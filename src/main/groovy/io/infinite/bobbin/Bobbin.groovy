@@ -1,29 +1,28 @@
 package io.infinite.bobbin
 
-import groovy.transform.Memoized
 import io.infinite.bobbin.destinations.Destination
+
+import javax.script.ScriptEngine
+import javax.script.ScriptEngineManager
 
 class Bobbin {
 
-
-    Binding binding = new Binding()
-    GroovyShell groovyShell = new GroovyShell(binding)
+    ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("groovy")
 
     BobbinConfig bobbinConfig
 
     Map<String, String> contextMap = [:]
 
     Boolean isLevelEnabled(Level level) {
-        binding.setProperty("level", level.value())
-        return groovyShell.evaluate(bobbinConfig.levels)
+        scriptEngine.put("level", level.value())
+        return scriptEngine.eval(bobbinConfig.levels)
     }
 
     Boolean isClassEnabled(String className) {
-        binding.setProperty("className", className)
-        return groovyShell.evaluate(bobbinConfig.classes)
+        scriptEngine.put("className", className)
+        return scriptEngine.eval(bobbinConfig.classes)
     }
 
-    @Memoized
     Boolean isLevelAndClassEnabled(Level level, String className) {
         return isLevelEnabled(level) && isClassEnabled(className)
     }

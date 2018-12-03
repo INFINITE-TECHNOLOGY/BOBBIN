@@ -3,22 +3,23 @@ package io.infinite.bobbin.destinations
 import io.infinite.bobbin.BobbinConfig
 import io.infinite.bobbin.Event
 
+import javax.script.ScriptEngine
+import javax.script.ScriptEngineManager
 import java.text.SimpleDateFormat
 
 abstract class Destination {
 
     BobbinConfig.Destination destinationConfig
 
-    Binding binding = new Binding()
-    GroovyShell groovyShell = new GroovyShell(binding)
+    ScriptEngine scriptingEngine = new ScriptEngineManager().getEngineByName("groovy")
 
     final void log(Event event) {
-        binding.setProperty("event", event)
-        binding.setProperty("level", event.getLevel().value())
-        binding.setProperty("className", event.getClassName())
-        binding.setProperty("threadName", Thread.currentThread().getName())
-        binding.setProperty("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
-        binding.setProperty("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
+        scriptingEngine.put("event", event)
+        scriptingEngine.put("level", event.getLevel().value())
+        scriptingEngine.put("className", event.getClassName())
+        scriptingEngine.put("threadName", Thread.currentThread().getName())
+        scriptingEngine.put("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
+        scriptingEngine.put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
         if (!isEventEnabled()) {
             return
         }
@@ -32,15 +33,15 @@ abstract class Destination {
     abstract protected void store(Event event)
 
     final Boolean isEventEnabled() {
-        return groovyShell.evaluate(destinationConfig.levels)
+        return scriptingEngine.eval(destinationConfig.levels)
     }
 
     final Boolean isClassEnabled() {
-        return groovyShell.evaluate(destinationConfig.classes)
+        return scriptingEngine.eval(destinationConfig.classes)
     }
 
     final Event formatMessage(Event event) {
-        event.setFormattedMessage(groovyShell.evaluate(destinationConfig.format) as String)
+        event.setFormattedMessage(scriptingEngine.eval(destinationConfig.format) as String)
         return event
     }
 

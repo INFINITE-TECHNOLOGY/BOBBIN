@@ -10,20 +10,20 @@ class FileDestination extends Destination {
     static Map<String, File> fileMap = new HashMap<>()
 
     String prepareKey() {
-        return groovyShell.evaluate(destinationConfig.properties.get("fileKey"))
+        return scriptingEngine.eval(destinationConfig.properties.get("fileKey"))
     }
 
     String prepareFileName() {
-        return groovyShell.evaluate(destinationConfig.properties.get("fileName"))
+        return scriptingEngine.eval(destinationConfig.properties.get("fileName"))
     }
 
     String prepareZipFileName() {
-        return groovyShell.evaluate(destinationConfig.properties.get("zipFileName"))
+        return scriptingEngine.eval(destinationConfig.properties.get("zipFileName"))
     }
 
     String prepareCleanupZipFileName(String origFileName) {
-        binding.setProperty("origFileName", origFileName)
-        return groovyShell.evaluate(destinationConfig.properties.get("cleanupZipFileName"))
+        scriptingEngine.put("origFileName", origFileName)
+        return scriptingEngine.eval(destinationConfig.properties.get("cleanupZipFileName"))
     }
 
     @Override
@@ -56,6 +56,7 @@ class FileDestination extends Destination {
             file = new File(fileName)
         }
         file.zipFileName = prepareZipFileName()
+        file.fileName = fileName
         file.getParentFile().mkdirs()
         return file
     }

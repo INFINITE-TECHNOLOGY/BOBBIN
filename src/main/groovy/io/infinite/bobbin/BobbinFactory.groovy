@@ -26,8 +26,14 @@ class BobbinFactory implements ILoggerFactory {
                     }
                 }
             })
-            if (url != null && new File(url.toURI()).exists()) {
-                BobbinConfig bobbinConfig = new ObjectMapper().readValue(new File(url.toURI()).getText(), BobbinConfig.class)
+            File file
+            if (url != null) {
+                file = new File(url.toURI())
+            } else {
+                file = new File("./Bobbin.json")
+            }
+            if (file.exists()) {
+                BobbinConfig bobbinConfig = new ObjectMapper().readValue(file.getText(), BobbinConfig.class)
                 bobbin = new Bobbin(bobbinConfig)
                 bobbinThreadLocal.set(bobbin)
                 return new BobbinNameAdapter(bobbin, name)

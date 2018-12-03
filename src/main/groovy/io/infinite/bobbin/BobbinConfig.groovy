@@ -9,11 +9,11 @@ class BobbinConfig {
         String levels
         String classes
         String dateFormat = "yyyy-MM-dd"
-        String dateTimeFormat = "yyyy-MM-dd HH:mm:ss"
+        String dateTimeFormat = "yyyy-MM-dd HH:mm:ss:SSS"
     }
 
-    String levels
-    String classes
+    String levels = "false"
+    String classes = "false"
     List<Destination> destinations = []
 
 }
