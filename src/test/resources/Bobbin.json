@@ -7,7 +7,8 @@
       "properties": {
         "fileKey": "threadName + level",
         "fileName": "\"./LOGS/${threadName}/${level}/${threadName}_${level}_${date}.log\"",
-        "zipFileName": "\"./LOGS/${threadName}/${level}/ARCHIVE/${threadName}_${level}_${date}.zip\""
+        "zipFileName": "\"./LOGS/${threadName}/${level}/ARCHIVE/${threadName}_${level}_${date}.zip\"",
+        "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
       },
       "format": "\"${dateTime}|${level}|${threadName}|${className}|${event.message}\\n\"",
       "levels": "['trace', 'debug', 'info', 'warn', 'error'].contains(level)",

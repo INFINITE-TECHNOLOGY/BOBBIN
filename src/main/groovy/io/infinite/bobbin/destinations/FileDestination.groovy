@@ -21,6 +21,11 @@ class FileDestination extends Destination {
         return groovyShell.evaluate(destinationConfig.properties.get("zipFileName"))
     }
 
+    String prepareCleanupZipFileName(String origFileName) {
+        binding.setProperty("origFileName", origFileName)
+        return groovyShell.evaluate(destinationConfig.properties.get("cleanupZipFileName"))
+    }
+
     @Override
     protected void store(Event event) {
         String key = prepareKey()
@@ -39,11 +44,17 @@ class FileDestination extends Destination {
             }
         }
         fileMap.put(key, file)
-        file.write(event.getFormattedMessage())
+        file.append(event.getFormattedMessage())
     }
 
     File initFile(String fileName) {
         File file = new File(fileName)
+        if (file.exists()) {
+            file.zipFileName = prepareCleanupZipFileName(fileName)
+            zip(file)
+            file.delete()
+            file = new File(fileName)
+        }
         file.zipFileName = prepareZipFileName()
         file.getParentFile().mkdirs()
         return file
