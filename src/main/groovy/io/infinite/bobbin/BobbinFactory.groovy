@@ -33,7 +33,7 @@ class BobbinFactory implements ILoggerFactory {
                 return new BobbinNameAdapter(bobbin, name)
             } else {
                 Util.report("Missing Bobbin.json at classpath")
-                return new BobbinNameAdapter(new Bobbin(), name)
+                return new BobbinNameAdapter(new Bobbin(new BobbinConfig()), name)
             }
         } else {
             return new BobbinNameAdapter(bobbin, name)
