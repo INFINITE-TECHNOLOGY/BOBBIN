@@ -1,0 +1,166 @@
+package io.infinite.bobbin
+
+import groovy.transform.Memoized
+import io.infinite.bobbin.destinations.Destination
+
+class Bobbin {
+
+
+    Binding binding = new Binding()
+    GroovyShell groovyShell = new GroovyShell(binding)
+
+    BobbinConfig bobbinConfig
+
+    Map<String, String> contextMap = [:]
+
+    Boolean isLevelEnabled(Level level) {
+        binding.setProperty("level", level.value())
+        return groovyShell.evaluate(bobbinConfig.levels)
+    }
+
+    Boolean isClassEnabled(String className) {
+        binding.setProperty("className", className)
+        return groovyShell.evaluate(bobbinConfig.classes)
+    }
+
+    @Memoized
+    Boolean isLevelAndClassEnabled(Level level, String className) {
+        return isLevelEnabled(level) && isClassEnabled(className)
+    }
+
+    Bobbin(BobbinConfig bobbinConfig) {
+        this.bobbinConfig = bobbinConfig
+        bobbinConfig.destinations.each {
+            Destination destination = Class.forName(it.name).newInstance() as Destination
+            destination.setDestinationConfig(it)
+            destinations.add(destination)
+        }
+    }
+
+    List<Destination> destinations = new ArrayList<>()
+
+    void log(Event event) {
+        destinations.each { it.log(event) }
+    }
+
+    boolean isTraceEnabled(String name) {
+        return isLevelAndClassEnabled(Level.TRACE, name)
+    }
+
+    void trace(String className, String msg) {
+        log(new Event(className: className, level: Level.TRACE, message: msg))
+    }
+
+    void trace(String className, String format, Object arg) {
+        log(new Event(className: className, level: Level.TRACE, message: format, arguments: [arg]))
+    }
+
+    void trace(String className, String format, Object arg1, Object arg2) {
+        log(new Event(className: className, level: Level.TRACE, message: format, arguments: [arg1, arg2]))
+    }
+
+    void trace(String className, String format, Object... arguments) {
+        log(new Event(className: className, level: Level.TRACE, message: format, arguments: arguments))
+    }
+
+    void trace(String className, String msg, Throwable t) {
+        log(new Event(className: className, level: Level.TRACE, message: msg, throwable: t))
+    }
+
+    boolean isDebugEnabled(String name) {
+        return isLevelAndClassEnabled(Level.DEBUG, name)
+    }
+
+    void debug(String className, String msg) {
+        log(new Event(className: className, level: Level.DEBUG, message: msg))
+    }
+
+    void debug(String className, String format, Object arg) {
+        log(new Event(className: className, level: Level.DEBUG, message: format, arguments: [arg]))
+    }
+
+    void debug(String className, String format, Object arg1, Object arg2) {
+        log(new Event(className: className, level: Level.DEBUG, message: format, arguments: [arg1, arg2]))
+    }
+
+    void debug(String className, String format, Object... arguments) {
+        log(new Event(className: className, level: Level.DEBUG, message: format, arguments: arguments))
+    }
+
+    void debug(String className, String msg, Throwable t) {
+        log(new Event(className: className, level: Level.DEBUG, message: msg, throwable: t))
+    }
+
+    boolean isInfoEnabled(String name) {
+        return isLevelAndClassEnabled(Level.INFO, name)
+    }
+
+    void info(String className, String msg) {
+        log(new Event(className: className, level: Level.INFO, message: msg))
+    }
+
+    void info(String className, String format, Object arg) {
+        log(new Event(className: className, level: Level.INFO, message: format, arguments: [arg]))
+    }
+
+    void info(String className, String format, Object arg1, Object arg2) {
+        log(new Event(className: className, level: Level.INFO, message: format, arguments: [arg1, arg2]))
+    }
+
+    void info(String className, String format, Object... arguments) {
+        log(new Event(className: className, level: Level.INFO, message: format, arguments: arguments))
+    }
+
+    void info(String className, String msg, Throwable t) {
+        log(new Event(className: className, level: Level.INFO, message: msg, throwable: t))
+    }
+
+    boolean isWarnEnabled(String name) {
+        return isLevelAndClassEnabled(Level.WARN, name)
+    }
+
+    void warn(String className, String msg) {
+        log(new Event(className: className, level: Level.WARN, message: msg))
+    }
+
+    void warn(String className, String format, Object arg) {
+        log(new Event(className: className, level: Level.WARN, message: format, arguments: [arg]))
+    }
+
+    void warn(String className, String format, Object... arguments) {
+        log(new Event(className: className, level: Level.WARN, message: format, arguments: arguments))
+    }
+
+    void warn(String className, String format, Object arg1, Object arg2) {
+        log(new Event(className: className, level: Level.WARN, message: format, arguments: [arg1, arg2]))
+    }
+
+    void warn(String className, String msg, Throwable t) {
+        log(new Event(className: className, level: Level.WARN, message: msg, throwable: t))
+    }
+
+    boolean isErrorEnabled(String name) {
+        return isLevelAndClassEnabled(Level.ERROR, name)
+    }
+
+    void error(String className, String msg) {
+        log(new Event(className: className, level: Level.ERROR, message: msg))
+    }
+
+    void error(String className, String format, Object arg) {
+        log(new Event(className: className, level: Level.ERROR, message: format, arguments: [arg]))
+    }
+
+    void error(String className, String format, Object arg1, Object arg2) {
+        log(new Event(className: className, level: Level.ERROR, message: format, arguments: [arg1, arg2]))
+    }
+
+    void error(String className, String format, Object... arguments) {
+        log(new Event(className: className, level: Level.ERROR, message: format, arguments: arguments))
+    }
+
+    void error(String className, String msg, Throwable t) {
+        log(new Event(className: className, level: Level.ERROR, message: msg, throwable: t))
+    }
+
+}
