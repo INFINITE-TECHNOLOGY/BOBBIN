@@ -15,11 +15,13 @@ class Bobbin {
 
     Boolean isLevelEnabled(Level level) {
         scriptEngine.put("level", level.value())
+        scriptEngine.put("all", true)
         return scriptEngine.eval(bobbinConfig.levels)
     }
 
     Boolean isClassEnabled(String className) {
         scriptEngine.put("className", className)
+        scriptEngine.put("all", true)
         return scriptEngine.eval(bobbinConfig.classes)
     }
 
@@ -31,7 +33,7 @@ class Bobbin {
         this.bobbinConfig = bobbinConfig
         bobbinConfig.destinations.each {
             Destination destination = Class.forName(it.name).newInstance() as Destination
-            destination.setDestinationConfig(it)
+            destination.setConfigs(it, bobbinConfig)
             destinations.add(destination)
         }
     }

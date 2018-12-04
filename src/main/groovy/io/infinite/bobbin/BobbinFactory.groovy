@@ -10,7 +10,7 @@ import java.security.PrivilegedAction
 
 class BobbinFactory implements ILoggerFactory {
 
-    static InheritableThreadLocal<Bobbin> bobbinThreadLocal = new InheritableThreadLocal()
+    static ThreadLocal bobbinThreadLocal = new ThreadLocal()
 
     @Override
     Logger getLogger(String name) {
@@ -36,13 +36,19 @@ class BobbinFactory implements ILoggerFactory {
                 BobbinConfig bobbinConfig = new ObjectMapper().readValue(file.getText(), BobbinConfig.class)
                 bobbin = new Bobbin(bobbinConfig)
                 bobbinThreadLocal.set(bobbin)
-                return new BobbinNameAdapter(bobbin, name)
+                return new BobbinNameAdapter(name)
             } else {
                 Util.report("Missing Bobbin.json at classpath")
-                return new BobbinNameAdapter(new Bobbin(new BobbinConfig()), name)
+                bobbinThreadLocal.set(new Bobbin(new BobbinConfig()))
+                return new BobbinNameAdapter(name)
             }
         } else {
-            return new BobbinNameAdapter(bobbin, name)
+            return new BobbinNameAdapter(name)
         }
     }
+
+    static Bobbin getBobbin() {
+        return bobbinThreadLocal.get() as Bobbin
+    }
+
 }

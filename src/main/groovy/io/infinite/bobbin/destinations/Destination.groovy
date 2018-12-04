@@ -1,5 +1,6 @@
 package io.infinite.bobbin.destinations
 
+import io.infinite.bobbin.Bobbin
 import io.infinite.bobbin.BobbinConfig
 import io.infinite.bobbin.Event
 
@@ -11,15 +12,18 @@ abstract class Destination {
 
     BobbinConfig.Destination destinationConfig
 
-    ScriptEngine scriptingEngine = new ScriptEngineManager().getEngineByName("groovy")
+    BobbinConfig parentBobbinConfig
+
+    ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("groovy")
 
     final void log(Event event) {
-        scriptingEngine.put("event", event)
-        scriptingEngine.put("level", event.getLevel().value())
-        scriptingEngine.put("className", event.getClassName())
-        scriptingEngine.put("threadName", Thread.currentThread().getName())
-        scriptingEngine.put("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
-        scriptingEngine.put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
+        scriptEngine.put("event", event)
+        scriptEngine.put("level", event.getLevel().value())
+        scriptEngine.put("className", event.getClassName())
+        scriptEngine.put("threadName", Thread.currentThread().getName())
+        scriptEngine.put("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
+        scriptEngine.put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
+        scriptEngine.put("all", true)
         if (!isEventEnabled()) {
             return
         }
@@ -33,20 +37,21 @@ abstract class Destination {
     abstract protected void store(Event event)
 
     final Boolean isEventEnabled() {
-        return scriptingEngine.eval(destinationConfig.levels)
+        return scriptEngine.eval(destinationConfig.levels?:parentBobbinConfig.levels)
     }
 
     final Boolean isClassEnabled() {
-        return scriptingEngine.eval(destinationConfig.classes)
+        return scriptEngine.eval(destinationConfig.classes?:parentBobbinConfig.classes)
     }
 
     final Event formatMessage(Event event) {
-        event.setFormattedMessage(scriptingEngine.eval(destinationConfig.format) as String)
+        event.setFormattedMessage(scriptEngine.eval(destinationConfig.format) as String)
         return event
     }
 
-    final void setDestinationConfig(BobbinConfig.Destination destinationConfig) {
+    final void setConfigs(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig) {
         this.destinationConfig = destinationConfig
+        this.parentBobbinConfig = parentBobbinConfig
     }
 
 }

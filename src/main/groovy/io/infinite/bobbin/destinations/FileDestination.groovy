@@ -10,20 +10,20 @@ class FileDestination extends Destination {
     static Map<String, File> fileMap = new HashMap<>()
 
     String prepareKey() {
-        return scriptingEngine.eval(destinationConfig.properties.get("fileKey"))
+        return scriptEngine.eval(destinationConfig.properties.get("fileKey")?:"\"default\"")
     }
 
     String prepareFileName() {
-        return scriptingEngine.eval(destinationConfig.properties.get("fileName"))
+        return scriptEngine.eval(destinationConfig.properties.get("fileName"))
     }
 
     String prepareZipFileName() {
-        return scriptingEngine.eval(destinationConfig.properties.get("zipFileName"))
+        return scriptEngine.eval(destinationConfig.properties.get("zipFileName"))
     }
 
     String prepareCleanupZipFileName(String origFileName) {
-        scriptingEngine.put("origFileName", origFileName)
-        return scriptingEngine.eval(destinationConfig.properties.get("cleanupZipFileName"))
+        scriptEngine.put("origFileName", origFileName)
+        return scriptEngine.eval(destinationConfig.properties.get("cleanupZipFileName"))
     }
 
     @Override
@@ -69,6 +69,7 @@ class FileDestination extends Destination {
     static void zip(File file) {
         final Integer BUFFER_LENGTH = 2048
         if (file.isFile()) {
+            new File(file.zipFileName as String).getParentFile().mkdirs()
             FileOutputStream fileOutputStream = new FileOutputStream(file.zipFileName as String)
             ZipOutputStream zipOutputStream = new ZipOutputStream(new BufferedOutputStream(fileOutputStream))
             byte[] bytes = new byte[BUFFER_LENGTH]

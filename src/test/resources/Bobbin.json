@@ -1,5 +1,5 @@
 {
-  "levels": "['trace', 'debug', 'info', 'warn', 'error'].contains(level)",
+  "levels": "all",
   "classes": "className.contains('io.infinite.')",
   "destinations": [
     {
@@ -10,15 +10,11 @@
         "zipFileName": "\"./LOGS/${threadName}/${level}/ARCHIVE/${threadName}_${level}_${date}.zip\"",
         "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
       },
-      "format": "\"${dateTime}|${level}|${threadName}|${className}|${event.message}\\n\"",
-      "levels": "['trace', 'debug', 'info', 'warn', 'error'].contains(level)",
-      "classes": "className.contains('io.infinite.')"
+      "format": "\"${dateTime}|${level}|${threadName}|${className}|${event.message}\\n\""
     },
     {
       "name": "io.infinite.bobbin.destinations.ConsoleDestination",
-      "format": "\"${dateTime}|${level}|${threadName}|${className}|${event.message}\\n\"",
-      "levels": "['trace', 'debug', 'info', 'warn', 'error'].contains(level)",
-      "classes": "className.contains('io.infinite.')"
+      "format": "\"${dateTime}|${level}|${threadName}|${className}|${event.message}\\n\""
     }
   ]
 }

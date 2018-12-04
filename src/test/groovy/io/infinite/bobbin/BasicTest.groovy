@@ -8,7 +8,8 @@ class BasicTest {
 
     @Test
     void test() {
-        log.debug("Test child thread")
+        log.debug("Test 1")
+        log.debug("Test 2")
     }
 
 }

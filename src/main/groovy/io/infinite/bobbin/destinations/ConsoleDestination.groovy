@@ -6,6 +6,6 @@ class ConsoleDestination extends Destination {
 
     @Override
     protected void store(Event event) {
-        System.out.println(event.getFormattedMessage())
+        System.out.print(event.getFormattedMessage())
     }
 }
