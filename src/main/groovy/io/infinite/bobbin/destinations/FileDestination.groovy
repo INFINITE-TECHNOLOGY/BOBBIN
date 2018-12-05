@@ -37,22 +37,22 @@ class FileDestination extends Destination {
             file = fileMap.get(key)
             if (file.fileName != newFileName) {
                 Thread.start({
-                    zip(file)
-                    file.delete()
+                    zipAndDelete(file)
                 })
                 file = initFile(newFileName)
             }
         }
         fileMap.put(key, file)
-        file.append(event.getFormattedMessage())
+        file.withWriter {
+            it.append(event.getFormattedMessage())
+        }
     }
 
     File initFile(String fileName) {
         File file = new File(fileName)
         if (file.exists()) {
             file.zipFileName = prepareCleanupZipFileName(fileName)
-            zip(file)
-            file.delete()
+            zipAndDelete(file)
             file = new File(fileName)
         }
         file.zipFileName = prepareZipFileName()
@@ -66,7 +66,7 @@ class FileDestination extends Destination {
         File.getMetaClass().zipFileName = null
     }
 
-    static void zip(File file) {
+    static void zipAndDelete(File file) {
         final Integer BUFFER_LENGTH = 2048
         if (file.isFile()) {
             new File(file.zipFileName as String).getParentFile().mkdirs()
@@ -83,6 +83,7 @@ class FileDestination extends Destination {
             }
             bufferedInputStream.close()
             zipOutputStream.close()
+            file.delete()
         }
     }
 
