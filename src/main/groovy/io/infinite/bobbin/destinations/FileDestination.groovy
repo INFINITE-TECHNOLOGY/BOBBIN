@@ -43,7 +43,7 @@ class FileDestination extends Destination {
             }
         }
         fileMap.put(key, file)
-        file.withWriter {
+        file.withWriterAppend {
             it.append(event.getFormattedMessage())
         }
     }
