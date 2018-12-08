@@ -1,31 +1,35 @@
 package io.infinite.bobbin
 
+import groovy.transform.Memoized
 import io.infinite.bobbin.destinations.Destination
+import io.infinite.speedometer.Speedometer
 
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 
+@Speedometer
 class Bobbin {
 
     ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("groovy")
 
     BobbinConfig bobbinConfig
 
-    Map<String, String> contextMap = [:]
-
+    @Memoized
     Boolean isLevelEnabled(Level level) {
         scriptEngine.put("level", level.value())
         scriptEngine.put("all", true)
         return scriptEngine.eval(bobbinConfig.levels)
     }
 
-    Boolean isClassEnabled(String className) {
+    @Memoized(maxCacheSize = 128)
+    final Boolean isClassEnabled(String className) {
         scriptEngine.put("className", className)
         scriptEngine.put("all", true)
         return scriptEngine.eval(bobbinConfig.classes)
     }
 
-    Boolean isLevelAndClassEnabled(Level level, String className) {
+    @Memoized(maxCacheSize = 128)
+    final Boolean isLevelAndClassEnabled(Level level, String className) {
         return isLevelEnabled(level) && isClassEnabled(className)
     }
 
@@ -44,8 +48,8 @@ class Bobbin {
         destinations.each { it.log(event) }
     }
 
-    boolean isTraceEnabled(String name) {
-        return isLevelAndClassEnabled(Level.TRACE, name)
+    boolean isTraceEnabled(String className) {
+        return isLevelAndClassEnabled(Level.TRACE, className)
     }
 
     void trace(String className, String msg) {

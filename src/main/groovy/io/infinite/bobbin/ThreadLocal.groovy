@@ -1,5 +1,7 @@
 package io.infinite.bobbin
 
+import io.infinite.speedometer.Speedometer
+
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -7,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap
  * Thus we have to use custom class.
  *
  * */
+@Speedometer
 class ThreadLocal {
 
     public static ConcurrentHashMap<Thread, Object> objectsByThread = new ConcurrentHashMap<Thread, Object>()

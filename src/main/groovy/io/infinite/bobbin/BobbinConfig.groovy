@@ -1,5 +1,8 @@
 package io.infinite.bobbin
 
+import io.infinite.speedometer.Speedometer
+
+@Speedometer
 class BobbinConfig {
 
     static class Destination {

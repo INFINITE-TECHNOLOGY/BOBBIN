@@ -1,13 +1,16 @@
 package io.infinite.bobbin.destinations
 
-import io.infinite.bobbin.Bobbin
+import groovy.transform.Memoized
 import io.infinite.bobbin.BobbinConfig
 import io.infinite.bobbin.Event
+import io.infinite.bobbin.Level
+import io.infinite.speedometer.Speedometer
 
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 import java.text.SimpleDateFormat
 
+@Speedometer
 abstract class Destination {
 
     BobbinConfig.Destination destinationConfig
@@ -18,16 +21,11 @@ abstract class Destination {
 
     final void log(Event event) {
         scriptEngine.put("event", event)
-        scriptEngine.put("level", event.getLevel().value())
-        scriptEngine.put("className", event.getClassName())
         scriptEngine.put("threadName", Thread.currentThread().getName())
         scriptEngine.put("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
         scriptEngine.put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
         scriptEngine.put("all", true)
-        if (!isEventEnabled()) {
-            return
-        }
-        if (!isClassEnabled()) {
+        if (!isLevelAndClassEnabled(event.getLevel(), event.getClassName())) {
             return
         }
         formatMessage(event)
@@ -36,12 +34,22 @@ abstract class Destination {
 
     abstract protected void store(Event event)
 
-    final Boolean isEventEnabled() {
-        return scriptEngine.eval(destinationConfig.levels?:parentBobbinConfig.levels)
+    @Memoized(maxCacheSize = 128)
+    final Boolean isLevelAndClassEnabled(Level level, String className) {
+        return isLevelEnabled(level) && isClassEnabled(className)
     }
 
-    final Boolean isClassEnabled() {
-        return scriptEngine.eval(destinationConfig.classes?:parentBobbinConfig.classes)
+    @Memoized
+    final Boolean isLevelEnabled(Level level) {
+        scriptEngine.put("level", level.value())
+        scriptEngine.put("all", true)
+        return scriptEngine.eval(destinationConfig.levels ?: parentBobbinConfig.levels)
+    }
+
+    @Memoized(maxCacheSize = 128)
+    final Boolean isClassEnabled(String className) {
+        scriptEngine.put("className", className)
+        return scriptEngine.eval(destinationConfig.classes ?: parentBobbinConfig.classes)
     }
 
     final Event formatMessage(Event event) {

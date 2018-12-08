@@ -1,16 +1,18 @@
 package io.infinite.bobbin.destinations
 
 import io.infinite.bobbin.Event
+import io.infinite.speedometer.Speedometer
 
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
+@Speedometer
 class FileDestination extends Destination {
 
     static Map<String, File> fileMap = new HashMap<>()
 
     String prepareKey() {
-        return scriptEngine.eval(destinationConfig.properties.get("fileKey")?:"\"default\"")
+        return destinationConfig.properties.get("fileKey") ?: "\"default\""
     }
 
     String prepareFileName() {
@@ -43,9 +45,7 @@ class FileDestination extends Destination {
             }
         }
         fileMap.put(key, file)
-        file.withWriterAppend {
-            it.append(event.getFormattedMessage())
-        }
+        file.writer.append(event.getFormattedMessage())
     }
 
     File initFile(String fileName) {
@@ -57,13 +57,16 @@ class FileDestination extends Destination {
         }
         file.zipFileName = prepareZipFileName()
         file.fileName = fileName
+        file.writer = new FileWriter(file, true)
         file.getParentFile().mkdirs()
+        println("Bobbin log: " + file.getCanonicalPath())
         return file
     }
 
     static {
         File.getMetaClass().fileName = null
         File.getMetaClass().zipFileName = null
+        File.getMetaClass().writer = null
     }
 
     static void zipAndDelete(File file) {
