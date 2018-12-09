@@ -29,25 +29,29 @@ class FileDestination extends Destination {
     @Override
     protected void store(Event event) {
         String key = prepareKey()
-        File file
         String newFileName = prepareFileName()
-        if (!fileMap.containsKey(key)) {
-            file = initFile(newFileName)
-        } else {
-            file = fileMap.get(key)
-            if (file.fileName != newFileName) {
-                Thread.start({
-                    zipAndDelete(file)
-                })
-                file = initFile(newFileName)
-            }
-        }
-        fileMap.put(key, file)
+        File file = getFile(newFileName, key)
         file.writer.write(event.getFormattedMessage())
         file.writer.flush()
     }
 
-    File initFile(String fileName) {
+    File getFile(String newFileName, String fileKey) {
+        File file
+        if (!fileMap.containsKey(fileKey)) {
+            file = initFile(newFileName, fileKey)
+        } else {
+            file = fileMap.get(fileKey)
+            if (file.fileName != newFileName) {
+                Thread.start({
+                    zipAndDelete(file)
+                })
+                file = initFile(newFileName, fileKey)
+            }
+        }
+        return file
+    }
+
+    File initFile(String fileName, String fileKey) {
         File file = new File(fileName)
         if (file.exists()) {
             file.zipFileName = prepareCleanupZipFileName(fileName)
@@ -58,6 +62,7 @@ class FileDestination extends Destination {
         file.fileName = fileName
         file.getParentFile().mkdirs()
         file.writer = new FileWriter(file, true)
+        fileMap.put(fileKey, file)
         return file
     }
 
