@@ -4,13 +4,11 @@ import groovy.util.logging.Slf4j
 import org.junit.Test
 
 @Slf4j
-class BasicTest {
+class SingleTest {
 
     @Test
     void test() {
-        (0..100).each {
-            log.debug("Debug $it")
-        }
+        log.debug("This is debug")
     }
 
 }

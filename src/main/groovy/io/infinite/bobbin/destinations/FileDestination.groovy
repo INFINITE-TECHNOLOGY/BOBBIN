@@ -43,7 +43,8 @@ class FileDestination extends Destination {
             }
         }
         fileMap.put(key, file)
-        file.writer.append(event.getFormattedMessage())
+        file.writer.write(event.getFormattedMessage())
+        file.writer.flush()
     }
 
     File initFile(String fileName) {
@@ -64,7 +65,7 @@ class FileDestination extends Destination {
         File.getMetaClass().fileName = null
         File.getMetaClass().zipFileName = null
         File.getMetaClass().writer = null
-        println("Bobbin: application working dir: " || new File("./").getCanonicalPath())
+        println("Bobbin: application working dir: " + new File("./").getCanonicalPath())
     }
 
     static void zipAndDelete(File file) {
