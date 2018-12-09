@@ -10,7 +10,7 @@ class FileDestination extends Destination {
     static Map<String, File> fileMap = new HashMap<>()
 
     String prepareKey() {
-        return destinationConfig.properties.get("fileKey") ?: "\"default\""
+        return scriptEngine.eval(destinationConfig.properties.get("fileKey") ?: "\"default\"")
     }
 
     String prepareFileName() {
@@ -57,7 +57,6 @@ class FileDestination extends Destination {
         file.fileName = fileName
         file.getParentFile().mkdirs()
         file.writer = new FileWriter(file, true)
-        println("Bobbin log: " + file.getCanonicalPath())
         return file
     }
 
@@ -65,6 +64,7 @@ class FileDestination extends Destination {
         File.getMetaClass().fileName = null
         File.getMetaClass().zipFileName = null
         File.getMetaClass().writer = null
+        println("Bobbin: application working dir: " || new File("./").getCanonicalPath())
     }
 
     static void zipAndDelete(File file) {

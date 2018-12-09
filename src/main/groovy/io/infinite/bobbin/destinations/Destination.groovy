@@ -22,6 +22,8 @@ abstract class Destination {
         scriptEngine.put("threadName", Thread.currentThread().getName())
         scriptEngine.put("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
         scriptEngine.put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
+        scriptEngine.put("level", event.getLevel().value())
+        scriptEngine.put("className", event.getClassName())
         scriptEngine.put("all", true)
         if (!isLevelAndClassEnabled(event.getLevel(), event.getClassName())) {
             return
