@@ -1,12 +1,10 @@
 package io.infinite.bobbin.destinations
 
 import io.infinite.bobbin.Event
-import io.infinite.speedometer.Speedometer
 
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
-@Speedometer
 class FileDestination extends Destination {
 
     static Map<String, File> fileMap = new HashMap<>()
@@ -57,8 +55,8 @@ class FileDestination extends Destination {
         }
         file.zipFileName = prepareZipFileName()
         file.fileName = fileName
-        file.writer = new FileWriter(file, true)
         file.getParentFile().mkdirs()
+        file.writer = new FileWriter(file, true)
         println("Bobbin log: " + file.getCanonicalPath())
         return file
     }

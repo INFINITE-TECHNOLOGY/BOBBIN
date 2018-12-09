@@ -4,13 +4,11 @@ import groovy.transform.Memoized
 import io.infinite.bobbin.BobbinConfig
 import io.infinite.bobbin.Event
 import io.infinite.bobbin.Level
-import io.infinite.speedometer.Speedometer
 
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 import java.text.SimpleDateFormat
 
-@Speedometer
 abstract class Destination {
 
     BobbinConfig.Destination destinationConfig

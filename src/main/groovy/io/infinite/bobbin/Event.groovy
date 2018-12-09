@@ -1,8 +1,5 @@
 package io.infinite.bobbin
 
-import io.infinite.speedometer.Speedometer
-
-@Speedometer
 class Event {
     Level level
     Date date = new Date()

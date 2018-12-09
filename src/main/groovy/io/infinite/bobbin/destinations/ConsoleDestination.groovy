@@ -1,9 +1,7 @@
 package io.infinite.bobbin.destinations
 
 import io.infinite.bobbin.Event
-import io.infinite.speedometer.Speedometer
 
-@Speedometer
 class ConsoleDestination extends Destination {
 
     @Override

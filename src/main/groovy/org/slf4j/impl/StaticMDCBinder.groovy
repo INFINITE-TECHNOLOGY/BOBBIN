@@ -1,6 +1,6 @@
 package org.slf4j.impl
 
-import io.infinite.speedometer.Speedometer
+
 import org.slf4j.helpers.BasicMDCAdapter
 import org.slf4j.spi.MDCAdapter
 

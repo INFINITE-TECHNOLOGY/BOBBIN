@@ -8,7 +8,7 @@ class BasicTest {
 
     @Test
     void test() {
-        (0..10000).each {
+        (0..100).each {
             log.debug("Debug $it")
         }
     }

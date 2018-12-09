@@ -1,7 +1,6 @@
 package io.infinite.bobbin
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.infinite.speedometer.Speedometer
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 import org.slf4j.helpers.Util
@@ -9,7 +8,6 @@ import org.slf4j.helpers.Util
 import java.security.AccessController
 import java.security.PrivilegedAction
 
-@Speedometer
 class BobbinFactory implements ILoggerFactory {
 
     static ThreadLocal bobbinThreadLocal = new ThreadLocal()

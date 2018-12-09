@@ -1,9 +1,7 @@
 package io.infinite.bobbin
 
-import io.infinite.speedometer.Speedometer
 import org.slf4j.helpers.MarkerIgnoringBase
 
-@Speedometer
 class BobbinNameAdapter extends MarkerIgnoringBase {
 
     static Bobbin bobbin() {

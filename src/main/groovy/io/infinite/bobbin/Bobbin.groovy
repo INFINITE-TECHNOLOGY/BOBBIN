@@ -2,12 +2,10 @@ package io.infinite.bobbin
 
 import groovy.transform.Memoized
 import io.infinite.bobbin.destinations.Destination
-import io.infinite.speedometer.Speedometer
 
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 
-@Speedometer
 class Bobbin {
 
     ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("groovy")
