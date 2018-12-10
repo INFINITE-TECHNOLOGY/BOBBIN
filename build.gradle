@@ -6,6 +6,8 @@ buildscript {
 plugins {
     id "com.jfrog.bintray" version "1.7"
 }
+group = 'io.infinite'
+version = '1.0.0'
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'idea'
@@ -46,13 +48,14 @@ sourceSets {
     }
 }
 bintray {
-    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    println(System.getProperty('bintrayuser'))
+    user = System.getProperty('bintrayuser')
+    key = System.getProperty('bintraypassword')
     configurations = ['archives']
     pkg {
         repo = 'm2'
         name = 'bobbin'
-        userOrg = user
+        userOrg = 'infinite-technology'
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/INFINITE-TECHNOLOGY/BOBBIN.git'
         version {
