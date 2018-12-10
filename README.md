@@ -9,6 +9,8 @@ References:
 
 **Sample configuration:**
 
+Bobbin.json
+
 ```json
 {
   "levels": "['debug', 'info', 'warn', 'error'].contains(level)",
