@@ -8,7 +8,7 @@ class MultiTest {
 
     @Test
     void test() {
-        (0..10000).each {
+        (0..1000).each {
             log.debug("Debug $it")
         }
     }
