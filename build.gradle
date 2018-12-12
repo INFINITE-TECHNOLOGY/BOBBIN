@@ -1,68 +1,95 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-}
+/*
+File
+https://github.com/virtualdogbert/GroovyConfigWriter/blob/master/build.gradle
+has been used as basis for this file.
+ */
 plugins {
-    id "com.jfrog.bintray" version "1.7"
+    id "groovy"
+    id "maven-publish"
+    id "com.jfrog.bintray" version "1.8.4"
+    id "com.jfrog.artifactory" version "4.8.1"
+    id "idea"
 }
-group = 'io.infinite'
-version = '1.0.0'
-apply plugin: 'groovy'
-apply plugin: 'maven'
-apply plugin: 'idea'
-apply plugin: 'java'
+sourceCompatibility = 1.7
+group = "io.infinite"
+version = "1.0.1"
+description = "Groovy Slf4j logger"
+wrapper {
+    gradleVersion = "5.0"
+}
 repositories {
     jcenter()
 }
-dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.5.4'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
-uploadArchives {
-    repositories {
-        mavenLocal()
-        mavenDeployer {
-            repository(url: mavenLocal().url)
-            pom.version = '1.0.0'
-            pom.groupId = 'io.infinite'
-            pom.artifactId = 'bobbin'
-        }
-    }
-}
 sourceSets {
-    main {
-        groovy {
-            srcDirs = ['src/main/groovy']
+    main.groovy.srcDirs = ["src/main/groovy"]
+    test.groovy.srcDirs = ["src/test/groovy"]
+}
+dependencies {
+    compile "org.codehaus.groovy:groovy-all:2.5.4"
+    compile "org.slf4j:slf4j-api:1.7.25"
+    compile "com.fasterxml.jackson.core:jackson-databind:2.9.7"
+    testCompile "junit:junit:4.12"
+}
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier "sources"
+}
+ext {
+    theTitle = "Groovy Slf4j logger"
+    titleForDocumentation = archivesBaseName + " " + version
+    packageTitle = group
+    description = description
+}
+publishing {
+    publications {
+        groovyMaven(MavenPublication) {
+            from components.java
+            artifact(sourceJar) {
+                classifier "sources"
+            }
         }
     }
-    test {
-        groovy {
-            srcDirs = ['src/test/groovy']
-        }
-        resources {
-            srcDirs = ['src/test/resources']
-        }
-    }
+}
+task jarSrc(type: Jar, dependsOn: classes) {
+    classifier = "sources"
+    from sourceSets.main.allSource
+}
+artifacts {
+    archives(jarSrc)
 }
 bintray {
-    println(System.getProperty('bintrayuser'))
-    user = System.getProperty('bintrayuser')
-    key = System.getProperty('bintraypassword')
-    configurations = ['archives']
+    user = System.getProperty("bintrayuser")
+    key = System.getProperty("bintraypassword")
+    publications = ["groovyMaven"]
+    def projectName = project.name
+    def projectDescription = project.description
     pkg {
-        repo = 'm2'
-        name = 'bobbin'
-        userOrg = 'infinite-technology'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/INFINITE-TECHNOLOGY/BOBBIN.git'
-        version {
-            name = '1.0.0'
-            desc = 'Groovy Slf4j logger'
-            vcsTag = '1.0.0'
-            attributes = ['maturity': 'development']
+        userOrg = "infinite-technology"
+        repo = "m2"
+        name = "bobbin"
+        desc = "Groovy Slf4j Logger"
+        issueTrackerUrl = "https://github.com/INFINITE-TECHNOLOGY/BOBBIN/issues"
+        vcsUrl = "https://github.com/INFINITE-TECHNOLOGY/BOBBIN.git"
+        websiteUrl = "https://i-t.io/Bobbin/"
+        licenses = ["Apache-2.0"]
+    }
+}
+artifactory {
+    contextUrl = 'http://oss.jfrog.org'
+    publish {
+        repository {
+            repoKey = 'oss-snapshot-local'
+            username = System.getProperty("bintrayuser")
+            password = System.getProperty("bintraypassword")
+        }
+        defaults {
+            publications('groovyMaven')
+            publishArtifacts = true
+            publishPom = true
         }
     }
+    resolve {
+        repoKey = 'jcenter'
+    }
+    clientConfig.info.setBuildNumber(System.currentTimeMillis().toString())
 }
