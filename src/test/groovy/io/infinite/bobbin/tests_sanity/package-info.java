@@ -1,4 +1,4 @@
 /**
- * Tests that should pass in all 1.x.x branches without adaptation (changes) in their code.
+ * Non-asserting tests (assertion is running without exceptions)
  */
-package io.infinite.bobbin.tests_1_x_x;
+package io.infinite.bobbin.tests_sanity;

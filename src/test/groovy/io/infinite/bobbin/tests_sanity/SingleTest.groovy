@@ -1,4 +1,4 @@
-package io.infinite.bobbin
+package io.infinite.bobbin.tests_sanity
 
 import groovy.util.logging.Slf4j
 import org.junit.Test
