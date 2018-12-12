@@ -7,11 +7,12 @@ plugins {
     id "groovy"
     id "maven-publish"
     id "com.jfrog.bintray" version "1.8.4"
+    id "com.jfrog.artifactory" version "4.8.1"
     id "idea"
 }
 sourceCompatibility = 1.7
 group = "io.infinite"
-version = "1.0.0"
+version = "1.1.0-SNAPSHOT"
 description = "Groovy Slf4j logger"
 wrapper {
     gradleVersion = "5.0"
@@ -72,4 +73,23 @@ bintray {
         websiteUrl = "https://i-t.io/Bobbin/"
         licenses = ["Apache-2.0"]
     }
+}
+artifactory {
+    contextUrl = 'http://oss.jfrog.org'
+    publish {
+        repository {
+            repoKey = 'oss-snapshot-local'
+            username = System.getProperty("bintrayuser")
+            password = System.getProperty("bintraypassword")
+        }
+        defaults {
+            publications('groovyMaven')
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+    resolve {
+        repoKey = 'jcenter'
+    }
+    clientConfig.info.setBuildNumber(System.currentTimeMillis().toString())
 }
