@@ -12,17 +12,25 @@ class Bobbin {
 
     BobbinConfig bobbinConfig
 
+    Map<String, Object> contextMap = [:]
+
+    Object get(String key) {
+        return contextMap.get(key)
+    }
+
+    void set(String key, Object value) {
+        contextMap.put(key, value)
+    }
+
     @Memoized
     Boolean isLevelEnabled(Level level) {
         scriptEngine.put("level", level.value())
-        scriptEngine.put("all", true)
         return scriptEngine.eval(bobbinConfig.levels)
     }
 
     @Memoized(maxCacheSize = 128)
     final Boolean isClassEnabled(String className) {
         scriptEngine.put("className", className)
-        scriptEngine.put("all", true)
         return scriptEngine.eval(bobbinConfig.classes)
     }
 
@@ -32,10 +40,17 @@ class Bobbin {
     }
 
     Bobbin(BobbinConfig bobbinConfig) {
+        scriptEngine.put("all", true)
+        scriptEngine.put("none", false)
+        scriptEngine.put("threadName", Thread.currentThread().getName())
+        scriptEngine.put("bobbin", this)
         this.bobbinConfig = bobbinConfig
         bobbinConfig.destinations.each {
-            Destination destination = Class.forName(it.name).newInstance() as Destination
-            destination.setConfigs(it, bobbinConfig)
+            Destination destination = Class.forName(it.name).newInstance(
+                    it,
+                    bobbinConfig,
+                    scriptEngine
+            ) as Destination
             destinations.add(destination)
         }
     }

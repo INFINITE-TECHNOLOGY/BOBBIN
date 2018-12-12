@@ -6,7 +6,6 @@ import io.infinite.bobbin.Event
 import io.infinite.bobbin.Level
 
 import javax.script.ScriptEngine
-import javax.script.ScriptEngineManager
 import java.text.SimpleDateFormat
 
 abstract class Destination {
@@ -15,17 +14,15 @@ abstract class Destination {
 
     BobbinConfig parentBobbinConfig
 
-    ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("groovy")
+    ScriptEngine scriptEngine
 
     final void log(Event event) {
         scriptEngine.put("event", event)
-        scriptEngine.put("threadName", Thread.currentThread().getName())
         scriptEngine.put("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
         scriptEngine.put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
         scriptEngine.put("level", event.getLevel().value())
         scriptEngine.put("className", event.getClassName())
-        scriptEngine.put("all", true)
-        if (!isLevelAndClassEnabled(event.getLevel(), event.getClassName())) {
+        if (!needsLogging(event.getLevel(), event.getClassName())) {
             return
         }
         formatMessage(event)
@@ -35,21 +32,9 @@ abstract class Destination {
     abstract protected void store(Event event)
 
     @Memoized(maxCacheSize = 128)
-    final Boolean isLevelAndClassEnabled(Level level, String className) {
-        return isLevelEnabled(level) && isClassEnabled(className)
-    }
-
-    @Memoized
-    final Boolean isLevelEnabled(Level level) {
-        scriptEngine.put("level", level.value())
-        scriptEngine.put("all", true)
-        return scriptEngine.eval(destinationConfig.levels ?: parentBobbinConfig.levels)
-    }
-
-    @Memoized(maxCacheSize = 128)
-    final Boolean isClassEnabled(String className) {
-        scriptEngine.put("className", className)
-        return scriptEngine.eval(destinationConfig.classes ?: parentBobbinConfig.classes)
+    final Boolean needsLogging(Level level, String className) {
+        return (scriptEngine.eval(destinationConfig.classes ?: parentBobbinConfig.classes)
+        && scriptEngine.eval(destinationConfig.levels ?: parentBobbinConfig.levels))
     }
 
     final Event formatMessage(Event event) {
@@ -57,9 +42,10 @@ abstract class Destination {
         return event
     }
 
-    final void setConfigs(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig) {
+    Destination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig, ScriptEngine scriptEngine) {
         this.destinationConfig = destinationConfig
         this.parentBobbinConfig = parentBobbinConfig
+        this.scriptEngine = scriptEngine
     }
 
 }
