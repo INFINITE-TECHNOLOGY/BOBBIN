@@ -21,8 +21,8 @@ class BasicTest {
         File file = TestTools.getResourceFile("BasicTest.expected")
         assert file != null
         Template template = TestTools.simpleTemplateEngine.createTemplate(file)
-        assert new File("./LOGS/BasicTest/ALL_LEVELS/BasicTest.expected").exists()
-        assert new File("./LOGS/BasicTest/ALL_LEVELS/BasicTest.expected").getText() == template.make(["uuid": uuid]).toString()
+        assert new File("./LOGS/BasicTest/ALL_LEVELS/BasicTest.log").exists()
+        assert new File("./LOGS/BasicTest/ALL_LEVELS/BasicTest.log").getText() == template.make(["uuid": uuid]).toString()
     }
 
     String getBobbinConfFileName() {
