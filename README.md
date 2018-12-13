@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=master)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)
 
+Default git Branch (master) corresponds to latest major version: 2.x.x
+
+Other major versions (1.x.x) can be found in corresponding git branches.
+
 Bobbin is a Groovy Slf4j-compatible logger designed for multi-threaded applications.
 
 Bobbin leverages the concept of Logback sifting appender while providing much more easier configuration.
