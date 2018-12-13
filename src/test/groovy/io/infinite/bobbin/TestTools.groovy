@@ -1,17 +1,22 @@
 package io.infinite.bobbin
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import groovy.text.SimpleTemplateEngine
 import org.slf4j.Logger
 import org.slf4j.helpers.Util
 
+import javax.script.ScriptEngine
+import javax.script.ScriptEngineManager
 import java.security.AccessController
 import java.security.PrivilegedAction
 
-class TestBobbinFactory {
+class TestTools {
 
     String bobbinConfFileName
 
-    TestBobbinFactory(String bobbinConfFileName) {
+    static SimpleTemplateEngine simpleTemplateEngine = new SimpleTemplateEngine()
+
+    TestTools(String bobbinConfFileName) {
         this.bobbinConfFileName = bobbinConfFileName
     }
 
@@ -20,23 +25,30 @@ class TestBobbinFactory {
         return new BobbinNameAdapter(name)
     }
 
-    void forceBobbinInit() {
+    static File getResourceFile(String fileName, String defaultFileName = null) {
         URL url = AccessController.doPrivileged(new PrivilegedAction<URL>() {
             URL run() {
                 ClassLoader threadCL = Thread.currentThread().getContextClassLoader()
                 if (threadCL != null) {
-                    return threadCL.getResource(bobbinConfFileName)
+                    return threadCL.getResource(fileName)
                 } else {
-                    return ClassLoader.getSystemResource(bobbinConfFileName)
+                    return ClassLoader.getSystemResource(fileName)
                 }
             }
         })
-        File file
+        File file = null
         if (url != null) {
             file = new File(url.toURI())
         } else {
-            file = new File("./Bobbin.json")
+            if (defaultFileName != null) {
+                file = new File("./${defaultFileName}")
+            }
         }
+        return file
+    }
+
+    void forceBobbinInit() {
+        File file = getResourceFile(bobbinConfFileName, "Bobbin.json")
         if (file.exists()) {
             BobbinConfig bobbinConfig = new ObjectMapper().readValue(file.getText(), BobbinConfig.class)
             Bobbin bobbin = new Bobbin(bobbinConfig)
