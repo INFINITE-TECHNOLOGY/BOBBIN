@@ -15,19 +15,23 @@ class BobbinFactory implements ILoggerFactory {
     @Override
     Logger getLogger(String name) {
         initBobbinIfNeeded()
-        return new BobbinNameAdapter(name)
+        return new BobbinNameAdapter(name, this)
     }
 
-    static initBobbinIfNeeded() {
+    String getBobbinConfigFileName() {
+        return "Bobbin.json"
+    }
+
+    void initBobbinIfNeeded() {
         Bobbin bobbin = bobbinThreadLocal.get() as Bobbin
         if (bobbin == null) {
             URL url = AccessController.doPrivileged(new PrivilegedAction<URL>() {
                 URL run() {
                     ClassLoader threadCL = Thread.currentThread().getContextClassLoader()
                     if (threadCL != null) {
-                        return threadCL.getResource("Bobbin.json")
+                        return threadCL.getResource(getBobbinConfigFileName())
                     } else {
-                        return ClassLoader.getSystemResource("Bobbin.json")
+                        return ClassLoader.getSystemResource(getBobbinConfigFileName())
                     }
                 }
             })
@@ -35,20 +39,20 @@ class BobbinFactory implements ILoggerFactory {
             if (url != null) {
                 file = new File(url.toURI())
             } else {
-                file = new File("./Bobbin.json")
+                file = new File("./${getBobbinConfigFileName()}")
             }
             if (file.exists()) {
                 BobbinConfig bobbinConfig = new ObjectMapper().readValue(file.getText(), BobbinConfig.class)
                 bobbin = new Bobbin(bobbinConfig)
                 bobbinThreadLocal.set(bobbin)
             } else {
-                Util.report("Missing Bobbin.json at classpath")
+                Util.report("Missing ${getBobbinConfigFileName()} at classpath")
                 bobbinThreadLocal.set(new Bobbin(new BobbinConfig()))
             }
         }
     }
 
-    static Bobbin getBobbin() {
+    Bobbin getBobbin() {
         initBobbinIfNeeded()
         return bobbinThreadLocal.get() as Bobbin
     }
