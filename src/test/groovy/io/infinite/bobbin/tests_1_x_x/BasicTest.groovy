@@ -17,6 +17,7 @@ class BasicTest {
         bobbinNameAdapter.info("info abcd1234")
         bobbinNameAdapter.debug("debug " + uuid)
         bobbinNameAdapter.trace("trace " + uuid)
+        println("Start test " + this.getClass().getSimpleName())
         assert new File("./LOGS/BasicTest/ALL_LEVELS/BasicTest.log").exists()
         assert new File("./LOGS/BasicTest/ALL_LEVELS/BasicTest.log").getText() == """error|BasicTest|io.infinite.bobbin.tests_1_x_x.BasicTest|error abcd
 warn|BasicTest|io.infinite.bobbin.tests_1_x_x.BasicTest|warn 1234
