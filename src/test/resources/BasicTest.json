@@ -15,7 +15,7 @@
     {
       "name": "io.infinite.bobbin.destinations.FileDestination",
       "properties": {
-        "fileKey": "threadName + level",
+        "fileKey": "threadName",
         "fileName": "\"./LOGS/${threadName}/ALL_LEVELS/${threadName}.log\"",
         "zipFileName": "\"./LOGS/${threadName}/ALL_LEVELS/ARCHIVE/${threadName}.zip\"",
         "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
