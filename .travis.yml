@@ -8,4 +8,4 @@ cache:
 after_failure:
   - pwd
   - ls -l ./
-  - ls -R
+  - ls -R ./
