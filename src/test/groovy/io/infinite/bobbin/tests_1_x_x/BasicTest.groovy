@@ -18,7 +18,9 @@ class BasicTest {
         bobbinNameAdapter.info("info abcd1234")
         bobbinNameAdapter.debug("debug " + uuid)
         bobbinNameAdapter.trace("trace " + uuid)
-        Template template = TestTools.simpleTemplateEngine.createTemplate(TestTools.getResourceFile("BasicTest.log"))
+        File file = TestTools.getResourceFile("BasicTest.log")
+        assert file != null
+        Template template = TestTools.simpleTemplateEngine.createTemplate(file)
         assert new File("./LOGS/BasicTest/ALL_LEVELS/BasicTest.log").exists()
         assert new File("./LOGS/BasicTest/ALL_LEVELS/BasicTest.log").getText() == template.make(["uuid": uuid]).toString()
     }

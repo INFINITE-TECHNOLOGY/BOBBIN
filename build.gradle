@@ -93,3 +93,9 @@ artifactory {
     }
     clientConfig.info.setBuildNumber(System.currentTimeMillis().toString())
 }
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+}
