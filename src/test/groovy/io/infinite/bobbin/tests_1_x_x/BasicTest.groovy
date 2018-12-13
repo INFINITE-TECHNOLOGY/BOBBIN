@@ -1,7 +1,7 @@
 package io.infinite.bobbin.tests_1_x_x
 
 import io.infinite.bobbin.BobbinNameAdapter
-import io.infinite.bobbin.TestBobbinFactory
+import io.infinite.bobbin.TestBobbinFactoryAdapter
 import org.junit.Test
 
 class BasicTest {
@@ -11,7 +11,7 @@ class BasicTest {
     @Test
     void test() {
         Thread.currentThread().setName(this.getClass().getSimpleName())
-        BobbinNameAdapter bobbinNameAdapter = new TestBobbinFactory(getBobbinConfFileName()).getLogger(this.getClass().getCanonicalName()) as BobbinNameAdapter
+        BobbinNameAdapter bobbinNameAdapter = new TestBobbinFactoryAdapter(getBobbinConfFileName()).getLogger(this.getClass().getCanonicalName()) as BobbinNameAdapter
         bobbinNameAdapter.error("error abcd")
         bobbinNameAdapter.warn("warn 1234")
         bobbinNameAdapter.info("info abcd1234")
