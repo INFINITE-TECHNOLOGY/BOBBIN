@@ -4,17 +4,14 @@ import org.slf4j.helpers.MarkerIgnoringBase
 
 class BobbinNameAdapter extends MarkerIgnoringBase {
 
-    BobbinFactory bobbinFactory
+    static Bobbin bobbin() {
+        return BobbinFactory.getBobbin()
+    }
 
     String className
 
-    Bobbin bobbin() {
-        return bobbinFactory.getBobbin()
-    }
-
-    BobbinNameAdapter(String className, BobbinFactory bobbinFactory) {
+    BobbinNameAdapter(className) {
         this.className = className
-        this.bobbinFactory = bobbinFactory
     }
 
     @Override
