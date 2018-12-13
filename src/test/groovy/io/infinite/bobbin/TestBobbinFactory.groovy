@@ -8,13 +8,11 @@ import org.slf4j.helpers.Util
 import java.security.AccessController
 import java.security.PrivilegedAction
 
-class TestBobbinFactoryAdapter {
-
-    static ThreadLocal bobbinThreadLocal = new ThreadLocal()
+class TestBobbinFactory {
 
     String bobbinConfFileName
 
-    TestBobbinFactoryAdapter(String bobbinConfFileName) {
+    TestBobbinFactory(String bobbinConfFileName) {
         this.bobbinConfFileName = bobbinConfFileName
     }
 
@@ -24,7 +22,7 @@ class TestBobbinFactoryAdapter {
     }
 
     void initBobbinIfNeeded() {
-        Bobbin bobbin = bobbinThreadLocal.get() as Bobbin
+        Bobbin bobbin = BobbinFactory.bobbinThreadLocal.get() as Bobbin
         if (bobbin == null) {
             URL url = AccessController.doPrivileged(new PrivilegedAction<URL>() {
                 URL run() {
@@ -45,18 +43,17 @@ class TestBobbinFactoryAdapter {
             if (file.exists()) {
                 BobbinConfig bobbinConfig = new ObjectMapper().readValue(file.getText(), BobbinConfig.class)
                 bobbin = new Bobbin(bobbinConfig)
-                bobbinThreadLocal.set(bobbin)
+                BobbinFactory.bobbinThreadLocal.set(bobbin)
             } else {
                 Util.report("Missing Bobbin.json at classpath")
-                bobbinThreadLocal.set(new Bobbin(new BobbinConfig()))
+                BobbinFactory.bobbinThreadLocal.set(new Bobbin(new BobbinConfig()))
             }
-            BobbinFactory.bobbinThreadLocal = bobbinThreadLocal
         }
     }
 
     Bobbin getBobbin() {
         initBobbinIfNeeded()
-        return bobbinThreadLocal.get() as Bobbin
+        return BobbinFactory.bobbinThreadLocal.get() as Bobbin
     }
 
 }
