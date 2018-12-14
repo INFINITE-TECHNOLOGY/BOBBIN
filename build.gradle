@@ -9,6 +9,7 @@ plugins {
     id "com.jfrog.bintray" version "1.8.4"
     id "com.jfrog.artifactory" version "4.8.1"
     id "idea"
+    id "jacoco"
 }
 sourceCompatibility = 1.7
 group = "io.infinite"
@@ -99,3 +100,10 @@ test {
         exceptionFormat "full"
     }
 }
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
+check.dependsOn jacocoTestReport
