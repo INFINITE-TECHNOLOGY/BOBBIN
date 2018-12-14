@@ -30,10 +30,10 @@ class BaseTest {
     }
 
     void assertFile(String fileName) {
-        File file = new File(thisClass.getResource(fileName).toURI())
-        Template template = TestTools.simpleTemplateEngine.createTemplate(file)
+        File expectedResultsFile = new File(thisClass.getResource(fileName).toURI())
+        Template expectedResultsTemplate = TestTools.simpleTemplateEngine.createTemplate(expectedResultsFile)
         assert new File("./$fileName").exists()
-        assert new File("./$fileName").getText() == template.make(["uuid": uuid]).toString()
+        assert new File("./$fileName").getText() == expectedResultsTemplate.make(["uuid": uuid]).toString()
     }
 
     String getBobbinConfFileName() {

@@ -2,5 +2,5 @@ language: groovy
 after_failure:
   - pwd
   - ls -l ./
-  - ls -R ./
-  - cat ./LOGS/BaseTest/ALL_LEVELS/BaseTest.log
+  - ls -lR ./LOGS
+  - ls -lR ./build/resources
