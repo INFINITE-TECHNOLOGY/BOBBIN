@@ -22,11 +22,11 @@ class BaseTest {
         bobbinNameAdapter.debug("debug " + uuid)
         bobbinNameAdapter.trace("trace " + uuid)
         assertFile("LOGS/BaseTest/ALL_LEVELS/BaseTest", ".log", ".expected")
-        assertFile("LOGS/BaseTest/TRACE/BaseTest_trace", ".log", ".expected")
-        assertFile("LOGS/BaseTest/INFO/BaseTest_info", ".log", ".expected")
-        assertFile("LOGS/BaseTest/DEBUG/BaseTest_debug", ".log", ".expected")
-        assertFile("LOGS/BaseTest/ERROR/BaseTest_error", ".log", ".expected")
-        assertFile("LOGS/BaseTest/WARN/BaseTest_warn", ".log", ".expected")
+        assertFile("LOGS/BaseTest/trace/BaseTest_trace", ".log", ".expected")
+        assertFile("LOGS/BaseTest/info/BaseTest_info", ".log", ".expected")
+        assertFile("LOGS/BaseTest/debug/BaseTest_debug", ".log", ".expected")
+        assertFile("LOGS/BaseTest/error/BaseTest_error", ".log", ".expected")
+        assertFile("LOGS/BaseTest/warn/BaseTest_warn", ".log", ".expected")
     }
 
     void assertFile(String fileName, String fileExtensionActual, String fileExtensionExpected) {
