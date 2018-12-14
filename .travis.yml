@@ -1,6 +1,4 @@
 language: groovy
 after_failure:
-  - pwd
-  - ls -l ./
   - ls -lR ./LOGS
   - ls -lR ./build/resources

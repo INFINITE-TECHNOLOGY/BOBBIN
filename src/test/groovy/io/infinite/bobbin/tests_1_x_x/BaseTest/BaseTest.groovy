@@ -21,19 +21,18 @@ class BaseTest {
         bobbinNameAdapter.info("info abcd1234")
         bobbinNameAdapter.debug("debug " + uuid)
         bobbinNameAdapter.trace("trace " + uuid)
-        assertFile("LOGS/BaseTest/ALL_LEVELS/BaseTest.log")
-        assertFile("LOGS/BaseTest/TRACE/BaseTest_trace.log")
-        assertFile("LOGS/BaseTest/INFO/BaseTest_info.log")
-        assertFile("LOGS/BaseTest/DEBUG/BaseTest_debug.log")
-        assertFile("LOGS/BaseTest/ERROR/BaseTest_error.log")
-        assertFile("LOGS/BaseTest/WARN/BaseTest_warn.log")
+        assertFile("LOGS/BaseTest/ALL_LEVELS/BaseTest", ".log", ".expected")
+        assertFile("LOGS/BaseTest/TRACE/BaseTest_trace", ".log", ".expected")
+        assertFile("LOGS/BaseTest/INFO/BaseTest_info", ".log", ".expected")
+        assertFile("LOGS/BaseTest/DEBUG/BaseTest_debug", ".log", ".expected")
+        assertFile("LOGS/BaseTest/ERROR/BaseTest_error", ".log", ".expected")
+        assertFile("LOGS/BaseTest/WARN/BaseTest_warn", ".log", ".expected")
     }
 
-    void assertFile(String fileName) {
-        File expectedResultsFile = new File(thisClass.getResource(fileName).toURI())
+    void assertFile(String fileName, String fileExtensionActual, String fileExtensionExpected) {
+        File expectedResultsFile = new File(thisClass.getResource(fileName + fileExtensionExpected).toURI())
         Template expectedResultsTemplate = TestTools.simpleTemplateEngine.createTemplate(expectedResultsFile)
-        assert new File("./$fileName").exists()
-        assert new File("./$fileName").getText() == expectedResultsTemplate.make(["uuid": uuid]).toString()
+        assert new File("./$fileName" + fileExtensionActual).getText() == expectedResultsTemplate.make(["uuid": uuid]).toString()
     }
 
     String getBobbinConfFileName() {
