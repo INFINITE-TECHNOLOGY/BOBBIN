@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=master)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)
 
 Latest/unstable: [master](https://github.com/INFINITE-TECHNOLOGY/BOBBIN)
+
 Stable: [BOBBIN_1_X_X](https://github.com/INFINITE-TECHNOLOGY/BOBBIN/tree/BOBBIN_1_0_X)
 
 Bobbin is a Groovy Slf4j-compatible logger designed for multi-threaded applications.
