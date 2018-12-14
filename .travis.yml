@@ -3,4 +3,4 @@ after_failure:
   - pwd
   - ls -l ./
   - ls -R ./
-  - cat ./LOGS/BasicTest/ALL_LEVELS/BasicTest.log
+  - cat ./LOGS/BaseTest/ALL_LEVELS/BaseTest.log

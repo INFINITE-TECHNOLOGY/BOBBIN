@@ -38,7 +38,7 @@ ext {
     theTitle = "Groovy Slf4j logger"
     titleForDocumentation = archivesBaseName + " " + version
     packageTitle = group
-    description = description
+    description = "Groovy Slf4j logger"
 }
 publishing {
     publications {
