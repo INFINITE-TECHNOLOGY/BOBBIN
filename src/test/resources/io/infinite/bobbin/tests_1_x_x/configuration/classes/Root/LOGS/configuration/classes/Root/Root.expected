@@ -1,0 +1,3 @@
+error|Root|Enabled|error abcd
+info|Root|Enabled|info abcd1234
+trace|Root|Enabled|trace $uuid

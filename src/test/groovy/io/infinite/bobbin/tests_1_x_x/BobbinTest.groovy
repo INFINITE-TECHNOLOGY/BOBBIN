@@ -19,7 +19,7 @@ abstract class BobbinTest {
 
     abstract void writeLogs()
 
-    void test() {
+    final void runTest() {
         setup()
         writeLogs()
         assertLogs()
@@ -28,6 +28,7 @@ abstract class BobbinTest {
     abstract void assertLogs()
 
     void assertFile(String fileName, String fileExtensionActual, String fileExtensionExpected) {
+        assert thisClass.getResource(fileName + fileExtensionExpected) != null
         File expectedResultsFile = new File(thisClass.getResource(fileName + fileExtensionExpected).toURI())
         Template expectedResultsTemplate = TestTools.simpleTemplateEngine.createTemplate(expectedResultsFile)
         assert new File("./$fileName" + fileExtensionActual).getText() == expectedResultsTemplate.make(["uuid": uuid]).toString()

@@ -16,7 +16,7 @@ class BaseTest extends BobbinTest {
 
     @Test
     void test() {
-        super.test()
+        super.runTest()
     }
 
     @Override
