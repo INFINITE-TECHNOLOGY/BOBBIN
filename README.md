@@ -1,10 +1,9 @@
 # Infinite Technology ∞ Bobbin
 
-[![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=master)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)
-
-Latest/unstable: [master](https://github.com/INFINITE-TECHNOLOGY/BOBBIN)
-
-Stable: [BOBBIN_1_X_X](https://github.com/INFINITE-TECHNOLOGY/BOBBIN/tree/BOBBIN_1_0_X)
+|Type|Version|Branch|Build|Test Coverage|Documentation Coverage|Code Quality|Bintray|
+|----|-------|------|-----|-------------|----------------------|------------|-------|
+|Unstable|2.0.0-ALPHA|[master](https://github.com/INFINITE-TECHNOLOGY/BOBBIN)|[![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=master)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)|TBD|TBD|TBD|TBD|
+|Stable|1.0.1|[BOBBIN_1_0_X](https://github.com/INFINITE-TECHNOLOGY/BOBBIN/tree/BOBBIN_1_0_X)|[![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=BOBBIN_1_0_X)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)|[![codecov](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/BOBBIN_1_0_X/graphs/badge.svg)](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/BOBBIN_1_0_X/graphs)|TBD|TBD|[ ![Download](https://api.bintray.com/packages/infinite-technology/m2/bobbin/images/download.svg) ](https://bintray.com/infinite-technology/m2/bobbin/_latestVersion)|
 
 Bobbin is a Groovy Slf4j-compatible logger designed for multi-threaded applications.
 
