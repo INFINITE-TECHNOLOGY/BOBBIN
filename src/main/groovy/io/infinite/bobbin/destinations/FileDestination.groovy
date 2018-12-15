@@ -42,8 +42,9 @@ class FileDestination extends Destination {
         } else {
             file = fileMap.get(fileKey)
             if (file.fileName != newFileName) {
+                File fileToZip = file //avoid reassigning variable outside of thread closure
                 Thread.start({
-                    zipAndDelete(file)
+                    zipAndDelete(fileToZip)
                 })
                 file = initFile(newFileName, fileKey)
             }
@@ -90,6 +91,7 @@ class FileDestination extends Destination {
             }
             bufferedInputStream.close()
             zipOutputStream.close()
+            file.writer?.close()
             file.delete()
         }
     }
