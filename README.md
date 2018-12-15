@@ -12,6 +12,16 @@ Bobbin leverages the concept of Logback sifting appender while providing much mo
 References:
 * [Bobbin Documentation](https://github.com/INFINITE-TECHNOLOGY/BOBBIN/wiki)
 
+**IMPORTANT**: "levels" and "classes" scripts in configuration are **cached against message level and class name** respectively.
+
+Documentation updates are pending to outline this.
+
+In 2.x.x there will be added optional "filter" script without caching.
+
+Thus including into "levels" and "classes" any other tokens/runtime variables (like thread name) **will not be evaluated** due to caching of scripts by message level and classname.
+
+The intention of these scripts is to have more flexibility in syntax, but runtime data flexibility is limited due to performance consideration.
+
 **Sample configuration:**
 
 Bobbin.json
