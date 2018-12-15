@@ -1,0 +1,15 @@
+{
+  "levels": "all",
+  "classes": "all",
+  "destinations": [
+    {
+      "name": "io.infinite.bobbin.destinations.FileDestination",
+      "properties": {
+        "fileName": "\"./LOGS/Archiving/Housekeeping/${className}.log\"",
+        "zipFileName": "\"./LOGS/Archiving/Housekeeping/${className}.log.zip\"",
+        "cleanupZipFileName": "\"${origFileName}_previous.zip\""
+      },
+      "format": "\"${level}|${threadName}|${className}|${event.message}\\n\""
+    }
+  ]
+}
