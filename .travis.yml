@@ -2,7 +2,7 @@ language: groovy
 after_failure:
   - ls -lR ./LOGS
   - ls -lR ./build/resources
-  - cat ./LOGS/BaseTest/trace/BaseTest_trace.log
-  - cat ./build/resources/test/LOGS/BaseTest/trace/BaseTest_trace.expected
+  #- cat ./LOGS/BaseTest/trace/BaseTest_trace.log
+  #- cat ./build/resources/test/LOGS/BaseTest/trace/BaseTest_trace.expected
 after_success:
   - bash <(curl -s https://codecov.io/bash)
