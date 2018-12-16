@@ -7,7 +7,7 @@ import java.util.zip.ZipOutputStream
 
 class FileDestination extends Destination {
 
-    static Map<String, File> fileMap = new HashMap<>()
+    Map<String, File> fileMap = new HashMap<>()
 
     String prepareKey() {
         return scriptEngine.eval(destinationConfig.properties.get("fileKey") ?: "\"default\"")
