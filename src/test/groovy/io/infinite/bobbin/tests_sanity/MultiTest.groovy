@@ -1,4 +1,4 @@
-package io.infinite.bobbin
+package io.infinite.bobbin.tests_sanity
 
 import groovy.util.logging.Slf4j
 import org.junit.Test
@@ -8,7 +8,7 @@ class MultiTest {
 
     @Test
     void test() {
-        (0..1000).each {
+        (0..5).each {
             log.debug("Debug $it")
         }
     }

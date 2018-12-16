@@ -1,0 +1,16 @@
+{
+  "levels": "all",
+  "classes": "all",
+  "destinations": [
+    {
+      "name": "io.infinite.bobbin.destinations.FileDestination",
+      "properties": {
+        "fileKey": "className",
+        "fileName": "\"./LOGS/Archiving/Disabled/${className}.log\"",
+        "zipFileName": "\"./LOGS/Archiving/Disabled/${className}.log.zip\"",
+        "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
+      },
+      "format": "\"${level}|${threadName}|${className}|${event.message}\\n\""
+    }
+  ]
+}

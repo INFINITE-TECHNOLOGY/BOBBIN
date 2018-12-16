@@ -9,10 +9,11 @@ plugins {
     id "com.jfrog.bintray" version "1.8.4"
     id "com.jfrog.artifactory" version "4.8.1"
     id "idea"
+    id "jacoco"
 }
 sourceCompatibility = 1.7
 group = "io.infinite"
-version = "1.1.0-SNAPSHOT"
+version = "1.0.1"
 description = "Groovy Slf4j logger"
 wrapper {
     gradleVersion = "5.0"
@@ -38,7 +39,7 @@ ext {
     theTitle = "Groovy Slf4j logger"
     titleForDocumentation = archivesBaseName + " " + version
     packageTitle = group
-    description = description
+    description = "Groovy Slf4j logger"
 }
 publishing {
     publications {
@@ -93,3 +94,16 @@ artifactory {
     }
     clientConfig.info.setBuildNumber(System.currentTimeMillis().toString())
 }
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+}
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
+check.dependsOn jacocoTestReport
