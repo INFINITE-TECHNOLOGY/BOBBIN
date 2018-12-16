@@ -1,0 +1,5 @@
+error|MDCTest|io.infinite.bobbin.tests_2_x_x.MDC.MDCTest|error abcd|$dynamicValue
+warn|MDCTest|io.infinite.bobbin.tests_2_x_x.MDC.MDCTest|warn 1234|$dynamicValue
+info|MDCTest|io.infinite.bobbin.tests_2_x_x.MDC.MDCTest|info abcd1234|$dynamicValue
+debug|MDCTest|io.infinite.bobbin.tests_2_x_x.MDC.MDCTest|debug $uuid|$dynamicValue
+trace|MDCTest|io.infinite.bobbin.tests_2_x_x.MDC.MDCTest|trace $uuid|$dynamicValue
