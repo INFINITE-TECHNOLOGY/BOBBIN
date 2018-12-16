@@ -1,12 +1,12 @@
 package io.infinite.bobbin.tests_1_x_x.Archiving.Housekeeping
 
-import io.infinite.bobbin.tests_1_x_x.BobbinTest
+import io.infinite.bobbin.tests_1_x_x.BobbinTest_1_x_x
 import org.junit.Before
 import org.junit.Test
 
 import java.util.zip.ZipFile
 
-class Housekeeping extends BobbinTest {
+class Housekeeping extends BobbinTest_1_x_x {
 
     @Before
     void init() {

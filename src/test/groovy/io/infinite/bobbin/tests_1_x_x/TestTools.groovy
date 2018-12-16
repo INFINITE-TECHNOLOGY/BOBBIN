@@ -1,12 +1,13 @@
-package io.infinite.bobbin
+package io.infinite.bobbin.tests_1_x_x
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.text.SimpleTemplateEngine
+import io.infinite.bobbin.Bobbin
+import io.infinite.bobbin.BobbinAdapter
+import io.infinite.bobbin.BobbinConfig
+import io.infinite.bobbin.factories.BobbinFactory
 import org.slf4j.Logger
 import org.slf4j.helpers.Util
-
-import java.security.AccessController
-import java.security.PrivilegedAction
 
 class TestTools {
 
@@ -20,7 +21,7 @@ class TestTools {
 
     Logger getTestLogger(String name) {
         forceBobbinInit()
-        return new BobbinNameAdapter(name)
+        return new BobbinAdapter(name)
     }
 
     void forceBobbinInit() {

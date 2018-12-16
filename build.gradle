@@ -13,7 +13,7 @@ plugins {
 }
 sourceCompatibility = 1.7
 group = "io.infinite"
-version = "1.0.1"
+version = "2.0.0-SNAPSHOT"
 description = "Groovy Slf4j logger"
 wrapper {
     gradleVersion = "5.0"

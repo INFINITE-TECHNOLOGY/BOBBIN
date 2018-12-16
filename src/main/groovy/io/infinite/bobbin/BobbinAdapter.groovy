@@ -1,8 +1,10 @@
 package io.infinite.bobbin
 
+import io.infinite.bobbin.factories.BobbinFactory
 import org.slf4j.helpers.MarkerIgnoringBase
+import org.slf4j.spi.MDCAdapter
 
-class BobbinNameAdapter extends MarkerIgnoringBase {
+class BobbinAdapter extends MarkerIgnoringBase implements MDCAdapter {
 
     BobbinFactory bobbinFactory = new BobbinFactory()
 
@@ -12,7 +14,7 @@ class BobbinNameAdapter extends MarkerIgnoringBase {
 
     String className
 
-    BobbinNameAdapter(className) {
+    BobbinAdapter(className) {
         this.className = className
     }
 
@@ -164,5 +166,35 @@ class BobbinNameAdapter extends MarkerIgnoringBase {
     @Override
     void error(String msg, Throwable t) {
         bobbin().error(className, msg, t)
+    }
+
+    @Override
+    void put(String key, String val) {
+        bobbin().getContextMap().put(key, val)
+    }
+
+    @Override
+    String get(String key) {
+        return bobbin().getContextMap().get(key)
+    }
+
+    @Override
+    void remove(String key) {
+        bobbin().getContextMap().remove(key)
+    }
+
+    @Override
+    void clear() {
+        bobbin().getContextMap().clear()
+    }
+
+    @Override
+    Map<String, String> getCopyOfContextMap() {
+        return bobbin().getContextMap().clone() as Map<String, String>
+    }
+
+    @Override
+    void setContextMap(Map<String, String> contextMap) {
+        bobbin().setContextMap(contextMap)
     }
 }

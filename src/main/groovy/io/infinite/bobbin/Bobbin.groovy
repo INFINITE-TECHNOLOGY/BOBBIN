@@ -12,13 +12,13 @@ class Bobbin {
 
     BobbinConfig bobbinConfig
 
-    Map<String, Object> contextMap = [:]
+    Map<String, String> contextMap = [:]
 
     Object get(String key) {
         return contextMap.get(key)
     }
 
-    void set(String key, Object value) {
+    void set(String key, String value) {
         contextMap.put(key, value)
     }
 

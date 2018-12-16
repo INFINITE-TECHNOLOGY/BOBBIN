@@ -1,0 +1,15 @@
+{
+  "levels": "all",
+  "classes": "all",
+  "destinations": [
+    {
+      "name": "io.infinite.bobbin.destinations.FileDestination",
+      "properties": {
+        "fileName": "\"./LOGS/MDC/${MDC.dynamicValue}.log\"",
+        "zipFileName": "\"./LOGS/MDC/${MDC.dynamicValue}.log.zip\"",
+        "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
+      },
+      "format": "\"${level}|${threadName}|${className}|${event.message}|${MDC.dynamicValue}\\n\""
+    }
+  ]
+}

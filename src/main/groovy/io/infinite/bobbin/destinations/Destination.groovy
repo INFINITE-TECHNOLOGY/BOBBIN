@@ -4,6 +4,7 @@ import groovy.transform.Memoized
 import io.infinite.bobbin.BobbinConfig
 import io.infinite.bobbin.Event
 import io.infinite.bobbin.Level
+import org.slf4j.MDC
 
 import javax.script.ScriptEngine
 import java.text.SimpleDateFormat
@@ -22,6 +23,7 @@ abstract class Destination {
         scriptEngine.put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
         scriptEngine.put("level", event.getLevel().value())
         scriptEngine.put("className", event.getClassName())
+        scriptEngine.put("MDC", MDC)
         if (!needsLogging(event.getLevel(), event.getClassName())) {
             return
         }

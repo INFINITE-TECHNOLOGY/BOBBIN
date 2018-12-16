@@ -1,20 +1,23 @@
-package io.infinite.bobbin.tests_1_x_x
+package io.infinite.bobbin.tests_2_x_x
 
+import groovy.text.SimpleTemplateEngine
 import groovy.text.Template
-import io.infinite.bobbin.BobbinNameAdapter
-import io.infinite.bobbin.TestTools
+import io.infinite.bobbin.BobbinAdapter
+import org.junit.Rule
+import org.junit.rules.TemporaryFolder
 
-abstract class BobbinTest {
+abstract class BobbinTest_2_x_x {
 
+    static SimpleTemplateEngine simpleTemplateEngine = new SimpleTemplateEngine()
     String uuid = UUID.randomUUID().toString()
     Class thisClass = this.getClass()
     String className = thisClass.getSimpleName()
     String canonicalName = thisClass.getCanonicalName()
-    BobbinNameAdapter bobbinNameAdapter
+    BobbinAdapter bobbinNameAdapter
 
     final void setup() {
         Thread.currentThread().setName(this.getClass().getSimpleName())
-        bobbinNameAdapter = new TestTools(thisClass.getResource("${className}.json").toURI()).getTestLogger(canonicalName) as BobbinNameAdapter
+        bobbinNameAdapter = new TestBobbinFactory(thisClass).getLogger(canonicalName) as BobbinAdapter
     }
 
     abstract void writeLogs()
@@ -30,7 +33,7 @@ abstract class BobbinTest {
     void assertFile(String fileName, String fileExtensionActual, String fileExtensionExpected) {
         assert thisClass.getResource(fileName + fileExtensionExpected) != null
         File expectedResultsFile = new File(thisClass.getResource(fileName + fileExtensionExpected).toURI())
-        Template expectedResultsTemplate = TestTools.simpleTemplateEngine.createTemplate(expectedResultsFile)
+        Template expectedResultsTemplate = simpleTemplateEngine.createTemplate(expectedResultsFile)
         assert new File("./$fileName" + fileExtensionActual).getText() == expectedResultsTemplate.make(["uuid": uuid]).toString()
     }
 

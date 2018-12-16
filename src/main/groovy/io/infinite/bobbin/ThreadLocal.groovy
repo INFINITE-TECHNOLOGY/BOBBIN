@@ -12,12 +12,16 @@ class ThreadLocal {
 
     public static ConcurrentHashMap<Thread, Object> objectsByThread = new ConcurrentHashMap<Thread, Object>()
 
-    static void set(Object iObject) {
+    void set(Object iObject) {
         objectsByThread.put(Thread.currentThread(), iObject)
     }
 
-    static Object get() {
+    Object get() {
         objectsByThread.get(Thread.currentThread())
+    }
+
+    void clear() {
+        objectsByThread.clear()
     }
 
 }

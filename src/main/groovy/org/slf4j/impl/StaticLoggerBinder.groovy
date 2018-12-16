@@ -1,6 +1,6 @@
 package org.slf4j.impl
 
-import io.infinite.bobbin.BobbinFactory
+import io.infinite.bobbin.factories.BobbinFactory
 import org.slf4j.ILoggerFactory
 import org.slf4j.spi.LoggerFactoryBinder
 

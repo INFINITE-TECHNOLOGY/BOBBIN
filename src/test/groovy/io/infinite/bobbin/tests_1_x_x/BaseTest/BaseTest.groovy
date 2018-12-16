@@ -1,9 +1,9 @@
 package io.infinite.bobbin.tests_1_x_x.BaseTest
 
-import io.infinite.bobbin.tests_1_x_x.BobbinTest
+import io.infinite.bobbin.tests_1_x_x.BobbinTest_1_x_x
 import org.junit.Test
 
-class BaseTest extends BobbinTest {
+class BaseTest extends BobbinTest_1_x_x {
 
     @Override
     void writeLogs() {

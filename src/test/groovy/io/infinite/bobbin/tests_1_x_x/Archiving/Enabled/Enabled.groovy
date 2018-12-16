@@ -1,13 +1,11 @@
 package io.infinite.bobbin.tests_1_x_x.Archiving.Enabled
 
-import io.infinite.bobbin.tests_1_x_x.BobbinTest
+import io.infinite.bobbin.tests_1_x_x.BobbinTest_1_x_x
 import org.junit.Test
 
-import java.nio.file.Files
-import java.nio.file.Paths
 import java.util.zip.ZipFile
 
-class Enabled extends BobbinTest {
+class Enabled extends BobbinTest_1_x_x {
 
     @Override
     void writeLogs() {
