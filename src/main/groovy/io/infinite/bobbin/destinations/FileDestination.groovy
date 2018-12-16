@@ -9,7 +9,7 @@ import java.util.zip.ZipOutputStream
 
 class FileDestination extends Destination {
 
-    static Map<String, File> fileMap = new HashMap<>()
+    Map<String, File> fileMap = new HashMap<>()
 
     FileDestination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig, ScriptEngine scriptEngine) {
         super(destinationConfig, parentBobbinConfig, scriptEngine)
