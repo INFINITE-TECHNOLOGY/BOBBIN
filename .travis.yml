@@ -6,4 +6,4 @@ after_failure:
   #- cat ./build/resources/test/LOGS/BaseTest/trace/BaseTest_trace.expected
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - gradlew artifactoryPublish
+  - ./gradlew artifactoryPublish -Dbintray.user=$BINTRAY_USER -Dbintray.key=$BINTRAY_KEY -Dbuild.number=$TRAVIS_BUILD_NUMBER

@@ -80,8 +80,8 @@ artifactory {
     publish {
         repository {
             repoKey = 'oss-snapshot-local'
-            username = System.getProperty("bintrayuser")
-            password = System.getProperty("bintraypassword")
+            username = System.getProperty('bintray.user')
+            password = System.getProperty('bintray.key')
         }
         defaults {
             publications('groovyMaven')
@@ -92,7 +92,7 @@ artifactory {
     resolve {
         repoKey = 'jcenter'
     }
-    clientConfig.info.setBuildNumber(System.currentTimeMillis().toString())
+    clientConfig.info.setBuildNumber(System.getProperty('build.number'))
 }
 test {
     testLogging {

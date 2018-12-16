@@ -3,13 +3,12 @@ package io.infinite.bobbin.tests_2_x_x
 import groovy.text.SimpleTemplateEngine
 import groovy.text.Template
 import io.infinite.bobbin.BobbinAdapter
-import org.junit.Rule
-import org.junit.rules.TemporaryFolder
 
 abstract class BobbinTest_2_x_x {
 
     static SimpleTemplateEngine simpleTemplateEngine = new SimpleTemplateEngine()
     String uuid = UUID.randomUUID().toString()
+    String dynamicValue = System.currentTimeMillis().toString()
     Class thisClass = this.getClass()
     String className = thisClass.getSimpleName()
     String canonicalName = thisClass.getCanonicalName()
@@ -30,11 +29,11 @@ abstract class BobbinTest_2_x_x {
 
     abstract void assertLogs()
 
-    void assertFile(String fileName, String fileExtensionActual, String fileExtensionExpected) {
-        assert thisClass.getResource(fileName + fileExtensionExpected) != null
-        File expectedResultsFile = new File(thisClass.getResource(fileName + fileExtensionExpected).toURI())
+    void assertFile(String actualFileName, String expectedFileName) {
+        assert thisClass.getResource(expectedFileName) != null
+        File expectedResultsFile = new File(thisClass.getResource(expectedFileName).toURI())
         Template expectedResultsTemplate = simpleTemplateEngine.createTemplate(expectedResultsFile)
-        assert new File("./$fileName" + fileExtensionActual).getText() == expectedResultsTemplate.make(["uuid": uuid]).toString()
+        assert new File("./" + actualFileName).getText() == expectedResultsTemplate.make(["uuid": uuid, "dynamicValue": dynamicValue]).toString()
     }
 
 }
