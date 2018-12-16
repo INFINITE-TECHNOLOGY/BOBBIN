@@ -80,7 +80,7 @@ class FileDestination extends Destination {
         println("Bobbin: application working dir: " + new File("./").getCanonicalPath())
     }
 
-    static void zipAndDelete(File file) {
+    void zipAndDelete(File file) {
         final Integer BUFFER_LENGTH = 2048
         if (file.isFile()) {
             new File(file.zipFileName as String).getParentFile().mkdirs()

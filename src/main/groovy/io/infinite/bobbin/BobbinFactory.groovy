@@ -12,14 +12,18 @@ class BobbinFactory implements ILoggerFactory {
 
     static ThreadLocal bobbinThreadLocal = new ThreadLocal()
 
+    ThreadLocal getBobbinThreadLocal() {
+        return bobbinThreadLocal
+    }
+
     @Override
     Logger getLogger(String name) {
         initBobbinIfNeeded()
         return new BobbinNameAdapter(name)
     }
 
-    static initBobbinIfNeeded() {
-        Bobbin bobbin = bobbinThreadLocal.get() as Bobbin
+    void initBobbinIfNeeded() {
+        Bobbin bobbin = getBobbinThreadLocal().get() as Bobbin
         if (bobbin == null) {
             URL url = AccessController.doPrivileged(new PrivilegedAction<URL>() {
                 URL run() {
@@ -40,17 +44,17 @@ class BobbinFactory implements ILoggerFactory {
             if (file.exists()) {
                 BobbinConfig bobbinConfig = new ObjectMapper().readValue(file.getText(), BobbinConfig.class)
                 bobbin = new Bobbin(bobbinConfig)
-                bobbinThreadLocal.set(bobbin)
+                getBobbinThreadLocal().set(bobbin)
             } else {
                 Util.report("Missing Bobbin.json at classpath")
-                bobbinThreadLocal.set(new Bobbin(new BobbinConfig()))
+                getBobbinThreadLocal().set(new Bobbin(new BobbinConfig()))
             }
         }
     }
 
-    static Bobbin getBobbin() {
+    Bobbin getBobbin() {
         initBobbinIfNeeded()
-        return bobbinThreadLocal.get() as Bobbin
+        return getBobbinThreadLocal().get() as Bobbin
     }
 
 }
