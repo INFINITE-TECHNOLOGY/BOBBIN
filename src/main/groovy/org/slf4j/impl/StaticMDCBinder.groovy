@@ -1,6 +1,6 @@
 package org.slf4j.impl
 
-
+import io.infinite.bobbin.BobbinAdapter
 import org.slf4j.helpers.BasicMDCAdapter
 import org.slf4j.spi.MDCAdapter
 
@@ -12,10 +12,10 @@ public class StaticMDCBinder {
     }
 
     public MDCAdapter getMDCA() {
-        return new BasicMDCAdapter()
+        return new BobbinAdapter()
     }
 
     public String getMDCAdapterClassStr() {
-        return BasicMDCAdapter.class.getName()
+        return BobbinAdapter.class.getName()
     }
 }
