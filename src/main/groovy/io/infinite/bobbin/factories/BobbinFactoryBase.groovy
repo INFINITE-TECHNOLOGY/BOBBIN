@@ -9,9 +9,9 @@ class BobbinFactoryBase extends BobbinFactoryAbstract{
 
     @Override
     BobbinConfig getBobbinConf() {
-        Util.report("Using Bobbin default configuration:")
+        report("Using Bobbin default configuration:")
         BobbinConfig bobbinConfig = new BobbinConfig()//todo
-        Util.report(new ObjectMapper().writeValueAsString(bobbinConfig))
+        report(new ObjectMapper().writeValueAsString(bobbinConfig))
         return bobbinConfig
     }
 }

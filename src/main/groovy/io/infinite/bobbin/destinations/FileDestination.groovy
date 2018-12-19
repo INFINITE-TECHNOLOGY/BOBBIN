@@ -2,6 +2,7 @@ package io.infinite.bobbin.destinations
 
 import io.infinite.bobbin.BobbinConfig
 import io.infinite.bobbin.Event
+import org.slf4j.helpers.Util
 
 import javax.script.ScriptEngine
 import java.util.zip.ZipEntry
@@ -77,7 +78,7 @@ class FileDestination extends Destination {
         File.getMetaClass().fileName = null
         File.getMetaClass().zipFileName = null
         File.getMetaClass().writer = null
-        println("Bobbin: application working dir: " + new File("./").getCanonicalPath())
+        Util.report(Thread.currentThread().getName().padRight(50) + ":" + "Bobbin: application working dir: " + new File("./").getCanonicalPath())
     }
 
     void zipAndDelete(File file) {

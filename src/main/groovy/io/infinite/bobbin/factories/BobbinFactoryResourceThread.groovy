@@ -11,23 +11,23 @@ abstract class BobbinFactoryResourceThread extends BobbinFactoryResourceSystem {
 
     @Override
     BobbinConfig getBobbinConf() {
-        Util.report("Searching for Bobbin config in application resource files using Thread classloader.")
+        report("Searching for Bobbin config in application resource files using Thread classloader.")
         URL url = AccessController.doPrivileged(new PrivilegedAction<URL>() {
             URL run() {
                 return getResource()
             }
         })
         if (url != null) {
-            Util.report("Found.")
+            report("Found.")
             return new ObjectMapper().readValue(new File(url.toURI()).getText(), BobbinConfig.class)
         } else {
-            Util.report("Not found.")
+            report("Not found.")
             return super.getBobbinConf()
         }
     }
 
     URL getResource() {
-        Util.report("(Resource name: ${getConfName()})")
+        report("(Resource name: ${getConfName()})")
         ClassLoader classLoader = getClassLoader()
         if (classLoader != null) {
             return classLoader.getResource(getConfName())
@@ -37,7 +37,7 @@ abstract class BobbinFactoryResourceThread extends BobbinFactoryResourceSystem {
     }
 
     ClassLoader getClassLoader() {
-        Util.report("Using thread classloader")
+        report("Using thread classloader")
         return Thread.currentThread().getContextClassLoader()
     }
 
