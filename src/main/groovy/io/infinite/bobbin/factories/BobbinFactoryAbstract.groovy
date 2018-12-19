@@ -35,7 +35,7 @@ abstract class BobbinFactoryAbstract implements ILoggerFactory {
     }
 
     void report(String msg) {
-        Util.report(Thread.currentThread().getName().padRight(50) + " Bobbin: " + msg)
+        Util.report(" Bobbin: "+ Thread.currentThread().getName().padRight(50) + msg)
     }
 
 }
