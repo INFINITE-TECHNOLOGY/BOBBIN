@@ -175,7 +175,7 @@ class BobbinAdapter extends MarkerIgnoringBase implements MDCAdapter {
 
     @Override
     String get(String key) {
-        return bobbin().getContextMap().get(key)
+        return bobbin().getContextMap().get(key) ?: ""
     }
 
     @Override
