@@ -1,6 +1,6 @@
 package io.infinite.bobbin.factories
 
-import com.fasterxml.jackson.databind.ObjectMapper
+
 import io.infinite.bobbin.Bobbin
 import io.infinite.bobbin.BobbinAdapter
 import io.infinite.bobbin.BobbinConfig
@@ -35,7 +35,7 @@ abstract class BobbinFactoryAbstract implements ILoggerFactory {
     }
 
     void report(String msg) {
-        Util.report(" Bobbin: "+ Thread.currentThread().getName().padRight(50) + msg)
+        Util.report("Bobbin: " + Thread.currentThread().getName().padRight(50) + msg)
     }
 
 }
