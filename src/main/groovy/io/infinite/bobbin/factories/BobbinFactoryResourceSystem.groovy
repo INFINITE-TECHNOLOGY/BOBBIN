@@ -18,7 +18,7 @@ abstract class BobbinFactoryResourceSystem extends BobbinFactoryFile {
             }
         })
         if (url != null) {
-            report("Found.")
+            report("Found: " + new File(url.toURI()).getCanonicalPath())
             return new ObjectMapper().readValue(new File(url.toURI()).getText(), BobbinConfig.class)
         } else {
             report("Not found.")

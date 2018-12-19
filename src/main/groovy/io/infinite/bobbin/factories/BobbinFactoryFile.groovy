@@ -11,7 +11,7 @@ class BobbinFactoryFile extends BobbinFactoryBase {
         report("Searching for Bobbin config in: " + getConfPath() + " (full path: ${new File(getConfPath()).getCanonicalPath()})")
         File file = new File(getConfPath())
         if (file.exists()) {
-            report("Found")
+            report("Found: " + file.getCanonicalPath())
             return new ObjectMapper().readValue(file.getText(), BobbinConfig.class)
         } else {
             report("Not found.")
