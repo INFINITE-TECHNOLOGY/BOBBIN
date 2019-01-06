@@ -1,6 +1,6 @@
 package io.infinite.bobbin
 
-import io.infinite.bobbin.factories.BobbinFactory
+
 import org.slf4j.helpers.MarkerIgnoringBase
 import org.slf4j.spi.MDCAdapter
 
@@ -175,7 +175,7 @@ class BobbinAdapter extends MarkerIgnoringBase implements MDCAdapter {
 
     @Override
     String get(String key) {
-        return bobbin().getContextMap().get(key) ?: ""
+        return bobbin().getContextMap().get(key)
     }
 
     @Override

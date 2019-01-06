@@ -20,6 +20,7 @@ wrapper {
 }
 repositories {
     jcenter()
+    mavenLocal()
 }
 sourceSets {
     main.groovy.srcDirs = ["src/main/groovy"]
@@ -29,6 +30,7 @@ dependencies {
     compile "org.codehaus.groovy:groovy-all:2.5.4"
     compile "org.slf4j:slf4j-api:1.7.25"
     compile "com.fasterxml.jackson.core:jackson-databind:2.9.7"
+    compile "io.infinite:supplies:1.0.0"
     testCompile "junit:junit:4.12"
 }
 task sourceJar(type: Jar) {
