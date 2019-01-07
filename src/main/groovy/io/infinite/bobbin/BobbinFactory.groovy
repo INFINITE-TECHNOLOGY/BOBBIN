@@ -1,7 +1,7 @@
 package io.infinite.bobbin
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.infinite.supplies.ast.cache.Cache
+import io.infinite.supplies.ast.cache.Static
 import io.infinite.supplies.conf.ResourceLookupThread
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
@@ -10,7 +10,7 @@ class BobbinFactory implements ILoggerFactory {
 
     ThreadLocal bobbinThreadLocal = new ThreadLocal()
 
-    @Cache
+    @Static
     final BobbinConfig bobbinConfig = initBobbinConfig()
 
     BobbinConfig getBobbinConfig() {

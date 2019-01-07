@@ -24,7 +24,6 @@ class MDCTest extends BobbinTest_2_x_x {
 
     @Override
     void assertLogs() {
-        simpleTemplateEngine
         assertFile("LOGS/MDC/${dynamicValue}.log", "LOGS/MDC/MDC.expected")
     }
 }

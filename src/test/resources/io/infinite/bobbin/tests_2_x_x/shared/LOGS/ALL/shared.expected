@@ -1,0 +1,6 @@
+error|SharedTest|io.infinite.bobbin.tests_2_x_x.shared.SharedTest|Parent Thread error abcd$uuid
+warn|SharedTest|io.infinite.bobbin.tests_2_x_x.shared.SharedTest|Parent Thread warn 1234$uuid
+error|SharedTest|io.infinite.bobbin.tests_2_x_x.shared.SharedTest|Thread 1 error abcd$uuid
+warn|SharedTest|io.infinite.bobbin.tests_2_x_x.shared.SharedTest|Thread 1 warn 1234$uuid
+error|SharedTest|io.infinite.bobbin.tests_2_x_x.shared.SharedTest|Thread 2 error abcd$uuid
+warn|SharedTest|io.infinite.bobbin.tests_2_x_x.shared.SharedTest|Thread 2 warn 1234$uuid

@@ -23,7 +23,7 @@ class TestBobbinFactory extends BobbinFactory {
     }
 
     BobbinConfig getBobbinConfig() {
-        Util.report("Using test config: " + resolveName())
+        Util.report("Using test config: " + resolveName() + ".json")
         BobbinConfig bobbinConfig = new ObjectMapper().readValue(
                 new ResourceLookupThread("Bobbin", resolveName() + ".json", true).getResourceAsFile()
                 , BobbinConfig.class
