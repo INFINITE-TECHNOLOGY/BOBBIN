@@ -30,6 +30,7 @@ class SharedTest extends BobbinTest_2_x_x {
         while (!TestSharedFileDestination.getInstance().getEventQueueRunnable().getEventQueue().isEmpty()) {
             Thread.sleep(200)
         }
+        assertFile("LOGS/ALL/WARNINGS_AND_ERRORS_${new SimpleDateFormat("yyyy-MM-dd").format(testDate)}.log", "LOGS/ALL/shared_main.expected")
         Bobbin testBobbin = bobbinNameAdapter.bobbinFactory.bobbinThreadLocal.get() as Bobbin
         Thread.start {
             TestSharedFileDestination.getInstance().getEventQueueRunnable().setFileDestination(new FileDestination(TestSharedFileDestination.getInstance().getDestinationConfig(), TestSharedFileDestination.getInstance().getParentBobbinConfig()))
@@ -43,6 +44,7 @@ class SharedTest extends BobbinTest_2_x_x {
             while (!TestSharedFileDestination.getInstance().getEventQueueRunnable().getEventQueue().isEmpty()) {
                 Thread.sleep(200)
             }
+            assertFile("LOGS/ALL/WARNINGS_AND_ERRORS_${new SimpleDateFormat("yyyy-MM-dd").format(testDate)}.log", "LOGS/ALL/shared_1.expected")
         }.join()
         Thread.start {
             TestSharedFileDestination.getInstance().getEventQueueRunnable().setFileDestination(new FileDestination(TestSharedFileDestination.getInstance().getDestinationConfig(), TestSharedFileDestination.getInstance().getParentBobbinConfig()))
