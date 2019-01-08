@@ -1,0 +1,3 @@
+info|SharedArchiving|LOG|i abcd1234
+debug|SharedArchiving|LOG|d $uuid
+trace|SharedArchiving|LOG|t $uuid

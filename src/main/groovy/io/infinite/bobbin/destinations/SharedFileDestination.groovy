@@ -5,6 +5,7 @@ import io.infinite.bobbin.Event
 import io.infinite.supplies.ast.cache.Static
 
 import javax.script.ScriptEngine
+import javax.script.ScriptEngineManager
 import java.util.concurrent.LinkedBlockingQueue
 
 class SharedFileDestination extends Destination {
@@ -18,7 +19,7 @@ class SharedFileDestination extends Destination {
         FileDestination fileDestination
 
         EventQueueRunnable(SharedFileDestination sharedFileDestination) {
-            fileDestination = new FileDestination(sharedFileDestination.getDestinationConfig(), sharedFileDestination.getParentBobbinConfig(), sharedFileDestination.getScriptEngine())
+            setFileDestination(new FileDestination(sharedFileDestination.getDestinationConfig(), sharedFileDestination.getParentBobbinConfig()))
             start()
         }
 
@@ -26,9 +27,15 @@ class SharedFileDestination extends Destination {
         void run() {
             setName("Bobbin Async Logger")
             while (true) {
+                while (!getEventQueue().isEmpty()) {
+                    Event event = getEventQueue().peek()
+                    getFileDestination().commonBinding(event)
+                    getFileDestination().store(event)
+                    getEventQueue().poll()
+                }
                 synchronized (getEventQueueRunnable()) {
-                    while (!eventQueue.isEmpty()) {
-                        fileDestination.store(eventQueue.poll())
+                    if (!getEventQueue().isEmpty()) {
+                        continue
                     }
                     getEventQueueRunnable().wait()
                 }
@@ -40,6 +47,10 @@ class SharedFileDestination extends Destination {
     @Static
     final EventQueueRunnable eventQueueRunnable = new EventQueueRunnable(this)
 
+    EventQueueRunnable getEventQueueRunnable() {
+        return eventQueueRunnable
+    }
+
     @Override
     protected void store(Event event) {
         synchronized (getEventQueueRunnable()) {
@@ -48,8 +59,8 @@ class SharedFileDestination extends Destination {
         }
     }
 
-    SharedFileDestination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig, ScriptEngine scriptEngine) {
-        super(destinationConfig, parentBobbinConfig, scriptEngine)
+    SharedFileDestination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig) {
+        super(destinationConfig, parentBobbinConfig)
     }
 
 }

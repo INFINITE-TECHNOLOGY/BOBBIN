@@ -31,6 +31,7 @@ class Enabled extends BobbinTest_1_x_x {
             assert zipFile.getInputStream(it).getText() == "error|Enabled|ZIP|error abcd\nwarn|Enabled|ZIP|warn 1234\n"
         }
         assert !new File("./LOGS/Archiving/Enabled/ZIP.log").exists()
+        assert !new File("./LOGS/Archiving/Enabled/LOG.log.zip").exists()
     }
 
 }

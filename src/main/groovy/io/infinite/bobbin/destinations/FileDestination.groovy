@@ -12,8 +12,8 @@ class FileDestination extends Destination {
 
     Map<String, File> fileMap = new HashMap<>()
 
-    FileDestination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig, ScriptEngine scriptEngine) {
-        super(destinationConfig, parentBobbinConfig, scriptEngine)
+    FileDestination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig) {
+        super(destinationConfig, parentBobbinConfig)
     }
 
     String prepareKey() {
@@ -24,7 +24,8 @@ class FileDestination extends Destination {
         return scriptEngine.eval(destinationConfig.properties.get("fileName"))
     }
 
-    String prepareZipFileName() {
+    String prepareZipFileName(String origFileName) {
+        scriptEngine.put("origFileName", origFileName)
         return scriptEngine.eval(destinationConfig.properties.get("zipFileName"))
     }
 
@@ -66,7 +67,7 @@ class FileDestination extends Destination {
             zipAndDelete(file)
             file = new File(fileName)
         }
-        file.zipFileName = prepareZipFileName()
+        file.zipFileName = prepareZipFileName(fileName)
         file.fileName = fileName
         file.getParentFile().mkdirs()
         file.writer = new FileWriter(file, true)

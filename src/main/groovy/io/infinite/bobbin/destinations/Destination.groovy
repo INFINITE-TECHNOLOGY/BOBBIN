@@ -7,6 +7,7 @@ import io.infinite.bobbin.Level
 import org.slf4j.MDC
 
 import javax.script.ScriptEngine
+import javax.script.ScriptEngineManager
 import java.text.SimpleDateFormat
 
 abstract class Destination {
@@ -15,15 +16,22 @@ abstract class Destination {
 
     BobbinConfig parentBobbinConfig
 
-    ScriptEngine scriptEngine
+    ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("groovy")
+
+    void commonBinding(Event event) {
+        getScriptEngine().put("event", event)
+        getScriptEngine().put("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
+        getScriptEngine().put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
+        getScriptEngine().put("level", event.getLevel().value())
+        getScriptEngine().put("className", event.getClassName())
+        getScriptEngine().put("MDC", MDC)
+        getScriptEngine().put("all", true)
+        getScriptEngine().put("none", false)
+        getScriptEngine().put("threadName", Thread.currentThread().getName())
+    }
 
     final void log(Event event) {
-        scriptEngine.put("event", event)
-        scriptEngine.put("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
-        scriptEngine.put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
-        scriptEngine.put("level", event.getLevel().value())
-        scriptEngine.put("className", event.getClassName())
-        scriptEngine.put("MDC", MDC)
+        commonBinding(event)
         if (!needsLogging(event.getLevel(), event.getClassName())) {
             return
         }
@@ -44,10 +52,9 @@ abstract class Destination {
         return event
     }
 
-    Destination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig, ScriptEngine scriptEngine) {
+    Destination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig) {
         this.destinationConfig = destinationConfig
         this.parentBobbinConfig = parentBobbinConfig
-        this.scriptEngine = scriptEngine
     }
 
 }

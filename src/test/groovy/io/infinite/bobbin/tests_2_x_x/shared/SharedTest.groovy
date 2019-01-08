@@ -1,6 +1,7 @@
 package io.infinite.bobbin.tests_2_x_x.shared
 
 import io.infinite.bobbin.Bobbin
+import io.infinite.bobbin.destinations.FileDestination
 import io.infinite.bobbin.destinations.SharedFileDestination
 import io.infinite.bobbin.tests_2_x_x.BobbinTest_2_x_x
 import io.infinite.bobbin.tests_2_x_x.TestSharedFileDestination
@@ -20,6 +21,7 @@ class SharedTest extends BobbinTest_2_x_x {
 
     @Override
     void writeLogs() {
+        TestSharedFileDestination.getInstance().getEventQueueRunnable().setFileDestination(new FileDestination(TestSharedFileDestination.getInstance().getDestinationConfig(), TestSharedFileDestination.getInstance().getParentBobbinConfig()))
         bobbinNameAdapter.error("Parent Thread error abcd" + uuid)
         bobbinNameAdapter.warn("Parent Thread warn 1234" + uuid)
         bobbinNameAdapter.info("Parent Thread info abcd1234" + uuid)
@@ -27,6 +29,8 @@ class SharedTest extends BobbinTest_2_x_x {
         bobbinNameAdapter.trace("Parent Thread trace " + uuid)
         Bobbin testBobbin = bobbinNameAdapter.bobbinFactory.bobbinThreadLocal.get() as Bobbin
         Thread.start {
+            TestSharedFileDestination.getInstance().getEventQueueRunnable().setFileDestination(new FileDestination(TestSharedFileDestination.getInstance().getDestinationConfig(), TestSharedFileDestination.getInstance().getParentBobbinConfig()))
+            Thread.currentThread().setName("test thread 1")
             bobbinNameAdapter.bobbinFactory.bobbinThreadLocal.set(testBobbin)
             bobbinNameAdapter.error("Thread 1 error abcd" + uuid)
             bobbinNameAdapter.warn("Thread 1 warn 1234" + uuid)
@@ -35,6 +39,8 @@ class SharedTest extends BobbinTest_2_x_x {
             bobbinNameAdapter.trace("Thread 1 trace " + uuid)
         }.join()
         Thread.start {
+            TestSharedFileDestination.getInstance().getEventQueueRunnable().setFileDestination(new FileDestination(TestSharedFileDestination.getInstance().getDestinationConfig(), TestSharedFileDestination.getInstance().getParentBobbinConfig()))
+            Thread.currentThread().setName("test thread 2")
             bobbinNameAdapter.bobbinFactory.bobbinThreadLocal.set(testBobbin)
             bobbinNameAdapter.error("Thread 2 error abcd" + uuid)
             bobbinNameAdapter.warn("Thread 2 warn 1234" + uuid)

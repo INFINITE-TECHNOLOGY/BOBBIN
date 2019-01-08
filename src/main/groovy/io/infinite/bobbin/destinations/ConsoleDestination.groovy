@@ -7,8 +7,8 @@ import javax.script.ScriptEngine
 
 class ConsoleDestination extends Destination {
 
-    ConsoleDestination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig, ScriptEngine scriptEngine) {
-        super(destinationConfig, parentBobbinConfig, scriptEngine)
+    ConsoleDestination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig) {
+        super(destinationConfig, parentBobbinConfig)
     }
 
     @Override

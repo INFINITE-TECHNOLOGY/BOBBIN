@@ -48,8 +48,7 @@ class Bobbin {
         bobbinConfig.destinations.each {
             Destination destination = Class.forName(it.name).newInstance(
                     it,
-                    bobbinConfig,
-                    scriptEngine
+                    bobbinConfig
             ) as Destination
             destinations.add(destination)
         }

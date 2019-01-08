@@ -1,0 +1,16 @@
+{
+  "levels": "['debug', 'info', 'warn', 'error'].contains(level)",
+  "classes": "all",
+  "destinations": [
+    {
+      "name": "io.infinite.bobbin.tests_2_x_x.TestSharedFileDestination",
+      "properties": {
+        "fileName": "\"./LOGS/SharedArchiving/TEST_${className}.log\"",
+        "zipFileName": "\"${origFileName}.zip\"",
+        "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
+      },
+      "format": "\"${level}|${threadName}|${className}|${event.message}\\n\"",
+      "levels": "all"
+    }
+  ]
+}
