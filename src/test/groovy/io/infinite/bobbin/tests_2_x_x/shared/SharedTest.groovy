@@ -58,6 +58,7 @@ class SharedTest extends BobbinTest_2_x_x {
             while (!TestSharedFileDestination.getInstance().getEventQueueRunnable().getEventQueue().isEmpty()) {
                 Thread.sleep(200)
             }
+            assertFile("LOGS/ALL/WARNINGS_AND_ERRORS_${new SimpleDateFormat("yyyy-MM-dd").format(testDate)}.log", "LOGS/ALL/shared.expected")
         }.join()
         while (!TestSharedFileDestination.getInstance().getEventQueueRunnable().getEventQueue().isEmpty()) {
             Thread.sleep(200)
@@ -66,6 +67,6 @@ class SharedTest extends BobbinTest_2_x_x {
 
     @Override
     void assertLogs() {
-        assertFile("LOGS/ALL/WARNINGS_AND_ERRORS_${new SimpleDateFormat("yyyy-MM-dd").format(testDate)}.log", "LOGS/ALL/shared.expected")
+        //assertFile("LOGS/ALL/WARNINGS_AND_ERRORS_${new SimpleDateFormat("yyyy-MM-dd").format(testDate)}.log", "LOGS/ALL/shared.expected")
     }
 }
