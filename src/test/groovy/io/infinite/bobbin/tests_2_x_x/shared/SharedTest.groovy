@@ -27,6 +27,9 @@ class SharedTest extends BobbinTest_2_x_x {
         bobbinNameAdapter.info("Parent Thread info abcd1234" + uuid)
         bobbinNameAdapter.debug("Parent Thread debug " + uuid)
         bobbinNameAdapter.trace("Parent Thread trace " + uuid)
+        while (!TestSharedFileDestination.getInstance().getEventQueueRunnable().getEventQueue().isEmpty()) {
+            Thread.sleep(200)
+        }
         Bobbin testBobbin = bobbinNameAdapter.bobbinFactory.bobbinThreadLocal.get() as Bobbin
         Thread.start {
             TestSharedFileDestination.getInstance().getEventQueueRunnable().setFileDestination(new FileDestination(TestSharedFileDestination.getInstance().getDestinationConfig(), TestSharedFileDestination.getInstance().getParentBobbinConfig()))
@@ -37,6 +40,9 @@ class SharedTest extends BobbinTest_2_x_x {
             bobbinNameAdapter.info("Thread 1 info abcd1234" + uuid)
             bobbinNameAdapter.debug("Thread 1 debug " + uuid)
             bobbinNameAdapter.trace("Thread 1 trace " + uuid)
+            while (!TestSharedFileDestination.getInstance().getEventQueueRunnable().getEventQueue().isEmpty()) {
+                Thread.sleep(200)
+            }
         }.join()
         Thread.start {
             TestSharedFileDestination.getInstance().getEventQueueRunnable().setFileDestination(new FileDestination(TestSharedFileDestination.getInstance().getDestinationConfig(), TestSharedFileDestination.getInstance().getParentBobbinConfig()))
@@ -47,6 +53,9 @@ class SharedTest extends BobbinTest_2_x_x {
             bobbinNameAdapter.info("Thread 2 info abcd1234" + uuid)
             bobbinNameAdapter.debug("Thread 2 debug " + uuid)
             bobbinNameAdapter.trace("Thread 2 trace " + uuid)
+            while (!TestSharedFileDestination.getInstance().getEventQueueRunnable().getEventQueue().isEmpty()) {
+                Thread.sleep(200)
+            }
         }.join()
         while (!TestSharedFileDestination.getInstance().getEventQueueRunnable().getEventQueue().isEmpty()) {
             Thread.sleep(200)
