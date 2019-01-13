@@ -1,17 +1,18 @@
 package io.infinite.bobbin.tests_1_x_x.configuration.classes.Root
 
-import io.infinite.bobbin.tests_1_x_x.BobbinTest_1_x_x
+import io.infinite.bobbin.BobbinThreadLocal
+import io.infinite.bobbin.tests_2_x_x.BobbinTest
 import org.junit.Test
 
-class Root extends BobbinTest_1_x_x {
+class Root extends BobbinTest {
 
     @Override
     void writeLogs() {
-        bobbinNameAdapter.bobbin().error("Enabled","error abcd")
-        bobbinNameAdapter.bobbin().warn("Disabled", "warn 1234")
-        bobbinNameAdapter.bobbin().info("Enabled", "info abcd1234")
-        bobbinNameAdapter.bobbin().debug("Disabled", "Disabled", "debug " + uuid)
-        bobbinNameAdapter.bobbin().trace("Enabled", "trace " + uuid)
+        BobbinThreadLocal.get().error("Enabled", "error abcd")
+        BobbinThreadLocal.get().warn("Disabled", "warn 1234")
+        BobbinThreadLocal.get().info("Enabled", "info abcd1234")
+        BobbinThreadLocal.get().debug("Disabled", "Disabled", "debug " + uuid)
+        BobbinThreadLocal.get().trace("Enabled", "trace " + uuid)
     }
 
     @Test
@@ -21,7 +22,7 @@ class Root extends BobbinTest_1_x_x {
 
     @Override
     void assertLogs() {
-        assertFile("LOGS/configuration/classes/Root/Root", ".log", ".expected")
+        assertFile("LOGS/configuration/classes/Root/Root.log", "LOGS/configuration/classes/Root/Root.expected")
     }
 
 }

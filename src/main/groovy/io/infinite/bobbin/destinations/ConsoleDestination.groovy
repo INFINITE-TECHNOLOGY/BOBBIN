@@ -1,13 +1,12 @@
 package io.infinite.bobbin.destinations
 
-import io.infinite.bobbin.BobbinConfig
 import io.infinite.bobbin.Event
-
-import javax.script.ScriptEngine
+import io.infinite.bobbin.config.BobbinConfig
+import io.infinite.bobbin.config.DestinationConfig
 
 class ConsoleDestination extends Destination {
 
-    ConsoleDestination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig) {
+    ConsoleDestination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
         super(destinationConfig, parentBobbinConfig)
     }
 

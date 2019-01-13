@@ -2,8 +2,6 @@ language: groovy
 after_failure:
   - ls -lR ./LOGS
   - ls -lR ./build/resources
-  #- cat ./LOGS/BaseTest/trace/BaseTest_trace.log
-  #- cat ./build/resources/test/LOGS/BaseTest/trace/BaseTest_trace.expected
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - ./gradlew artifactoryPublish -Dbintray.user=$BINTRAY_USER -Dbintray.key=$BINTRAY_KEY -Dbuild.number=$TRAVIS_BUILD_NUMBER

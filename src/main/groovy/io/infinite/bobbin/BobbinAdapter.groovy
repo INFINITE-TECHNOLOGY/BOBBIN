@@ -2,199 +2,163 @@ package io.infinite.bobbin
 
 
 import org.slf4j.helpers.MarkerIgnoringBase
-import org.slf4j.spi.MDCAdapter
 
-class BobbinAdapter extends MarkerIgnoringBase implements MDCAdapter {
-
-    BobbinFactory bobbinFactory = new BobbinFactory()
-
-    Bobbin bobbin() {
-        return bobbinFactory.getBobbin()
-    }
+class BobbinAdapter extends MarkerIgnoringBase {
 
     String className
 
-    BobbinAdapter(className) {
+    BobbinAdapter(String className) {
         this.className = className
     }
 
     @Override
     boolean isTraceEnabled() {
-        return bobbin().isTraceEnabled(className)
+        return BobbinThreadLocal.get().isTraceEnabled(className)
     }
 
     @Override
     void trace(String msg) {
-        bobbin().trace(className, msg)
+        BobbinThreadLocal.get().trace(className, msg)
     }
 
     @Override
     void trace(String format, Object arg) {
-        bobbin().trace(className, format, arg)
+        BobbinThreadLocal.get().trace(className, format, arg)
     }
 
     @Override
     void trace(String format, Object arg1, Object arg2) {
-        bobbin().trace(className, format, arg1, arg2)
+        BobbinThreadLocal.get().trace(className, format, arg1, arg2)
     }
 
     @Override
     void trace(String format, Object... arguments) {
-        bobbin().trace(className, format, arguments)
+        BobbinThreadLocal.get().trace(className, format, arguments)
     }
 
     @Override
     void trace(String msg, Throwable t) {
-        bobbin().trace(className, msg, t)
+        BobbinThreadLocal.get().trace(className, msg, t)
     }
 
     @Override
     boolean isDebugEnabled() {
-        bobbin().isDebugEnabled(className)
+        BobbinThreadLocal.get().isDebugEnabled(className)
     }
 
     @Override
     void debug(String msg) {
-        bobbin().debug(className, msg)
+        BobbinThreadLocal.get().debug(className, msg)
     }
 
     @Override
     void debug(String format, Object arg) {
-        bobbin().debug(className, format, arg)
+        BobbinThreadLocal.get().debug(className, format, arg)
     }
 
     @Override
     void debug(String format, Object arg1, Object arg2) {
-        bobbin().debug(className, format, arg1, arg2)
+        BobbinThreadLocal.get().debug(className, format, arg1, arg2)
     }
 
     @Override
     void debug(String format, Object... arguments) {
-        bobbin().debug(className, format, arguments)
+        BobbinThreadLocal.get().debug(className, format, arguments)
     }
 
     @Override
     void debug(String msg, Throwable t) {
-        bobbin().debug(className, msg, t)
+        BobbinThreadLocal.get().debug(className, msg, t)
     }
 
     @Override
     boolean isInfoEnabled() {
-        bobbin().isInfoEnabled(className)
+        BobbinThreadLocal.get().isInfoEnabled(className)
     }
 
     @Override
     void info(String msg) {
-        bobbin().info(className, msg)
+        BobbinThreadLocal.get().info(className, msg)
     }
 
     @Override
     void info(String format, Object arg) {
-        bobbin().info(className, format, arg)
+        BobbinThreadLocal.get().info(className, format, arg)
     }
 
     @Override
     void info(String format, Object arg1, Object arg2) {
-        bobbin().info(className, format, arg1, arg2)
+        BobbinThreadLocal.get().info(className, format, arg1, arg2)
     }
 
     @Override
     void info(String format, Object... arguments) {
-        bobbin().info(className, format, arguments)
+        BobbinThreadLocal.get().info(className, format, arguments)
     }
 
     @Override
     void info(String msg, Throwable t) {
-        bobbin().info(className, msg, t)
+        BobbinThreadLocal.get().info(className, msg, t)
     }
 
     @Override
     boolean isWarnEnabled() {
-        bobbin().isWarnEnabled(className)
+        BobbinThreadLocal.get().isWarnEnabled(className)
     }
 
     @Override
     void warn(String msg) {
-        bobbin().warn(className, msg)
+        BobbinThreadLocal.get().warn(className, msg)
     }
 
     @Override
     void warn(String format, Object arg) {
-        bobbin().warn(className, format, arg)
+        BobbinThreadLocal.get().warn(className, format, arg)
     }
 
     @Override
     void warn(String format, Object... arguments) {
-        bobbin().warn(className, format, arguments)
+        BobbinThreadLocal.get().warn(className, format, arguments)
     }
 
     @Override
     void warn(String format, Object arg1, Object arg2) {
-        bobbin().warn(className, format, arg1, arg2)
+        BobbinThreadLocal.get().warn(className, format, arg1, arg2)
     }
 
     @Override
     void warn(String msg, Throwable t) {
-        bobbin().warn(className, msg, t)
+        BobbinThreadLocal.get().warn(className, msg, t)
     }
 
     @Override
     boolean isErrorEnabled() {
-        bobbin().isErrorEnabled(className)
+        BobbinThreadLocal.get().isErrorEnabled(className)
     }
 
     @Override
     void error(String msg) {
-        bobbin().error(className, msg)
+        BobbinThreadLocal.get().error(className, msg)
     }
 
     @Override
     void error(String format, Object arg) {
-        bobbin().error(className, format, arg)
+        BobbinThreadLocal.get().error(className, format, arg)
     }
 
     @Override
     void error(String format, Object arg1, Object arg2) {
-        bobbin().error(className, format, arg1, arg2)
+        BobbinThreadLocal.get().error(className, format, arg1, arg2)
     }
 
     @Override
     void error(String format, Object... arguments) {
-        bobbin().error(className, format, arguments)
+        BobbinThreadLocal.get().error(className, format, arguments)
     }
 
     @Override
     void error(String msg, Throwable t) {
-        bobbin().error(className, msg, t)
+        BobbinThreadLocal.get().error(className, msg, t)
     }
 
-    @Override
-    void put(String key, String val) {
-        bobbin().getContextMap().put(key, val)
-    }
-
-    @Override
-    String get(String key) {
-        return bobbin().getContextMap().get(key)
-    }
-
-    @Override
-    void remove(String key) {
-        bobbin().getContextMap().remove(key)
-    }
-
-    @Override
-    void clear() {
-        bobbin().getContextMap().clear()
-    }
-
-    @Override
-    Map<String, String> getCopyOfContextMap() {
-        return bobbin().getContextMap().clone() as Map<String, String>
-    }
-
-    @Override
-    void setContextMap(Map<String, String> contextMap) {
-        bobbin().setContextMap(contextMap)
-    }
 }

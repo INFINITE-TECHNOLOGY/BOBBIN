@@ -1,12 +1,13 @@
 package io.infinite.bobbin.tests_1_x_x.Archiving.Housekeeping
 
-import io.infinite.bobbin.tests_1_x_x.BobbinTest_1_x_x
+import io.infinite.bobbin.BobbinThreadLocal
+import io.infinite.bobbin.tests_2_x_x.BobbinTest
 import org.junit.Before
 import org.junit.Test
 
 import java.util.zip.ZipFile
 
-class Housekeeping extends BobbinTest_1_x_x {
+class Housekeeping extends BobbinTest {
 
     @Before
     void init() {
@@ -20,8 +21,8 @@ class Housekeeping extends BobbinTest_1_x_x {
 
     @Override
     void writeLogs() {
-        bobbinNameAdapter.bobbin().error("LOG","error " + uuid)
-        bobbinNameAdapter.bobbin().warn("LOG", "warn " + uuid)
+        BobbinThreadLocal.get().error("LOG", "error " + uuid)
+        BobbinThreadLocal.get().warn("LOG", "warn " + uuid)
         Thread.currentThread().sleep(1500)
     }
 
@@ -32,7 +33,7 @@ class Housekeeping extends BobbinTest_1_x_x {
 
     @Override
     void assertLogs() {
-        assertFile("LOGS/Archiving/Housekeeping/LOG", ".log", ".expected")
+        assertFile("LOGS/Archiving/Housekeeping/LOG.log", "LOGS/Archiving/Housekeeping/LOG.expected")
         ZipFile zipFile = new ZipFile(new File("./LOGS/Archiving/Housekeeping/LOG.log_previous.zip"))
         assert zipFile.entries().toList().size() == 1
         zipFile.entries().each {

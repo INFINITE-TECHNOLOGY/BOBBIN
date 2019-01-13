@@ -1,9 +1,10 @@
 package io.infinite.bobbin.destinations
 
 import groovy.transform.Memoized
-import io.infinite.bobbin.BobbinConfig
+import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.Event
 import io.infinite.bobbin.Level
+import io.infinite.bobbin.config.DestinationConfig
 import org.slf4j.MDC
 
 import javax.script.ScriptEngine
@@ -12,7 +13,7 @@ import java.text.SimpleDateFormat
 
 abstract class Destination {
 
-    BobbinConfig.Destination destinationConfig
+    DestinationConfig destinationConfig
 
     BobbinConfig parentBobbinConfig
 
@@ -52,7 +53,7 @@ abstract class Destination {
         return event
     }
 
-    Destination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig) {
+    Destination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
         this.destinationConfig = destinationConfig
         this.parentBobbinConfig = parentBobbinConfig
     }

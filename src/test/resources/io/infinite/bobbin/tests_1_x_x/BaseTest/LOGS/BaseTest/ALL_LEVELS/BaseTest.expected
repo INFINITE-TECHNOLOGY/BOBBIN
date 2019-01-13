@@ -1,5 +1,0 @@
-error|BaseTest|io.infinite.bobbin.tests_1_x_x.BaseTest.BaseTest|error abcd
-warn|BaseTest|io.infinite.bobbin.tests_1_x_x.BaseTest.BaseTest|warn 1234
-info|BaseTest|io.infinite.bobbin.tests_1_x_x.BaseTest.BaseTest|info abcd1234
-debug|BaseTest|io.infinite.bobbin.tests_1_x_x.BaseTest.BaseTest|debug $uuid
-trace|BaseTest|io.infinite.bobbin.tests_1_x_x.BaseTest.BaseTest|trace $uuid

@@ -1,35 +1,39 @@
 package io.infinite.bobbin
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.infinite.supplies.ast.cache.Static
+import io.infinite.bobbin.config.BobbinConfig
+import io.infinite.supplies.ast.cache.Cache
 import io.infinite.supplies.conf.ResourceLookupThread
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
+import org.slf4j.helpers.Util
 
 class BobbinFactory implements ILoggerFactory {
 
-    ThreadLocal bobbinThreadLocal = new ThreadLocal()
-
-    @Static
-    final BobbinConfig bobbinConfig = initBobbinConfig()
-
-    BobbinConfig getBobbinConfig() {
-        return bobbinConfig
-    }
+    @Cache
+    BobbinConfig bobbinConfig = initBobbinConfig()
 
     String getConfName() {
         return "Bobbin.json"
     }
 
     BobbinConfig initBobbinConfig() {
-        BobbinConfig bobbinConfig = new ObjectMapper().readValue(
-                new ResourceLookupThread("Bobbin", getConfName(), true).getResourceAsFile()
-                , BobbinConfig.class
-        )
-        if (bobbinConfig == null) {
-            bobbinConfig = new BobbinConfig() //todo: noconf here
+        BobbinConfig bobbinConfig
+        File configResource = new ResourceLookupThread("Bobbin", getConfName(), true).getResourceAsFile()
+        if (configResource != null) {
+            bobbinConfig = new ObjectMapper().readValue(
+                    configResource
+                    , BobbinConfig.class
+            )
+        } else {
+            bobbinConfig = zeroConf()
         }
         return bobbinConfig
+    }
+
+    BobbinConfig zeroConf() {
+        Util.report("Bobbin: using zero configuration")
+        return new BobbinConfig()
     }
 
     @Override
@@ -39,16 +43,11 @@ class BobbinFactory implements ILoggerFactory {
     }
 
     void initBobbinIfNeeded() {
-        Bobbin bobbin = getBobbinThreadLocal().get() as Bobbin
+        Bobbin bobbin = BobbinThreadLocal.get()
         if (bobbin == null) {
             bobbin = new Bobbin(getBobbinConfig())
-            getBobbinThreadLocal().set(bobbin)
+            BobbinThreadLocal.set(bobbin)
         }
-    }
-
-    Bobbin getBobbin() {
-        initBobbinIfNeeded()
-        return getBobbinThreadLocal().get() as Bobbin
     }
 
 }

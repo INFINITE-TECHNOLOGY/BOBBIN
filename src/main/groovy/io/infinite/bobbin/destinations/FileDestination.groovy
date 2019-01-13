@@ -1,10 +1,10 @@
 package io.infinite.bobbin.destinations
 
-import io.infinite.bobbin.BobbinConfig
 import io.infinite.bobbin.Event
+import io.infinite.bobbin.config.BobbinConfig
+import io.infinite.bobbin.config.DestinationConfig
 import org.slf4j.helpers.Util
 
-import javax.script.ScriptEngine
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
@@ -12,7 +12,7 @@ class FileDestination extends Destination {
 
     Map<String, File> fileMap = new HashMap<>()
 
-    FileDestination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig) {
+    FileDestination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
         super(destinationConfig, parentBobbinConfig)
     }
 

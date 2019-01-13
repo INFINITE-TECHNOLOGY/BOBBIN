@@ -1,12 +1,14 @@
 package io.infinite.bobbin
 
 import groovy.transform.Memoized
+import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.destinations.Destination
+import org.slf4j.spi.MDCAdapter
 
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 
-class Bobbin {
+class Bobbin implements MDCAdapter {
 
     ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("groovy")
 
@@ -14,12 +16,32 @@ class Bobbin {
 
     Map<String, String> contextMap = [:]
 
-    Object get(String key) {
+    String get(String key) {
         return contextMap.get(key)
     }
 
-    void set(String key, String value) {
+    void put(String key, String value) {
         contextMap.put(key, value)
+    }
+
+    @Override
+    void remove(String key) {
+        contextMap.remove(key)
+    }
+
+    @Override
+    void clear() {
+        contextMap.clear()
+    }
+
+    @Override
+    Map<String, String> getCopyOfContextMap() {
+        return contextMap.clone() as Map<String, String>
+    }
+
+    @Override
+    void setContextMap(Map<String, String> contextMap) {
+        this.contextMap = contextMap
     }
 
     @Memoized

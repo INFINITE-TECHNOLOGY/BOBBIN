@@ -1,10 +1,11 @@
-package io.infinite.bobbin.tests_2_x_x.MDC
+package io.infinite.bobbin.tests_2_x_x.ZeroConf
 
+import io.infinite.bobbin.Bobbin
+import io.infinite.bobbin.BobbinThreadLocal
 import io.infinite.bobbin.tests_2_x_x.BobbinTest
 import org.junit.Test
-import org.slf4j.MDC
 
-class MDCTest extends BobbinTest {
+class ZeroConfTest extends BobbinTest {
 
 
     @Test
@@ -14,16 +15,18 @@ class MDCTest extends BobbinTest {
 
     @Override
     void writeLogs() {
-        MDC.put("dynamicValue", dynamicValue)
+        Bobbin bobbin = BobbinThreadLocal.get() as Bobbin
+        bobbin.getDestinations()[0].getDestinationConfig().setFormat("\"\${level}|\${threadName}|\${className}|\${event.message}\\n\"")
         bobbinNameAdapter.error("error abcd")
         bobbinNameAdapter.warn("warn 1234")
         bobbinNameAdapter.info("info abcd1234")
         bobbinNameAdapter.debug("debug " + uuid)
         bobbinNameAdapter.trace("trace " + uuid)
+        System.out.flush()
     }
 
     @Override
     void assertLogs() {
-        assertFile("LOGS/MDC/${dynamicValue}.log", "LOGS/MDC/MDC.expected")
+        assertStdout("STDOUT/stdout.expected")
     }
 }

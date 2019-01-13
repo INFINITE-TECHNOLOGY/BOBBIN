@@ -1,11 +1,10 @@
 package io.infinite.bobbin.destinations
 
-import io.infinite.bobbin.BobbinConfig
 import io.infinite.bobbin.Event
-import io.infinite.supplies.ast.cache.Static
+import io.infinite.bobbin.config.BobbinConfig
+import io.infinite.bobbin.config.DestinationConfig
+import io.infinite.supplies.ast.cache.Cache
 
-import javax.script.ScriptEngine
-import javax.script.ScriptEngineManager
 import java.util.concurrent.LinkedBlockingQueue
 
 class SharedFileDestination extends Destination {
@@ -44,8 +43,8 @@ class SharedFileDestination extends Destination {
 
     }
 
-    @Static
-    final EventQueueRunnable eventQueueRunnable = new EventQueueRunnable(this)
+    @Cache
+    EventQueueRunnable eventQueueRunnable = new EventQueueRunnable(this)
 
     EventQueueRunnable getEventQueueRunnable() {
         return eventQueueRunnable
@@ -59,7 +58,7 @@ class SharedFileDestination extends Destination {
         }
     }
 
-    SharedFileDestination(BobbinConfig.Destination destinationConfig, BobbinConfig parentBobbinConfig) {
+    SharedFileDestination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
         super(destinationConfig, parentBobbinConfig)
     }
 
