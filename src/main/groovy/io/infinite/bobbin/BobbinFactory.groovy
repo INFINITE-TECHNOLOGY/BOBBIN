@@ -19,10 +19,10 @@ class BobbinFactory implements ILoggerFactory {
 
     BobbinConfig initBobbinConfig() {
         BobbinConfig bobbinConfig
-        File configResource = new ResourceLookupThread("Bobbin", getConfName(), true).getResourceAsFile()
-        if (configResource != null) {
+        String configResourceString = new ResourceLookupThread("Bobbin", getConfName(), true).getResourceAsString()
+        if (configResourceString != null) {
             bobbinConfig = new ObjectMapper().readValue(
-                    configResource
+                    configResourceString
                     , BobbinConfig.class
             )
         } else {
