@@ -8,11 +8,11 @@ class Root extends BobbinTest {
 
     @Override
     void writeLogs() {
-        BobbinThreadLocal.get().error("Enabled", "error abcd")
-        BobbinThreadLocal.get().warn("Disabled", "warn 1234")
-        BobbinThreadLocal.get().info("Enabled", "info abcd1234")
-        BobbinThreadLocal.get().debug("Disabled", "Disabled", "debug " + uuid)
-        BobbinThreadLocal.get().trace("Enabled", "trace " + uuid)
+        BobbinThreadLocal.getBobbin().error("Enabled", "error abcd")
+        BobbinThreadLocal.getBobbin().warn("Disabled", "warn 1234")
+        BobbinThreadLocal.getBobbin().info("Enabled", "info abcd1234")
+        BobbinThreadLocal.getBobbin().debug("Disabled", "Disabled", "debug " + uuid)
+        BobbinThreadLocal.getBobbin().trace("Enabled", "trace " + uuid)
     }
 
     @Test

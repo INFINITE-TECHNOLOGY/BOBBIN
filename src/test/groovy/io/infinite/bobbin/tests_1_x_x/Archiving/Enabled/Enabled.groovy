@@ -10,11 +10,11 @@ class Enabled extends BobbinTest {
 
     @Override
     void writeLogs() {
-        BobbinThreadLocal.get().error("ZIP", "error abcd")
-        BobbinThreadLocal.get().warn("ZIP", "warn 1234")
-        BobbinThreadLocal.get().info("LOG", "info abcd1234")
-        BobbinThreadLocal.get().debug("LOG", "debug " + uuid)
-        BobbinThreadLocal.get().trace("LOG", "trace " + uuid)
+        BobbinThreadLocal.getBobbin().error("ZIP", "error abcd")
+        BobbinThreadLocal.getBobbin().warn("ZIP", "warn 1234")
+        BobbinThreadLocal.getBobbin().info("LOG", "info abcd1234")
+        BobbinThreadLocal.getBobbin().debug("LOG", "debug " + uuid)
+        BobbinThreadLocal.getBobbin().trace("LOG", "trace " + uuid)
         Thread.currentThread().sleep(1500)
     }
 

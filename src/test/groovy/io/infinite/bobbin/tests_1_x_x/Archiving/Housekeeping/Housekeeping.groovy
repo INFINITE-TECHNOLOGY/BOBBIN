@@ -21,8 +21,8 @@ class Housekeeping extends BobbinTest {
 
     @Override
     void writeLogs() {
-        BobbinThreadLocal.get().error("LOG", "error " + uuid)
-        BobbinThreadLocal.get().warn("LOG", "warn " + uuid)
+        BobbinThreadLocal.getBobbin().error("LOG", "error " + uuid)
+        BobbinThreadLocal.getBobbin().warn("LOG", "warn " + uuid)
         Thread.currentThread().sleep(1500)
     }
 

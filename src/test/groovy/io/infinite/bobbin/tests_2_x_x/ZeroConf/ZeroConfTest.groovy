@@ -15,7 +15,7 @@ class ZeroConfTest extends BobbinTest {
 
     @Override
     void writeLogs() {
-        Bobbin bobbin = BobbinThreadLocal.get() as Bobbin
+        Bobbin bobbin = BobbinThreadLocal.getBobbin() as Bobbin
         bobbin.getDestinations()[0].getDestinationConfig().setFormat("\"\${level}|\${threadName}|\${className}|\${event.message}\\n\"")
         bobbinNameAdapter.error("error abcd")
         bobbinNameAdapter.warn("warn 1234")

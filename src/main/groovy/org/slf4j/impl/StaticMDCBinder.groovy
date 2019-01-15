@@ -12,7 +12,7 @@ public class StaticMDCBinder {
     }
 
     public MDCAdapter getMDCA() {
-        return BobbinThreadLocal.get()
+        return BobbinThreadLocal.getBobbin()
     }
 
     public String getMDCAdapterClassStr() {

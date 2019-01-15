@@ -10,12 +10,10 @@ import org.slf4j.helpers.Util
 
 class BobbinFactory implements ILoggerFactory {
 
+    String confName = "Bobbin.json"
+
     @Cache
     BobbinConfig bobbinConfig = initBobbinConfig()
-
-    String getConfName() {
-        return "Bobbin.json"
-    }
 
     BobbinConfig initBobbinConfig() {
         BobbinConfig bobbinConfig
@@ -38,16 +36,8 @@ class BobbinFactory implements ILoggerFactory {
 
     @Override
     Logger getLogger(String name) {
-        initBobbinIfNeeded()
+        BobbinThreadLocal.getBobbin()
         return new BobbinAdapter(name)
-    }
-
-    void initBobbinIfNeeded() {
-        Bobbin bobbin = BobbinThreadLocal.get()
-        if (bobbin == null) {
-            bobbin = new Bobbin(getBobbinConfig())
-            BobbinThreadLocal.set(bobbin)
-        }
     }
 
 }

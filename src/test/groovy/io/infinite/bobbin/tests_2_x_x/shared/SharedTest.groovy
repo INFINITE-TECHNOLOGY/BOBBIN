@@ -30,7 +30,7 @@ class SharedTest extends BobbinTest {
             Thread.sleep(200)
         }
         assertFile("LOGS/ALL/WARNINGS_AND_ERRORS_${new SimpleDateFormat("yyyy-MM-dd").format(testDate)}.log", "LOGS/ALL/shared_main.expected")
-        Bobbin testBobbin = BobbinThreadLocal.get() as Bobbin
+        Bobbin testBobbin = BobbinThreadLocal.getBobbin() as Bobbin
         Thread.start {
             TestSharedFileDestination.getInstance().getEventQueueRunnable().setFileDestination(new FileDestination(TestSharedFileDestination.getInstance().getDestinationConfig(), TestSharedFileDestination.getInstance().getParentBobbinConfig()))
             Thread.currentThread().setName("test thread 1")

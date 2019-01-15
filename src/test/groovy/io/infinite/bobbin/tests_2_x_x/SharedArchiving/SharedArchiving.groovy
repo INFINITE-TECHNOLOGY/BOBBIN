@@ -1,5 +1,6 @@
 package io.infinite.bobbin.tests_2_x_x.SharedArchiving
 
+import io.infinite.bobbin.Bobbin
 import io.infinite.bobbin.BobbinThreadLocal
 import io.infinite.bobbin.destinations.FileDestination
 import io.infinite.bobbin.tests_2_x_x.BobbinTest
@@ -18,11 +19,11 @@ class SharedArchiving extends BobbinTest {
     @Override
     void writeLogs() {
         TestSharedFileDestination.getInstance().getEventQueueRunnable().setFileDestination(new FileDestination(TestSharedFileDestination.getInstance().getDestinationConfig(), TestSharedFileDestination.getInstance().getParentBobbinConfig()))
-        BobbinThreadLocal.get().error("ZIP","e abcd")
-        BobbinThreadLocal.get().warn("ZIP", "w 1234")
-        BobbinThreadLocal.get().info("LOG", "i abcd1234")
-        BobbinThreadLocal.get().debug("LOG", "d " + uuid)
-        BobbinThreadLocal.get().trace("LOG", "t " + uuid)
+        BobbinThreadLocal.getBobbin().error("ZIP","e abcd")
+        BobbinThreadLocal.getBobbin().warn("ZIP", "w 1234")
+        BobbinThreadLocal.getBobbin().info("LOG", "i abcd1234")
+        BobbinThreadLocal.getBobbin().debug("LOG", "d " + uuid)
+        BobbinThreadLocal.getBobbin().trace("LOG", "t " + uuid)
         //Thread.currentThread().sleep(1500)
         while (!TestSharedFileDestination.getInstance().getEventQueueRunnable().getEventQueue().isEmpty()) {
             Thread.sleep(200)
