@@ -1,0 +1,16 @@
+{
+  "levels": "all",
+  "classes": "all",
+  "destinations": [
+    {
+      "name": "io.infinite.bobbin.destinations.FileDestination",
+      "properties": {
+        "fileName": "\"./LOGS/Throwable/Throwable.log\"",
+        "zipFileName": "\"./LOGS/Throwable/Throwable.log.zip\"",
+        "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
+      },
+      "format": "\"${level}|${threadName}|${className}|${event.message}${event.error}\\n\"",
+      "errorFormat": "\"|${event.throwable.message}\""
+    }
+  ]
+}

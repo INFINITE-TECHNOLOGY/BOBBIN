@@ -8,5 +8,6 @@ abstract class AbstractConfig {
     String dateFormat
     String dateTimeFormat
     String format
+    String errorFormat
 
 }

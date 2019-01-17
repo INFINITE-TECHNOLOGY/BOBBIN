@@ -49,6 +49,9 @@ abstract class Destination {
     }
 
     final Event formatMessage(Event event) {
+        if (event.throwable != null) {
+            event.setError(scriptEngine.eval(destinationConfig.errorFormat) as String)
+        }
         event.setFormattedMessage(scriptEngine.eval(destinationConfig.format) as String)
         return event
     }

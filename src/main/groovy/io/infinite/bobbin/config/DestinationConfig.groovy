@@ -35,4 +35,10 @@ class DestinationConfig extends AbstractConfig {
     String getFormat() {
         return super.@format ?: bobbinConfig.getFormat()
     }
+
+    @Override
+    String getErrorFormat() {
+        return super.@errorFormat ?: bobbinConfig.getErrorFormat()
+    }
+
 }
