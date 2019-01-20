@@ -65,6 +65,7 @@ class Bobbin implements MDCAdapter {
         scriptEngine.put("all", true)
         scriptEngine.put("none", false)
         scriptEngine.put("threadName", Thread.currentThread().getName())
+        scriptEngine.put("threadGroupName", Thread.currentThread().getThreadGroup().getName())
         scriptEngine.put("bobbin", this)
         this.bobbinConfig = bobbinConfig
         bobbinConfig.destinations.each {

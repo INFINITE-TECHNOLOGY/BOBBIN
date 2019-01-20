@@ -20,15 +20,16 @@ abstract class Destination {
     ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("groovy")
 
     void commonBinding(Event event) {
-        getScriptEngine().put("event", event)
-        getScriptEngine().put("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
-        getScriptEngine().put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
-        getScriptEngine().put("level", event.getLevel().value())
-        getScriptEngine().put("className", event.getClassName())
-        getScriptEngine().put("MDC", MDC)
-        getScriptEngine().put("all", true)
-        getScriptEngine().put("none", false)
-        getScriptEngine().put("threadName", Thread.currentThread().getName())
+        scriptEngine.put("event", event)
+        scriptEngine.put("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
+        scriptEngine.put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
+        scriptEngine.put("level", event.getLevel().value())
+        scriptEngine.put("className", event.getClassName())
+        scriptEngine.put("MDC", MDC)
+        scriptEngine.put("all", true)
+        scriptEngine.put("none", false)
+        scriptEngine.put("threadName", Thread.currentThread().getName())
+        scriptEngine.put("threadGroupName", Thread.currentThread().getThreadGroup().getName())
     }
 
     final void log(Event event) {
