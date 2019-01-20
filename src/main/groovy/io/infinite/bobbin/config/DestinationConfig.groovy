@@ -17,11 +17,6 @@ class DestinationConfig extends AbstractConfig {
     }
 
     @Override
-    String getFilter() {
-        return super.@filter ?: bobbinConfig.getFilter()
-    }
-
-    @Override
     String getDateFormat() {
         return super.@dateFormat ?: bobbinConfig.getDateFormat()
     }
