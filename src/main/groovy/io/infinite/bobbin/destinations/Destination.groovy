@@ -43,7 +43,7 @@ abstract class Destination {
 
     abstract protected void store(Event event)
 
-    //@Memoized(maxCacheSize = 128)
+    @Memoized(maxCacheSize = 128)
     final Boolean needsLogging(Level level, String className) {
         return (scriptEngine.eval(destinationConfig.classes ?: parentBobbinConfig.classes)
         && scriptEngine.eval(destinationConfig.levels ?: parentBobbinConfig.levels))

@@ -44,19 +44,19 @@ class Bobbin implements MDCAdapter {
         this.contextMap = contextMap
     }
 
-    //@Memoized
+    @Memoized
     Boolean isLevelEnabled(Level level) {
         scriptEngine.put("level", level.value())
         return scriptEngine.eval(bobbinConfig.levels)
     }
 
-    //@Memoized(maxCacheSize = 128)
+    @Memoized(maxCacheSize = 128)
     final Boolean isClassEnabled(String className) {
         scriptEngine.put("className", className)
         return scriptEngine.eval(bobbinConfig.classes)
     }
 
-    //@Memoized(maxCacheSize = 128)
+    @Memoized(maxCacheSize = 128)
     final Boolean isLevelAndClassEnabled(Level level, String className) {
         return isLevelEnabled(level) && isClassEnabled(className)
     }

@@ -11,8 +11,6 @@ class SharedFileDestination extends Destination {
 
     class EventQueueRunnable extends Thread {
 
-        Throwable throwable
-
         LinkedBlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>()
 
         FileDestination fileDestination
@@ -44,10 +42,25 @@ class SharedFileDestination extends Destination {
     }
 
     @Cache
-    EventQueueRunnable eventQueueRunnable = new EventQueueRunnable(this)
+    Map<String, EventQueueRunnable> eventQueueRunnableMap = [:]
+
+    String getSharingKey() {
+        return destinationConfig.properties.get("sharingKey") ?: "default"
+    }
 
     EventQueueRunnable getEventQueueRunnable() {
-        return eventQueueRunnable
+        EventQueueRunnable eventQueueRunnable = eventQueueRunnableMap.get(sharingKey)
+        if (eventQueueRunnable != null) {
+            return eventQueueRunnable
+        } else {
+            eventQueueRunnable = new EventQueueRunnable(this)
+            setEventQueueRunnable(eventQueueRunnable)
+            return eventQueueRunnable
+        }
+    }
+
+    void setEventQueueRunnable(EventQueueRunnable eventQueueRunnable) {
+        eventQueueRunnableMap.put(sharingKey, eventQueueRunnable)
     }
 
     @Override
