@@ -26,7 +26,8 @@ class SharedFileDestination extends Destination {
             while (true) {
                 while (!getEventQueue().isEmpty()) {
                     Event event = getEventQueue().peek()
-                    getFileDestination().commonBinding(event)
+                    getFileDestination().commonBinding1(event)
+                    getFileDestination().commonBinding2(event)
                     getFileDestination().store(event)
                     getEventQueue().poll()
                 }

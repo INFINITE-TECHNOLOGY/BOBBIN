@@ -1,5 +1,5 @@
 {
-  "levels": "['debug', 'info', 'warn', 'error'].contains(level)",
+  "levels": "['debug', 'info', 'warn', 'error', 'trace'].contains(level)",
   "classes": "all",
   "destinations": [
     {

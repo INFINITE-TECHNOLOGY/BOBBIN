@@ -88,119 +88,169 @@ class Bobbin implements MDCAdapter {
     }
 
     void trace(String className, String msg) {
-        log(new Event(className: className, level: Level.TRACE, message: msg))
+        if (isTraceEnabled(className)) {
+            log(new Event(className: className, level: Level.TRACE, message: msg))
+        }
     }
 
     void trace(String className, String format, Object arg) {
-        log(new Event(className: className, level: Level.TRACE, message: format, arguments: [arg]))
+        if (isTraceEnabled(className)) {
+            log(new Event(className: className, level: Level.TRACE, message: format, arguments: [arg]))
+        }
     }
 
     void trace(String className, String format, Object arg1, Object arg2) {
-        log(new Event(className: className, level: Level.TRACE, message: format, arguments: [arg1, arg2]))
+        if (isTraceEnabled(className)) {
+            log(new Event(className: className, level: Level.TRACE, message: format, arguments: [arg1, arg2]))
+        }
     }
 
     void trace(String className, String format, Object... arguments) {
-        log(new Event(className: className, level: Level.TRACE, message: format, arguments: arguments))
+        if (isTraceEnabled(className)) {
+            log(new Event(className: className, level: Level.TRACE, message: format, arguments: arguments))
+        }
     }
 
     void trace(String className, String msg, Throwable t) {
-        log(new Event(className: className, level: Level.TRACE, message: msg, throwable: t))
+        if (isTraceEnabled(className)) {
+            log(new Event(className: className, level: Level.TRACE, message: msg, throwable: t))
+        }
     }
 
-    boolean isDebugEnabled(String name) {
-        return isLevelAndClassEnabled(Level.DEBUG, name)
+    boolean isDebugEnabled(String className) {
+        return isLevelAndClassEnabled(Level.DEBUG, className)
     }
 
     void debug(String className, String msg) {
-        log(new Event(className: className, level: Level.DEBUG, message: msg))
+        if (isDebugEnabled(className)) {
+            log(new Event(className: className, level: Level.DEBUG, message: msg))
+        }
     }
 
     void debug(String className, String format, Object arg) {
-        log(new Event(className: className, level: Level.DEBUG, message: format, arguments: [arg]))
+        if (isDebugEnabled(className)) {
+            log(new Event(className: className, level: Level.DEBUG, message: format, arguments: [arg]))
+        }
     }
 
     void debug(String className, String format, Object arg1, Object arg2) {
-        log(new Event(className: className, level: Level.DEBUG, message: format, arguments: [arg1, arg2]))
+        if (isDebugEnabled(className)) {
+            log(new Event(className: className, level: Level.DEBUG, message: format, arguments: [arg1, arg2]))
+        }
     }
 
     void debug(String className, String format, Object... arguments) {
-        log(new Event(className: className, level: Level.DEBUG, message: format, arguments: arguments))
+        if (isDebugEnabled(className)) {
+            log(new Event(className: className, level: Level.DEBUG, message: format, arguments: arguments))
+        }
     }
 
     void debug(String className, String msg, Throwable t) {
-        log(new Event(className: className, level: Level.DEBUG, message: msg, throwable: t))
+        if (isDebugEnabled(className)) {
+            log(new Event(className: className, level: Level.DEBUG, message: msg, throwable: t))
+        }
     }
 
-    boolean isInfoEnabled(String name) {
-        return isLevelAndClassEnabled(Level.INFO, name)
+    boolean isInfoEnabled(String className) {
+        return isLevelAndClassEnabled(Level.INFO, className)
     }
 
     void info(String className, String msg) {
-        log(new Event(className: className, level: Level.INFO, message: msg))
+        if (isInfoEnabled(className)) {
+            log(new Event(className: className, level: Level.INFO, message: msg))
+        }
     }
 
     void info(String className, String format, Object arg) {
-        log(new Event(className: className, level: Level.INFO, message: format, arguments: [arg]))
+        if (isInfoEnabled(className)) {
+            log(new Event(className: className, level: Level.INFO, message: format, arguments: [arg]))
+        }
     }
 
     void info(String className, String format, Object arg1, Object arg2) {
-        log(new Event(className: className, level: Level.INFO, message: format, arguments: [arg1, arg2]))
+        if (isInfoEnabled(className)) {
+            log(new Event(className: className, level: Level.INFO, message: format, arguments: [arg1, arg2]))
+        }
     }
 
     void info(String className, String format, Object... arguments) {
-        log(new Event(className: className, level: Level.INFO, message: format, arguments: arguments))
+        if (isInfoEnabled(className)) {
+            log(new Event(className: className, level: Level.INFO, message: format, arguments: arguments))
+        }
     }
 
     void info(String className, String msg, Throwable t) {
-        log(new Event(className: className, level: Level.INFO, message: msg, throwable: t))
+        if (isInfoEnabled(className)) {
+            log(new Event(className: className, level: Level.INFO, message: msg, throwable: t))
+        }
     }
 
-    boolean isWarnEnabled(String name) {
-        return isLevelAndClassEnabled(Level.WARN, name)
+    boolean isWarnEnabled(String className) {
+        return isLevelAndClassEnabled(Level.WARN, className)
     }
 
     void warn(String className, String msg) {
-        log(new Event(className: className, level: Level.WARN, message: msg))
+        if (isWarnEnabled(className)) {
+            log(new Event(className: className, level: Level.WARN, message: msg))
+        }
     }
 
     void warn(String className, String format, Object arg) {
-        log(new Event(className: className, level: Level.WARN, message: format, arguments: [arg]))
+        if (isWarnEnabled(className)) {
+            log(new Event(className: className, level: Level.WARN, message: format, arguments: [arg]))
+        }
     }
 
     void warn(String className, String format, Object... arguments) {
-        log(new Event(className: className, level: Level.WARN, message: format, arguments: arguments))
+        if (isWarnEnabled(className)) {
+            log(new Event(className: className, level: Level.WARN, message: format, arguments: arguments))
+        }
     }
 
     void warn(String className, String format, Object arg1, Object arg2) {
-        log(new Event(className: className, level: Level.WARN, message: format, arguments: [arg1, arg2]))
+        if (isWarnEnabled(className)) {
+            log(new Event(className: className, level: Level.WARN, message: format, arguments: [arg1, arg2]))
+        }
     }
 
     void warn(String className, String msg, Throwable t) {
-        log(new Event(className: className, level: Level.WARN, message: msg, throwable: t))
+        if (isWarnEnabled(className)) {
+            log(new Event(className: className, level: Level.WARN, message: msg, throwable: t))
+        }
     }
 
-    boolean isErrorEnabled(String name) {
-        return isLevelAndClassEnabled(Level.ERROR, name)
+    boolean isErrorEnabled(String className) {
+        return isLevelAndClassEnabled(Level.ERROR, className)
     }
 
     void error(String className, String msg) {
-        log(new Event(className: className, level: Level.ERROR, message: msg))
+        if (isErrorEnabled(className)) {
+            log(new Event(className: className, level: Level.ERROR, message: msg))
+        }
     }
 
     void error(String className, String format, Object arg) {
-        log(new Event(className: className, level: Level.ERROR, message: format, arguments: [arg]))
+        if (isErrorEnabled(className)) {
+            log(new Event(className: className, level: Level.ERROR, message: format, arguments: [arg]))
+        }
     }
 
     void error(String className, String format, Object arg1, Object arg2) {
-        log(new Event(className: className, level: Level.ERROR, message: format, arguments: [arg1, arg2]))
+        if (isErrorEnabled(className)) {
+            log(new Event(className: className, level: Level.ERROR, message: format, arguments: [arg1, arg2]))
+        }
     }
 
     void error(String className, String format, Object... arguments) {
-        log(new Event(className: className, level: Level.ERROR, message: format, arguments: arguments))
+        if (isErrorEnabled(className)) {
+            log(new Event(className: className, level: Level.ERROR, message: format, arguments: arguments))
+        }
     }
 
     void error(String className, String msg, Throwable t) {
-        log(new Event(className: className, level: Level.ERROR, message: msg, throwable: t))
+        if (isErrorEnabled(className)) {
+            log(new Event(className: className, level: Level.ERROR, message: msg, throwable: t))
+        }
     }
 
 }

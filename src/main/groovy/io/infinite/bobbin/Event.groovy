@@ -8,7 +8,7 @@ class Event {
     String message
     String className
     String formattedMessage
-    def arguments = []
+    def arguments
     Throwable throwable
     String error
 
