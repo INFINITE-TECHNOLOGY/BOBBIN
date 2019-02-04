@@ -5,22 +5,22 @@ import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
 import io.infinite.supplies.ast.cache.Cache
 
-class SharedFileDestination extends SharedDestination {
+class SharedConsoleDestination extends SharedDestination {
 
     @Cache
     Map<String, EventQueueRunnable> eventQueueRunnableMap = [:]
 
-    SharedFileDestination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
+    SharedConsoleDestination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
         super(destinationConfig, parentBobbinConfig)
     }
 
     @Override
     Destination getActualDestination() {
-        return new FileDestination(destinationConfig, parentBobbinConfig)
+        return new ConsoleDestination(destinationConfig, parentBobbinConfig)
     }
 
     @Override
     String getSharedDestinationName() {
-        return "Bobbin Async File Logger"
+        return "Bobbin Async Console Logger"
     }
 }
