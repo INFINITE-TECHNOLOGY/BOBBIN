@@ -50,6 +50,7 @@ class FileDestination extends Destination {
         } else {
             file = fileMap.get(fileKey)
             if (file.fileName != newFileName) {
+                Util.report("Bobbin: $newFileName replaces ${file.fileName} which is going to be archived.")
                 File fileToZip = file //avoid reassigning variable outside of thread closure
                 Thread.start({
                     zipAndDelete(fileToZip)
