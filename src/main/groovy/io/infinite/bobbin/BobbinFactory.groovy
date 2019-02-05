@@ -36,8 +36,11 @@ class BobbinFactory implements ILoggerFactory {
 
     @Override
     Logger getLogger(String name) {
-        BobbinThreadLocal.getBobbin()
-        return new BobbinAdapter(name)
+        return new BobbinAdapter(name, new Bobbin(bobbinConfig))
+    }
+
+    Bobbin getBobbin() {
+        return new Bobbin(bobbinConfig)
     }
 
 }

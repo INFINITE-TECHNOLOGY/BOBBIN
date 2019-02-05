@@ -1,18 +1,21 @@
 package io.infinite.bobbin.tests_1_x_x.configuration.classes.Root
 
-import io.infinite.bobbin.BobbinThreadLocal
+import io.infinite.bobbin.BobbinFactory
 import io.infinite.bobbin.tests_2_x_x.BobbinTest
 import org.junit.Test
+import org.slf4j.Logger
 
 class Root extends BobbinTest {
 
     @Override
     void writeLogs() {
-        BobbinThreadLocal.getBobbin().error("Enabled", "error abcd")
-        BobbinThreadLocal.getBobbin().warn("Disabled", "warn 1234")
-        BobbinThreadLocal.getBobbin().info("Enabled", "info abcd1234")
-        BobbinThreadLocal.getBobbin().debug("Disabled", "Disabled", "debug " + uuid)
-        BobbinThreadLocal.getBobbin().trace("Enabled", "trace " + uuid)
+        Logger enabledLogger = bobbinFactory.getLogger("Enabled")
+        Logger disabledLogger = bobbinFactory.getLogger("Disabled")
+        enabledLogger.error("error abcd")
+        disabledLogger.warn("warn 1234")
+        enabledLogger.info("info abcd1234")
+        disabledLogger.debug("Disabled", "debug " + uuid)
+        enabledLogger.trace("trace " + uuid)
     }
 
     @Test

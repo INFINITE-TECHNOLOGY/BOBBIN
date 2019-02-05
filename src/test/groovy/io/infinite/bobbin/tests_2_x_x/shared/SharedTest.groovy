@@ -1,7 +1,7 @@
 package io.infinite.bobbin.tests_2_x_x.shared
 
 import io.infinite.bobbin.Bobbin
-import io.infinite.bobbin.BobbinThreadLocal
+import io.infinite.bobbin.BobbinFactory
 import io.infinite.bobbin.destinations.FileDestination
 import io.infinite.bobbin.tests_2_x_x.BobbinTest
 import io.infinite.bobbin.tests_2_x_x.TestSharedFileDestination
@@ -30,11 +30,11 @@ class SharedTest extends BobbinTest {
             Thread.sleep(200)
         }
         assertFile("LOGS/ALL/WARNINGS_AND_ERRORS_${new SimpleDateFormat("yyyy-MM-dd").format(testDate)}.log", "LOGS/ALL/shared_main.expected")
-        Bobbin testBobbin = BobbinThreadLocal.getBobbin() as Bobbin
+        Bobbin testBobbin = bobbinFactory.getBobbin()//BobbinThreadLocal.getBobbin() as Bobbin
         Thread.start {
             TestSharedFileDestination.getInstance().getEventQueueRunnable().setSharedDestination(new FileDestination(TestSharedFileDestination.getInstance().getDestinationConfig(), TestSharedFileDestination.getInstance().getParentBobbinConfig()))
             Thread.currentThread().setName("test thread 1")
-            BobbinThreadLocal.set(testBobbin)
+            //BobbinThreadLocal.set(testBobbin)
             bobbinNameAdapter.error("Thread 1 error abcd" + uuid)
             bobbinNameAdapter.warn("Thread 1 warn 1234" + uuid)
             bobbinNameAdapter.info("Thread 1 info abcd1234" + uuid)
@@ -48,7 +48,7 @@ class SharedTest extends BobbinTest {
         Thread.start {
             TestSharedFileDestination.getInstance().getEventQueueRunnable().setSharedDestination(new FileDestination(TestSharedFileDestination.getInstance().getDestinationConfig(), TestSharedFileDestination.getInstance().getParentBobbinConfig()))
             Thread.currentThread().setName("test thread 2")
-            BobbinThreadLocal.set(testBobbin)
+            //BobbinThreadLocal.set(testBobbin)
             bobbinNameAdapter.error("Thread 2 error abcd" + uuid)
             bobbinNameAdapter.warn("Thread 2 warn 1234" + uuid)
             bobbinNameAdapter.info("Thread 2 info abcd1234" + uuid)

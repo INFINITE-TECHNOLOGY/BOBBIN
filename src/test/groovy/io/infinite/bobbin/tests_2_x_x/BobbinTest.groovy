@@ -4,7 +4,6 @@ import groovy.text.SimpleTemplateEngine
 import groovy.text.Template
 import io.infinite.bobbin.BobbinAdapter
 import io.infinite.bobbin.BobbinFactory
-import io.infinite.bobbin.BobbinThreadLocal
 import org.slf4j.helpers.Util
 
 abstract class BobbinTest {
@@ -50,8 +49,8 @@ abstract class BobbinTest {
     }
 
     final void setup() {
-        BobbinThreadLocal.clear()
-        BobbinThreadLocal.setBobbinFactory(bobbinFactory)
+        //BobbinThreadLocal.clear()
+        //BobbinThreadLocal.setBobbinFactory(bobbinFactory)
         bobbinFactory.setConfName(getConfName())
         bobbinFactory.setBobbinConfig(bobbinFactory.initBobbinConfig())
         Thread.currentThread().setName(this.getClass().getSimpleName())

@@ -1,7 +1,7 @@
 package org.slf4j.impl
 
-import io.infinite.bobbin.Bobbin
-import io.infinite.bobbin.BobbinThreadLocal
+
+import org.slf4j.helpers.BasicMDCAdapter
 import org.slf4j.spi.MDCAdapter
 
 public class StaticMDCBinder {
@@ -12,10 +12,10 @@ public class StaticMDCBinder {
     }
 
     public MDCAdapter getMDCA() {
-        return BobbinThreadLocal.getBobbin()
+        return new BasicMDCAdapter()
     }
 
     public String getMDCAdapterClassStr() {
-        return Bobbin.class.getName()
+        return BasicMDCAdapter.class.getName()
     }
 }

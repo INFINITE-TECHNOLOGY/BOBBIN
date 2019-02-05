@@ -1,9 +1,10 @@
 package io.infinite.bobbin.tests_1_x_x.Archiving.Housekeeping
 
-import io.infinite.bobbin.BobbinThreadLocal
+import io.infinite.bobbin.BobbinFactory
 import io.infinite.bobbin.tests_2_x_x.BobbinTest
 import org.junit.Before
 import org.junit.Test
+import org.slf4j.Logger
 
 import java.util.zip.ZipFile
 
@@ -21,8 +22,9 @@ class Housekeeping extends BobbinTest {
 
     @Override
     void writeLogs() {
-        BobbinThreadLocal.getBobbin().error("LOG", "error " + uuid)
-        BobbinThreadLocal.getBobbin().warn("LOG", "warn " + uuid)
+        Logger logLogger = bobbinFactory.getLogger("LOG")
+        logLogger.error("error " + uuid)
+        logLogger.warn("warn " + uuid)
         Thread.currentThread().sleep(1500)
     }
 

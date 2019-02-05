@@ -6,159 +6,161 @@ import org.slf4j.helpers.MarkerIgnoringBase
 class BobbinAdapter extends MarkerIgnoringBase {
 
     String className
+    Bobbin bobbin
 
-    BobbinAdapter(String className) {
+    BobbinAdapter(String className, Bobbin bobbin) {
         this.className = className
+        this.bobbin = bobbin
     }
 
     @Override
     boolean isTraceEnabled() {
-        return BobbinThreadLocal.getBobbin().isTraceEnabled(className)
+        return this.bobbin.isTraceEnabled(className)
     }
 
     @Override
     void trace(String msg) {
-        BobbinThreadLocal.getBobbin().trace(className, msg)
+        this.bobbin.trace(className, msg)
     }
 
     @Override
     void trace(String format, Object arg) {
-        BobbinThreadLocal.getBobbin().trace(className, format, arg)
+        this.bobbin.trace(className, format, arg)
     }
 
     @Override
     void trace(String format, Object arg1, Object arg2) {
-        BobbinThreadLocal.getBobbin().trace(className, format, arg1, arg2)
+        this.bobbin.trace(className, format, arg1, arg2)
     }
 
     @Override
     void trace(String format, Object... arguments) {
-        BobbinThreadLocal.getBobbin().trace(className, format, arguments)
+        this.bobbin.trace(className, format, arguments)
     }
 
     @Override
     void trace(String msg, Throwable t) {
-        BobbinThreadLocal.getBobbin().trace(className, msg, t)
+        this.bobbin.trace(className, msg, t)
     }
 
     @Override
     boolean isDebugEnabled() {
-        BobbinThreadLocal.getBobbin().isDebugEnabled(className)
+        this.bobbin.isDebugEnabled(className)
     }
 
     @Override
     void debug(String msg) {
-        BobbinThreadLocal.getBobbin().debug(className, msg)
+        this.bobbin.debug(className, msg)
     }
 
     @Override
     void debug(String format, Object arg) {
-        BobbinThreadLocal.getBobbin().debug(className, format, arg)
+        this.bobbin.debug(className, format, arg)
     }
 
     @Override
     void debug(String format, Object arg1, Object arg2) {
-        BobbinThreadLocal.getBobbin().debug(className, format, arg1, arg2)
+        this.bobbin.debug(className, format, arg1, arg2)
     }
 
     @Override
     void debug(String format, Object... arguments) {
-        BobbinThreadLocal.getBobbin().debug(className, format, arguments)
+        this.bobbin.debug(className, format, arguments)
     }
 
     @Override
     void debug(String msg, Throwable t) {
-        BobbinThreadLocal.getBobbin().debug(className, msg, t)
+        this.bobbin.debug(className, msg, t)
     }
 
     @Override
     boolean isInfoEnabled() {
-        BobbinThreadLocal.getBobbin().isInfoEnabled(className)
+        this.bobbin.isInfoEnabled(className)
     }
 
     @Override
     void info(String msg) {
-        BobbinThreadLocal.getBobbin().info(className, msg)
+        this.bobbin.info(className, msg)
     }
 
     @Override
     void info(String format, Object arg) {
-        BobbinThreadLocal.getBobbin().info(className, format, arg)
+        this.bobbin.info(className, format, arg)
     }
 
     @Override
     void info(String format, Object arg1, Object arg2) {
-        BobbinThreadLocal.getBobbin().info(className, format, arg1, arg2)
+        this.bobbin.info(className, format, arg1, arg2)
     }
 
     @Override
     void info(String format, Object... arguments) {
-        BobbinThreadLocal.getBobbin().info(className, format, arguments)
+        this.bobbin.info(className, format, arguments)
     }
 
     @Override
     void info(String msg, Throwable t) {
-        BobbinThreadLocal.getBobbin().info(className, msg, t)
+        this.bobbin.info(className, msg, t)
     }
 
     @Override
     boolean isWarnEnabled() {
-        BobbinThreadLocal.getBobbin().isWarnEnabled(className)
+        this.bobbin.isWarnEnabled(className)
     }
 
     @Override
     void warn(String msg) {
-        BobbinThreadLocal.getBobbin().warn(className, msg)
+        this.bobbin.warn(className, msg)
     }
 
     @Override
     void warn(String format, Object arg) {
-        BobbinThreadLocal.getBobbin().warn(className, format, arg)
+        this.bobbin.warn(className, format, arg)
     }
 
     @Override
     void warn(String format, Object... arguments) {
-        BobbinThreadLocal.getBobbin().warn(className, format, arguments)
+        this.bobbin.warn(className, format, arguments)
     }
 
     @Override
     void warn(String format, Object arg1, Object arg2) {
-        BobbinThreadLocal.getBobbin().warn(className, format, arg1, arg2)
+        this.bobbin.warn(className, format, arg1, arg2)
     }
 
     @Override
     void warn(String msg, Throwable t) {
-        BobbinThreadLocal.getBobbin().warn(className, msg, t)
+        this.bobbin.warn(className, msg, t)
     }
 
     @Override
     boolean isErrorEnabled() {
-        BobbinThreadLocal.getBobbin().isErrorEnabled(className)
+        this.bobbin.isErrorEnabled(className)
     }
 
     @Override
     void error(String msg) {
-        BobbinThreadLocal.getBobbin().error(className, msg)
+        this.bobbin.error(className, msg)
     }
 
     @Override
     void error(String format, Object arg) {
-        BobbinThreadLocal.getBobbin().error(className, format, arg)
+        this.bobbin.error(className, format, arg)
     }
 
     @Override
     void error(String format, Object arg1, Object arg2) {
-        BobbinThreadLocal.getBobbin().error(className, format, arg1, arg2)
+        this.bobbin.error(className, format, arg1, arg2)
     }
 
     @Override
     void error(String format, Object... arguments) {
-        BobbinThreadLocal.getBobbin().error(className, format, arguments)
+        this.bobbin.error(className, format, arguments)
     }
 
     @Override
     void error(String msg, Throwable t) {
-        BobbinThreadLocal.getBobbin().error(className, msg, t)
+        this.bobbin.error(className, msg, t)
     }
 
 }

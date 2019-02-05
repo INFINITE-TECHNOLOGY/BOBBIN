@@ -8,41 +8,11 @@ import org.slf4j.spi.MDCAdapter
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 
-class Bobbin implements MDCAdapter {
+class Bobbin {
 
     ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("groovy")
 
     BobbinConfig bobbinConfig
-
-    Map<String, String> contextMap = [:]
-
-    String get(String key) {
-        return contextMap.get(key)
-    }
-
-    void put(String key, String value) {
-        contextMap.put(key, value)
-    }
-
-    @Override
-    void remove(String key) {
-        contextMap.remove(key)
-    }
-
-    @Override
-    void clear() {
-        contextMap.clear()
-    }
-
-    @Override
-    Map<String, String> getCopyOfContextMap() {
-        return contextMap.clone() as Map<String, String>
-    }
-
-    @Override
-    void setContextMap(Map<String, String> contextMap) {
-        this.contextMap = contextMap
-    }
 
     @Memoized
     Boolean isLevelEnabled(Level level) {

@@ -1,11 +1,11 @@
 package io.infinite.bobbin.tests_2_x_x.SharedArchiving
 
-
-import io.infinite.bobbin.BobbinThreadLocal
+import io.infinite.bobbin.BobbinFactory
 import io.infinite.bobbin.destinations.FileDestination
 import io.infinite.bobbin.tests_2_x_x.BobbinTest
 import io.infinite.bobbin.tests_2_x_x.TestSharedFileDestination
 import org.junit.Test
+import org.slf4j.Logger
 
 import java.util.zip.ZipFile
 
@@ -19,11 +19,13 @@ class SharedArchiving extends BobbinTest {
     @Override
     void writeLogs() {
         TestSharedFileDestination.getInstance().getEventQueueRunnable().setSharedDestination(new FileDestination(TestSharedFileDestination.getInstance().getDestinationConfig(), TestSharedFileDestination.getInstance().getParentBobbinConfig()))
-        BobbinThreadLocal.getBobbin().error("ZIP","e abcd")
-        BobbinThreadLocal.getBobbin().warn("ZIP", "w 1234")
-        BobbinThreadLocal.getBobbin().info("LOG", "i abcd1234")
-        BobbinThreadLocal.getBobbin().debug("LOG", "d " + uuid)
-        BobbinThreadLocal.getBobbin().trace("LOG", "t " + uuid)
+        Logger zipLogger = bobbinFactory.getLogger("ZIP")
+        Logger logLogger = bobbinFactory.getLogger("LOG")
+        zipLogger.error("e abcd")
+        zipLogger.warn("w 1234")
+        logLogger.info("i abcd1234")
+        logLogger.debug("d " + uuid)
+        logLogger.trace("t " + uuid)
         //Thread.currentThread().sleep(1500)
         while (!TestSharedFileDestination.getInstance().getEventQueueRunnable().getEventQueue().isEmpty()) {
             Thread.sleep(200)
