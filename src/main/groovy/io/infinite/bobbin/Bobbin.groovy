@@ -16,12 +16,14 @@ class Bobbin {
 
     @Memoized
     Boolean isLevelEnabled(Level level) {
+        commonBinding()
         scriptEngine.put("level", level.value())
         return scriptEngine.eval(bobbinConfig.levels)
     }
 
     @Memoized(maxCacheSize = 128)
     final Boolean isClassEnabled(String className) {
+        commonBinding()
         scriptEngine.put("className", className)
         return scriptEngine.eval(bobbinConfig.classes)
     }
@@ -31,12 +33,15 @@ class Bobbin {
         return isLevelEnabled(level) && isClassEnabled(className)
     }
 
-    Bobbin(BobbinConfig bobbinConfig) {
+    void commonBinding() {
         scriptEngine.put("all", true)
         scriptEngine.put("none", false)
         scriptEngine.put("threadName", Thread.currentThread().getName())
         scriptEngine.put("threadGroupName", Thread.currentThread().getThreadGroup().getName())
         scriptEngine.put("bobbin", this)
+    }
+
+    Bobbin(BobbinConfig bobbinConfig) {
         this.bobbinConfig = bobbinConfig
         bobbinConfig.destinations.each {
             Destination destination = Class.forName(it.name).newInstance(
