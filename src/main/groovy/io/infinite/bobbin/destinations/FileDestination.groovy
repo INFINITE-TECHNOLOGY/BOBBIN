@@ -62,11 +62,6 @@ class FileDestination extends Destination {
 
     File initFile(String fileName, String fileKey) {
         File file = new File(fileName)
-        if (file.exists()) {
-            file.zipFileName = prepareCleanupZipFileName(fileName)
-            zipAndDelete(file)
-            file = new File(fileName)
-        }
         file.zipFileName = prepareZipFileName(fileName)
         file.fileName = fileName
         file.getParentFile().mkdirs()
