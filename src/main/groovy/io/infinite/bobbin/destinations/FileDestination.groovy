@@ -62,6 +62,7 @@ class FileDestination extends Destination {
     }
 
     File initFile(String fileName, String fileKey) {
+        Util.report("Bobbin: Initializing ${fileName}. Thread name is ${Thread.currentThread().getName()}, thread group is ${Thread.currentThread().getThreadGroup().getName()}, key is ${fileKey}")
         File file = new File(fileName)
         file.zipFileName = prepareZipFileName(fileName)
         file.fileName = fileName
