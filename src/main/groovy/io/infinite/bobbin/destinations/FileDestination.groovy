@@ -26,7 +26,9 @@ class FileDestination extends Destination {
     @Override
     synchronized protected void store(Event event) {
         String key = scriptEngine.eval(destinationConfig.properties.get("fileKey") ?: "\"default\"")
+        Util.report("!!!!!!KEY:"+getClass().getName() + "@" + Integer.toHexString(hashCode()) + key)
         String newFileName = scriptEngine.eval(destinationConfig.properties.get("fileName"))
+        Util.report("!!!!!!NEWFILENAME:"+getClass().getName() + "@" + Integer.toHexString(hashCode()) + newFileName)
         File file = getFile(newFileName, key)
         file.writer.write(event.getFormattedMessage())
         file.writer.flush()
