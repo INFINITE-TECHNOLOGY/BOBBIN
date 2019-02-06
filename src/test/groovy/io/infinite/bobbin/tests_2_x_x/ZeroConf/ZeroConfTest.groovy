@@ -1,7 +1,6 @@
 package io.infinite.bobbin.tests_2_x_x.ZeroConf
 
-import io.infinite.bobbin.Bobbin
-import io.infinite.bobbin.BobbinFactory
+
 import io.infinite.bobbin.tests_2_x_x.BobbinTest
 import org.junit.Test
 
@@ -15,8 +14,8 @@ class ZeroConfTest extends BobbinTest {
 
     @Override
     void writeLogs() {
-        Bobbin bobbin = bobbinFactory.getBobbin()
-        bobbin.getDestinations()[0].getDestinationConfig().setFormat("\"\${level}|\${threadName}|\${className}|\${event.message}\\n\"")
+        bobbinNameAdapter.bobbin.getDestinations()[0].getDestinationConfig().setFormat("\"\${level}|\${threadName}|\${className}|\${event.message}\\n\"")
+        bobbinNameAdapter.bobbin.getDestinations()[0].compileScripts()
         bobbinNameAdapter.error("error abcd")
         bobbinNameAdapter.warn("warn 1234")
         bobbinNameAdapter.info("info abcd1234")

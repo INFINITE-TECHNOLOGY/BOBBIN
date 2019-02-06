@@ -3,29 +3,63 @@ package io.infinite.bobbin
 import groovy.transform.Memoized
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.destinations.Destination
-import org.slf4j.spi.MDCAdapter
+import org.codehaus.groovy.jsr223.GroovyScriptEngineImpl
 
-import javax.script.ScriptEngine
+import javax.script.Bindings
+import javax.script.CompiledScript
 import javax.script.ScriptEngineManager
 
 class Bobbin {
 
-    ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("groovy")
+    CompiledScript levelsScript
 
-    BobbinConfig bobbinConfig
+    CompiledScript classesScript
+
+    Bindings bindings
+
+    private BobbinConfig bobbinConfig
+
+    ///////////////////CONSTRUCTOR \/\/\/\/\/\/
+    Bobbin(BobbinConfig bobbinConfig) {
+        setBobbinConfig(bobbinConfig)
+        bobbinConfig.destinations.each {
+            Destination destination = Class.forName(it.name).newInstance(
+                    it,
+                    bobbinConfig
+            ) as Destination
+            destinations.add(destination)
+        }
+    }
+    ///////////////////CONSTRUCTOR /\/\/\/\/\/\
+
+    void compileScripts() {
+        GroovyScriptEngineImpl scriptEngine = new ScriptEngineManager().getEngineByName("groovy") as GroovyScriptEngineImpl
+        levelsScript = scriptEngine.compile(bobbinConfig.levels)
+        classesScript = scriptEngine.compile(bobbinConfig.classes)
+        bindings = scriptEngine.createBindings()
+    }
+
+    void setBobbinConfig(BobbinConfig bobbinConfig) {
+        this.bobbinConfig = bobbinConfig
+        compileScripts()
+    }
+
+    BobbinConfig getBobbinConfig() {
+        return bobbinConfig
+    }
 
     @Memoized
     Boolean isLevelEnabled(Level level) {
         commonBinding()
-        scriptEngine.put("level", level.value())
-        return scriptEngine.eval(bobbinConfig.levels)
+        bindings.put("level", level.value())
+        return levelsScript.eval(bindings)
     }
 
     @Memoized(maxCacheSize = 128)
     final Boolean isClassEnabled(String className) {
         commonBinding()
-        scriptEngine.put("className", className)
-        return scriptEngine.eval(bobbinConfig.classes)
+        bindings.put("className", className)
+        return classesScript.eval(bindings)
     }
 
     @Memoized(maxCacheSize = 128)
@@ -34,22 +68,11 @@ class Bobbin {
     }
 
     void commonBinding() {
-        scriptEngine.put("all", true)
-        scriptEngine.put("none", false)
-        scriptEngine.put("threadName", Thread.currentThread().getName())
-        scriptEngine.put("threadGroupName", Thread.currentThread().getThreadGroup().getName())
-        scriptEngine.put("bobbin", this)
-    }
-
-    Bobbin(BobbinConfig bobbinConfig) {
-        this.bobbinConfig = bobbinConfig
-        bobbinConfig.destinations.each {
-            Destination destination = Class.forName(it.name).newInstance(
-                    it,
-                    bobbinConfig
-            ) as Destination
-            destinations.add(destination)
-        }
+        bindings.put("all", true)
+        bindings.put("none", false)
+        bindings.put("threadName", Thread.currentThread().getName())
+        bindings.put("threadGroupName", Thread.currentThread().getThreadGroup().getName())
+        bindings.put("bobbin", this)
     }
 
     List<Destination> destinations = new ArrayList<>()

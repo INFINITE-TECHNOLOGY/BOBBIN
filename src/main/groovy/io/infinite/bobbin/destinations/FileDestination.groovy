@@ -3,8 +3,11 @@ package io.infinite.bobbin.destinations
 import io.infinite.bobbin.Event
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
+import org.codehaus.groovy.jsr223.GroovyScriptEngineImpl
 import org.slf4j.helpers.Util
 
+import javax.script.CompiledScript
+import javax.script.ScriptEngineManager
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
@@ -12,32 +15,36 @@ class FileDestination extends Destination {
 
     Map<String, File> fileMap = new HashMap<>()
 
+    CompiledScript fileKeyScript
+
+    CompiledScript fileNameScript
+
+    CompiledScript zipFileNameScript
+
+    ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     FileDestination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
         super(destinationConfig, parentBobbinConfig)
     }
+    ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
-    String prepareKey() {
-        return scriptEngine.eval(destinationConfig.properties.get("fileKey") ?: "\"default\"")
-    }
-
-    String prepareFileName() {
-        return scriptEngine.eval(destinationConfig.properties.get("fileName"))
+    @Override
+    void compileScripts() {
+        GroovyScriptEngineImpl scriptEngine = new ScriptEngineManager().getEngineByName("groovy") as GroovyScriptEngineImpl
+        fileKeyScript = scriptEngine.compile(destinationConfig.properties.get("fileKey") ?: "\"default\"")
+        fileNameScript = scriptEngine.compile(destinationConfig.properties.get("fileName"))
+        zipFileNameScript = scriptEngine.compile(destinationConfig.properties.get("zipFileName"))
+        super.compileScripts()
     }
 
     String prepareZipFileName(String origFileName) {
-        scriptEngine.put("origFileName", origFileName)
-        return scriptEngine.eval(destinationConfig.properties.get("zipFileName"))
-    }
-
-    String prepareCleanupZipFileName(String origFileName) {
-        scriptEngine.put("origFileName", origFileName)
-        return scriptEngine.eval(destinationConfig.properties.get("cleanupZipFileName"))
+        bindings.put("origFileName", origFileName)
+        return zipFileNameScript.eval(bindings)
     }
 
     @Override
     protected void store(Event event) {
-        String key = prepareKey()
-        String newFileName = prepareFileName()
+        String key = fileKeyScript.eval(bindings)
+        String newFileName = fileNameScript.eval(bindings)
         File file = getFile(newFileName, key)
         file.writer.write(event.getFormattedMessage())
         file.writer.flush()
