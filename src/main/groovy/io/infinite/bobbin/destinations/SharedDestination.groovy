@@ -3,7 +3,6 @@ package io.infinite.bobbin.destinations
 import io.infinite.bobbin.Event
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
-import io.infinite.supplies.ast.cache.Cache
 
 abstract class SharedDestination extends Destination {
 

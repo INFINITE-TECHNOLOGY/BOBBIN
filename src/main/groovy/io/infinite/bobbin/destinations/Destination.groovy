@@ -5,63 +5,27 @@ import io.infinite.bobbin.Event
 import io.infinite.bobbin.Level
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
-import org.codehaus.groovy.jsr223.GroovyScriptEngineImpl
 import org.slf4j.MDC
 
 import javax.script.Bindings
-import javax.script.CompiledScript
+import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 import java.text.SimpleDateFormat
 
 abstract class Destination {
 
-    private DestinationConfig destinationConfig
+    DestinationConfig destinationConfig
 
-    private BobbinConfig parentBobbinConfig
+    BobbinConfig parentBobbinConfig
 
-    Bindings bindings
-
-    CompiledScript levelsScript
-
-    CompiledScript classesScript
-
-    CompiledScript formatScript
-
-    CompiledScript errorFormatScript
+    ScriptEngine scriptEngine = new ScriptEngineManager(this.getClass().getClassLoader()).getEngineByName("groovy")
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     Destination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
-        setDestinationConfig(destinationConfig)
-        setParentBobbinConfig(parentBobbinConfig)
+        this.destinationConfig = destinationConfig
+        this.parentBobbinConfig = parentBobbinConfig
     }
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
-
-    void compileScripts() {
-        GroovyScriptEngineImpl scriptEngine = new ScriptEngineManager(this.getClass().getClassLoader()).getEngineByName("groovy") as GroovyScriptEngineImpl
-        levelsScript = scriptEngine.compile(destinationConfig.levels ?: parentBobbinConfig.levels)
-        classesScript = scriptEngine.compile(destinationConfig.classes ?: parentBobbinConfig.classes)
-        formatScript = scriptEngine.compile(destinationConfig.format ?: parentBobbinConfig.format)
-        errorFormatScript = scriptEngine.compile(destinationConfig.errorFormat ?: parentBobbinConfig.errorFormat)
-        bindings = scriptEngine.createBindings()
-    }
-
-    DestinationConfig getDestinationConfig() {
-        return destinationConfig
-    }
-
-    void setDestinationConfig(DestinationConfig destinationConfig) {
-        this.destinationConfig = destinationConfig
-        compileScripts()
-    }
-
-    BobbinConfig getParentBobbinConfig() {
-        return parentBobbinConfig
-    }
-
-    void setParentBobbinConfig(BobbinConfig parentBobbinConfig) {
-        this.parentBobbinConfig = parentBobbinConfig
-        compileScripts()
-    }
 
     @Override
     String toString() {
@@ -69,19 +33,19 @@ abstract class Destination {
     }
 
     void commonBinding1(Event event) {
-        bindings.put("event", event)
-        bindings.put("level", event.getLevel().value())
-        bindings.put("className", event.getClassName())
-        bindings.put("MDC", MDC)
-        bindings.put("all", true)
-        bindings.put("none", false)
-        bindings.put("threadName", Thread.currentThread().getName())
-        bindings.put("threadGroupName", Thread.currentThread().getThreadGroup().getName())
+        scriptEngine.put("event", event)
+        scriptEngine.put("level", event.getLevel().value())
+        scriptEngine.put("className", event.getClassName())
+        scriptEngine.put("MDC", MDC)
+        scriptEngine.put("all", true)
+        scriptEngine.put("none", false)
+        scriptEngine.put("threadName", Thread.currentThread().getName())
+        scriptEngine.put("threadGroupName", Thread.currentThread().getThreadGroup().getName())
     }
 
     void commonBinding2(Event event) {
-        bindings.put("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
-        bindings.put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
+        scriptEngine.put("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
+        scriptEngine.put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
     }
 
     final void log(Event event) {
@@ -97,18 +61,18 @@ abstract class Destination {
     abstract protected void store(Event event)
 
     @Memoized(maxCacheSize = 128)
-    final Boolean needsLogging(Level level, String className) {
-        return (classesScript.eval(bindings)
-                && levelsScript.eval(bindings))
+    synchronized final Boolean needsLogging(Level level, String className) {
+        return (scriptEngine.eval(destinationConfig.classes ?: parentBobbinConfig.classes)
+                && scriptEngine.eval(destinationConfig.levels ?: parentBobbinConfig.levels))
     }
 
-    final Event formatMessage(Event event) {
+    synchronized final Event formatMessage(Event event) {
         if (event.throwable != null) {
-            event.setError(errorFormatScript.eval(bindings) as String)
+            event.setError(scriptEngine.eval(destinationConfig.errorFormat ?: parentBobbinConfig.errorFormat) as String)
         } else {
             event.setError("")
         }
-        event.setFormattedMessage(formatScript.eval(bindings) as String)
+        event.setFormattedMessage(scriptEngine.eval(destinationConfig.format ?: parentBobbinConfig.format) as String)
         return event
     }
 

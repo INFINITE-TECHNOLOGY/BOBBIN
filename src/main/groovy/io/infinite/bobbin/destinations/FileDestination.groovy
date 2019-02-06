@@ -3,11 +3,8 @@ package io.infinite.bobbin.destinations
 import io.infinite.bobbin.Event
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
-import org.codehaus.groovy.jsr223.GroovyScriptEngineImpl
 import org.slf4j.helpers.Util
 
-import javax.script.CompiledScript
-import javax.script.ScriptEngineManager
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
@@ -15,36 +12,21 @@ class FileDestination extends Destination {
 
     Map<String, File> fileMap = new HashMap<>()
 
-    CompiledScript fileKeyScript
-
-    CompiledScript fileNameScript
-
-    CompiledScript zipFileNameScript
-
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     FileDestination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
         super(destinationConfig, parentBobbinConfig)
     }
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
-    @Override
-    void compileScripts() {
-        GroovyScriptEngineImpl scriptEngine = new ScriptEngineManager(this.getClass().getClassLoader()).getEngineByName("groovy") as GroovyScriptEngineImpl
-        fileKeyScript = scriptEngine.compile(destinationConfig.properties.get("fileKey") ?: "\"default\"")
-        fileNameScript = scriptEngine.compile(destinationConfig.properties.get("fileName"))
-        zipFileNameScript = scriptEngine.compile(destinationConfig.properties.get("zipFileName"))
-        super.compileScripts()
-    }
-
-    String prepareZipFileName(String origFileName) {
-        bindings.put("origFileName", origFileName)
-        return zipFileNameScript.eval(bindings)
+    synchronized String prepareZipFileName(String origFileName) {
+        scriptEngine.put("origFileName", origFileName)
+        return scriptEngine.eval(destinationConfig.properties.get("zipFileName"))
     }
 
     @Override
-    protected void store(Event event) {
-        String key = fileKeyScript.eval(bindings)
-        String newFileName = fileNameScript.eval(bindings)
+    synchronized protected void store(Event event) {
+        String key = scriptEngine.eval(destinationConfig.properties.get("fileKey") ?: "\"default\"")
+        String newFileName = scriptEngine.eval(destinationConfig.properties.get("fileName"))
         File file = getFile(newFileName, key)
         file.writer.write(event.getFormattedMessage())
         file.writer.flush()
@@ -57,7 +39,6 @@ class FileDestination extends Destination {
         } else {
             file = fileMap.get(fileKey)
             if (file.fileName != newFileName) {
-                Util.report("Bobbin: $newFileName replaces ${file.fileName} which is going to be archived. Thread name is ${Thread.currentThread().getName()}, thread group is ${Thread.currentThread().getThreadGroup().getName()}, key is ${fileKey}")
                 File fileToZip = file //avoid reassigning variable outside of thread closure
                 Thread.start({
                     zipAndDelete(fileToZip)
@@ -69,7 +50,6 @@ class FileDestination extends Destination {
     }
 
     File initFile(String fileName, String fileKey) {
-        Util.report("Bobbin: Initializing ${fileName}. Thread name is ${Thread.currentThread().getName()}, thread group is ${Thread.currentThread().getThreadGroup().getName()}, key is ${fileKey}")
         File file = new File(fileName)
         file.zipFileName = prepareZipFileName(fileName)
         file.fileName = fileName
