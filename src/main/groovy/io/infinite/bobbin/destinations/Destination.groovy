@@ -61,12 +61,12 @@ abstract class Destination {
     abstract protected void store(Event event)
 
     @Memoized(maxCacheSize = 128)
-    synchronized final Boolean needsLogging(Level level, String className) {
+    final Boolean needsLogging(Level level, String className) {
         return (scriptEngine.eval(destinationConfig.classes ?: parentBobbinConfig.classes)
                 && scriptEngine.eval(destinationConfig.levels ?: parentBobbinConfig.levels))
     }
 
-    synchronized final Event formatMessage(Event event) {
+    final Event formatMessage(Event event) {
         if (event.throwable != null) {
             event.setError(scriptEngine.eval(destinationConfig.errorFormat ?: parentBobbinConfig.errorFormat) as String)
         } else {

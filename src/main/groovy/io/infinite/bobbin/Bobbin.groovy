@@ -27,14 +27,14 @@ class Bobbin {
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
     @Memoized
-    synchronized Boolean isLevelEnabled(Level level) {
+    Boolean isLevelEnabled(Level level) {
         commonBinding()
         scriptEngine.put("level", level.value())
         return scriptEngine.eval(bobbinConfig.levels)
     }
 
     @Memoized(maxCacheSize = 128)
-    synchronized final Boolean isClassEnabled(String className) {
+    final Boolean isClassEnabled(String className) {
         commonBinding()
         scriptEngine.put("className", className)
         return scriptEngine.eval(bobbinConfig.classes)
