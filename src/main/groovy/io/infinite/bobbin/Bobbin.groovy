@@ -33,7 +33,7 @@ class Bobbin {
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
     void compileScripts() {
-        GroovyScriptEngineImpl scriptEngine = new ScriptEngineManager().getEngineByName("groovy") as GroovyScriptEngineImpl
+        GroovyScriptEngineImpl scriptEngine = new ScriptEngineManager(this.getClass().getClassLoader()).getEngineByName("groovy") as GroovyScriptEngineImpl
         levelsScript = scriptEngine.compile(bobbinConfig.levels)
         classesScript = scriptEngine.compile(bobbinConfig.classes)
         bindings = scriptEngine.createBindings()

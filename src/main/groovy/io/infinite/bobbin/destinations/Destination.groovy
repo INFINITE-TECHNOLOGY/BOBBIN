@@ -37,7 +37,7 @@ abstract class Destination {
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
     void compileScripts() {
-        GroovyScriptEngineImpl scriptEngine = new ScriptEngineManager().getEngineByName("groovy") as GroovyScriptEngineImpl
+        GroovyScriptEngineImpl scriptEngine = new ScriptEngineManager(this.getClass().getClassLoader()).getEngineByName("groovy") as GroovyScriptEngineImpl
         levelsScript = scriptEngine.compile(destinationConfig.levels ?: parentBobbinConfig.levels)
         classesScript = scriptEngine.compile(destinationConfig.classes ?: parentBobbinConfig.classes)
         formatScript = scriptEngine.compile(destinationConfig.format ?: parentBobbinConfig.format)

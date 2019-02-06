@@ -29,7 +29,7 @@ class FileDestination extends Destination {
 
     @Override
     void compileScripts() {
-        GroovyScriptEngineImpl scriptEngine = new ScriptEngineManager().getEngineByName("groovy") as GroovyScriptEngineImpl
+        GroovyScriptEngineImpl scriptEngine = new ScriptEngineManager(this.getClass().getClassLoader()).getEngineByName("groovy") as GroovyScriptEngineImpl
         fileKeyScript = scriptEngine.compile(destinationConfig.properties.get("fileKey") ?: "\"default\"")
         fileNameScript = scriptEngine.compile(destinationConfig.properties.get("fileName"))
         zipFileNameScript = scriptEngine.compile(destinationConfig.properties.get("zipFileName"))
