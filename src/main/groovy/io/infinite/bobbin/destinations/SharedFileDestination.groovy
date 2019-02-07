@@ -1,26 +1,19 @@
 package io.infinite.bobbin.destinations
 
-
+import groovy.transform.CompileStatic
+import io.infinite.bobbin.Event
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
-import io.infinite.supplies.ast.cache.Cache
 
-class SharedFileDestination extends SharedDestination {
-
-    @Cache
-    Map<String, EventQueueRunnable> eventQueueRunnableMap = [:]
+@CompileStatic
+class SharedFileDestination extends FileDestination {
 
     SharedFileDestination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
         super(destinationConfig, parentBobbinConfig)
     }
 
     @Override
-    Destination getActualDestination() {
-        return new FileDestination(destinationConfig, parentBobbinConfig)
-    }
-
-    @Override
-    String getSharedDestinationName() {
-        return "Bobbin Async File Logger"
+    synchronized protected void store(Event event) {
+        super.store(event)
     }
 }

@@ -1,5 +1,6 @@
 package io.infinite.bobbin
 
+import groovy.transform.CompileStatic
 import groovy.transform.Memoized
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.destinations.Destination
@@ -7,6 +8,7 @@ import io.infinite.bobbin.destinations.Destination
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 
+@CompileStatic
 class Bobbin {
 
     BobbinConfig bobbinConfig

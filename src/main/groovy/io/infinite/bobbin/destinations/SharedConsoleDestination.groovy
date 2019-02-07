@@ -1,26 +1,19 @@
 package io.infinite.bobbin.destinations
 
-
+import groovy.transform.CompileStatic
+import io.infinite.bobbin.Event
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
-import io.infinite.supplies.ast.cache.Cache
 
-class SharedConsoleDestination extends SharedDestination {
-
-    @Cache
-    Map<String, EventQueueRunnable> eventQueueRunnableMap = [:]
+@CompileStatic
+class SharedConsoleDestination extends ConsoleDestination {
 
     SharedConsoleDestination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
         super(destinationConfig, parentBobbinConfig)
     }
 
     @Override
-    Destination getActualDestination() {
-        return new ConsoleDestination(destinationConfig, parentBobbinConfig)
-    }
-
-    @Override
-    String getSharedDestinationName() {
-        return "Bobbin Async Console Logger"
+    synchronized protected void store(Event event) {
+        super.store(event)
     }
 }

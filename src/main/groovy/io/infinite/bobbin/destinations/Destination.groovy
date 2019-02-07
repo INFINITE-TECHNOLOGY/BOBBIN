@@ -1,5 +1,6 @@
 package io.infinite.bobbin.destinations
 
+import groovy.transform.CompileStatic
 import groovy.transform.Memoized
 import io.infinite.bobbin.Event
 import io.infinite.bobbin.Level
@@ -7,11 +8,11 @@ import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
 import org.slf4j.MDC
 
-import javax.script.Bindings
 import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 import java.text.SimpleDateFormat
 
+@CompileStatic
 abstract class Destination {
 
     DestinationConfig destinationConfig

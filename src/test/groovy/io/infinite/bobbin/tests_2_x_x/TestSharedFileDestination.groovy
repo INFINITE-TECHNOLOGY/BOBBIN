@@ -2,9 +2,6 @@ package io.infinite.bobbin.tests_2_x_x
 
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
-import io.infinite.bobbin.destinations.Destination
-import io.infinite.bobbin.destinations.EventQueueRunnable
-import io.infinite.bobbin.destinations.SharedDestination
 import io.infinite.bobbin.destinations.SharedFileDestination
 
 class TestSharedFileDestination extends SharedFileDestination {

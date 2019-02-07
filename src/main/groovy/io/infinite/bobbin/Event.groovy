@@ -1,7 +1,9 @@
 package io.infinite.bobbin
 
+import groovy.transform.CompileStatic
 import io.infinite.supplies.ast.exceptions.ExceptionUtils
 
+@CompileStatic
 class Event {
     Level level
     Date date = new Date()

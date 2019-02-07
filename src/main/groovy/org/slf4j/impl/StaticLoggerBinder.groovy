@@ -1,9 +1,11 @@
 package org.slf4j.impl
 
+import groovy.transform.CompileStatic
 import io.infinite.bobbin.BobbinFactory
 import org.slf4j.ILoggerFactory
 import org.slf4j.spi.LoggerFactoryBinder
 
+@CompileStatic
 public class StaticLoggerBinder implements LoggerFactoryBinder {
 
     private static final StaticLoggerBinder SINGLETON = new StaticLoggerBinder()

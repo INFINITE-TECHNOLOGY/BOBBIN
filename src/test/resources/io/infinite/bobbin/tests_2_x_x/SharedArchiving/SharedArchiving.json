@@ -3,7 +3,7 @@
   "classes": "all",
   "destinations": [
     {
-      "name": "io.infinite.bobbin.tests_2_x_x.TestSharedFileDestination",
+      "name": "io.infinite.bobbin.destinations.SharedFileDestination",
       "properties": {
         "fileName": "\"./LOGS/SharedArchiving/TEST_${className}.log\"",
         "zipFileName": "\"${origFileName}.zip\"",
