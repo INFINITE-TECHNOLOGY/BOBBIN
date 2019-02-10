@@ -3,6 +3,7 @@ File
 https://github.com/virtualdogbert/GroovyConfigWriter/blob/master/build.gradle
 has been used as basis for this file.
  */
+
 plugins {
     id "groovy"
     id "maven-publish"
@@ -11,23 +12,28 @@ plugins {
     id "idea"
     id "jacoco"
 }
-sourceCompatibility = 1.7
+
+sourceCompatibility = 1.8
 group = "io.infinite"
 version = "2.0.0-SNAPSHOT"
 description = "Groovy Slf4j logger"
+
 wrapper {
-    gradleVersion = "5.0"
+    gradleVersion = "5.2.1"
 }
+
 repositories {
     jcenter()
     maven {
         url "https://oss.jfrog.org/artifactory/oss-snapshot-local"
     }
 }
+
 sourceSets {
     main.groovy.srcDirs = ["src/main/groovy"]
     test.groovy.srcDirs = ["src/test/groovy"]
 }
+
 dependencies {
     compile "org.codehaus.groovy:groovy-all:2.5.4"
     compile "org.slf4j:slf4j-api:1.7.25"
@@ -35,16 +41,19 @@ dependencies {
     compile "io.infinite:supplies:1.0.1-20190207.102440-27"
     testCompile "junit:junit:4.12"
 }
+
 task sourceJar(type: Jar) {
     from sourceSets.main.allSource
     classifier "sources"
 }
+
 ext {
     theTitle = "Groovy Slf4j logger"
     titleForDocumentation = archivesBaseName + " " + version
     packageTitle = group
     description = "Groovy Slf4j logger"
 }
+
 publishing {
     publications {
         groovyMaven(MavenPublication) {
@@ -55,13 +64,16 @@ publishing {
         }
     }
 }
+
 task jarSrc(type: Jar, dependsOn: classes) {
     classifier = "sources"
     from sourceSets.main.allSource
 }
+
 artifacts {
     archives(jarSrc)
 }
+
 bintray {
     user = System.getProperty("bintrayuser")
     key = System.getProperty("bintraypassword")
@@ -79,6 +91,7 @@ bintray {
         licenses = ["Apache-2.0"]
     }
 }
+
 artifactory {
     contextUrl = 'http://oss.jfrog.org'
     publish {
@@ -98,16 +111,19 @@ artifactory {
     }
     clientConfig.info.setBuildNumber(System.getProperty('build.number'))
 }
+
 test {
     testLogging {
         events "passed", "skipped", "failed"
         exceptionFormat "full"
     }
 }
+
 jacocoTestReport {
     reports {
         xml.enabled true
         html.enabled false
     }
 }
+
 check.dependsOn jacocoTestReport
