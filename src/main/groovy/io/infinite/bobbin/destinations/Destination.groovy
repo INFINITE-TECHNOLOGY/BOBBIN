@@ -2,15 +2,12 @@ package io.infinite.bobbin.destinations
 
 import groovy.transform.CompileStatic
 import groovy.transform.Memoized
+import io.infinite.bobbin.BobbinScriptEngine
+import io.infinite.bobbin.BobbinScriptEngineFactory
 import io.infinite.bobbin.Event
 import io.infinite.bobbin.Level
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
-import org.slf4j.MDC
-
-import javax.script.ScriptEngine
-import javax.script.ScriptEngineManager
-import java.text.SimpleDateFormat
 
 @CompileStatic
 abstract class Destination {
@@ -19,12 +16,13 @@ abstract class Destination {
 
     BobbinConfig parentBobbinConfig
 
-    ScriptEngine scriptEngine = new ScriptEngineManager(this.getClass().getClassLoader()).getEngineByName("groovy")
+    BobbinScriptEngine bobbinScriptEngine
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     Destination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
         this.destinationConfig = destinationConfig
         this.parentBobbinConfig = parentBobbinConfig
+        this.bobbinScriptEngine = new BobbinScriptEngineFactory().getDestinationBobbinScriptEngine(destinationConfig)
     }
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
@@ -33,28 +31,10 @@ abstract class Destination {
         return super.toString()
     }
 
-    void commonBinding1(Event event) {
-        scriptEngine.put("event", event)
-        scriptEngine.put("level", event.getLevel().value())
-        scriptEngine.put("className", event.getClassName())
-        scriptEngine.put("MDC", MDC)
-        scriptEngine.put("all", true)
-        scriptEngine.put("none", false)
-        scriptEngine.put("threadName", Thread.currentThread().getName())
-        scriptEngine.put("threadGroupName", Thread.currentThread().getThreadGroup().getName())
-    }
-
-    void commonBinding2(Event event) {
-        scriptEngine.put("date", new SimpleDateFormat(destinationConfig.dateFormat).format(event.getDate()))
-        scriptEngine.put("dateTime", new SimpleDateFormat(destinationConfig.dateTimeFormat).format(event.getDate()))
-    }
-
-    final void log(Event event) {
-        commonBinding1(event)
+    void log(Event event) {
         if (!needsLogging(event.getLevel(), event.getClassName())) {
             return
         }
-        commonBinding2(event)
         formatMessage(event)
         store(event)
     }
@@ -62,18 +42,18 @@ abstract class Destination {
     abstract protected void store(Event event)
 
     @Memoized(maxCacheSize = 128)
-    final Boolean needsLogging(Level level, String className) {
-        return (scriptEngine.eval(destinationConfig.classes ?: parentBobbinConfig.classes)
-                && scriptEngine.eval(destinationConfig.levels ?: parentBobbinConfig.levels))
+    Boolean needsLogging(Level level, String className) {
+        return (bobbinScriptEngine.isClassEnabled(className)
+                && bobbinScriptEngine.isLevelEnabled(level.value()))
     }
 
-    final Event formatMessage(Event event) {
-        if (event.throwable != null) {
+    Event formatMessage(Event event) {
+        /*if (event.throwable != null) {
             event.setError(scriptEngine.eval(destinationConfig.errorFormat ?: parentBobbinConfig.errorFormat) as String)
         } else {
             event.setError("")
-        }
-        event.setFormattedMessage(scriptEngine.eval(destinationConfig.format ?: parentBobbinConfig.format) as String)
+        }*/
+        event.setFormattedMessage(bobbinScriptEngine.formatMessage(event) as String)
         return event
     }
 

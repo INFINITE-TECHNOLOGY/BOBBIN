@@ -1,19 +1,15 @@
 package io.infinite.bobbin
 
 import groovy.transform.CompileStatic
-import groovy.transform.Memoized
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.destinations.Destination
-
-import javax.script.ScriptEngine
-import javax.script.ScriptEngineManager
 
 @CompileStatic
 class Bobbin {
 
     BobbinConfig bobbinConfig
 
-    ScriptEngine scriptEngine = new ScriptEngineManager(this.getClass().getClassLoader()).getEngineByName("groovy")
+    BobbinScriptEngine bobbinScriptEngine = new BobbinScriptEngineFactory().bobbinScriptEngine
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     Bobbin(BobbinConfig bobbinConfig) {
@@ -21,38 +17,24 @@ class Bobbin {
         bobbinConfig.destinations.each {
             Destination destination = Class.forName(it.name).newInstance(
                     it,
-                    bobbinConfig
+                    bobbinConfig,
+                    bobbinScriptEngine
             ) as Destination
             destinations.add(destination)
         }
     }
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
-    @Memoized
     Boolean isLevelEnabled(Level level) {
-        commonBinding()
-        scriptEngine.put("level", level.value())
-        return scriptEngine.eval(bobbinConfig.levels)
+        return bobbinScriptEngine.isLevelEnabled(level.value())
     }
 
-    @Memoized(maxCacheSize = 128)
-    final Boolean isClassEnabled(String className) {
-        commonBinding()
-        scriptEngine.put("className", className)
-        return scriptEngine.eval(bobbinConfig.classes)
+    Boolean isClassEnabled(String className) {
+        return bobbinScriptEngine.isClassEnabled(className)
     }
 
-    @Memoized(maxCacheSize = 128)
-    final Boolean isLevelAndClassEnabled(Level level, String className) {
+    Boolean needsLogging(Level level, String className) {
         return isLevelEnabled(level) && isClassEnabled(className)
-    }
-
-    void commonBinding() {
-        scriptEngine.put("all", true)
-        scriptEngine.put("none", false)
-        scriptEngine.put("threadName", Thread.currentThread().getName())
-        scriptEngine.put("threadGroupName", Thread.currentThread().getThreadGroup().getName())
-        scriptEngine.put("bobbin", this)
     }
 
     List<Destination> destinations = new ArrayList<>()
@@ -62,7 +44,7 @@ class Bobbin {
     }
 
     boolean isTraceEnabled(String className) {
-        return isLevelAndClassEnabled(Level.TRACE, className)
+        return needsLogging(Level.TRACE, className)
     }
 
     void trace(String className, String msg) {
@@ -96,7 +78,7 @@ class Bobbin {
     }
 
     boolean isDebugEnabled(String className) {
-        return isLevelAndClassEnabled(Level.DEBUG, className)
+        return needsLogging(Level.DEBUG, className)
     }
 
     void debug(String className, String msg) {
@@ -130,7 +112,7 @@ class Bobbin {
     }
 
     boolean isInfoEnabled(String className) {
-        return isLevelAndClassEnabled(Level.INFO, className)
+        return needsLogging(Level.INFO, className)
     }
 
     void info(String className, String msg) {
@@ -164,7 +146,7 @@ class Bobbin {
     }
 
     boolean isWarnEnabled(String className) {
-        return isLevelAndClassEnabled(Level.WARN, className)
+        return needsLogging(Level.WARN, className)
     }
 
     void warn(String className, String msg) {
@@ -198,7 +180,7 @@ class Bobbin {
     }
 
     boolean isErrorEnabled(String className) {
-        return isLevelAndClassEnabled(Level.ERROR, className)
+        return needsLogging(Level.ERROR, className)
     }
 
     void error(String className, String msg) {

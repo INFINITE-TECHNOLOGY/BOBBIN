@@ -17,7 +17,7 @@ class BobbinFactory implements ILoggerFactory {
     @Cache
     BobbinConfig bobbinConfig = initBobbinConfig()
 
-    BobbinConfig initBobbinConfig() {
+    synchronized BobbinConfig initBobbinConfig() {
         BobbinConfig bobbinConfig
         String configResourceString = new ResourceLookup("Bobbin", getConfName(), true).getResourceAsString()
         if (configResourceString != null) {
@@ -30,6 +30,7 @@ class BobbinFactory implements ILoggerFactory {
         }
         return bobbinConfig
     }
+
 
     BobbinConfig zeroConf() {
         Util.report("Bobbin: using zero configuration")

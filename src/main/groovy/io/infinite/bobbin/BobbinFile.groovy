@@ -7,7 +7,6 @@ class BobbinFile extends File{
 
     FileWriter writer
     String fileName
-    String zipFileName
 
     BobbinFile(String pathname) {
         super(pathname)
