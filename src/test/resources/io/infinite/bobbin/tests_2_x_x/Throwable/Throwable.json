@@ -9,8 +9,8 @@
         "zipFileName": "\"./LOGS/Throwable/Throwable.log.zip\"",
         "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
       },
-      "format": "\"${level}|${threadName}|${className}|${event.message}${event.error}\\n\"",
-      "errorFormat": "\"|${event.throwable.message}\""
+      "format": "\"${level}|${threadName}|${className}|${message}\\n\"",
+      "formatThrowable": "level + '|' + threadName + '|' + className + '|' + message + '|' + throwable.getMessage() + '\\n'"
     }
   ]
 }

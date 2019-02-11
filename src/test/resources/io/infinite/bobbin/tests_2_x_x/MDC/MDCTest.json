@@ -5,11 +5,11 @@
     {
       "name": "io.infinite.bobbin.destinations.FileDestination",
       "properties": {
-        "fileName": "\"./LOGS/MDC/${MDC.dynamicValue}.log\"",
-        "zipFileName": "\"./LOGS/MDC/${MDC.dynamicValue}.log.zip\"",
+        "fileName": "\"./LOGS/MDC/${MDC.get('dynamicValue')}.log\"",
+        "zipFileName": "\"./LOGS/MDC/${MDC.get('dynamicValue')}.log.zip\"",
         "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
       },
-      "format": "\"${level}|${threadName}|${className}|${event.message}|${MDC.dynamicValue}\\n\""
+      "format": "\"${level}|${threadName}|${className}|${message}|${MDC.get('dynamicValue')}\\n\""
     }
   ]
 }

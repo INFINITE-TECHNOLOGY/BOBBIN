@@ -3,10 +3,7 @@ package io.infinite.bobbin.destinations
 import groovy.transform.CompileStatic
 import groovy.transform.Memoized
 import io.infinite.bobbin.BobbinScriptEngine
-import io.infinite.bobbin.BobbinScriptEngineFactory
-import io.infinite.bobbin.Event
 import io.infinite.bobbin.Level
-import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
 
 @CompileStatic
@@ -14,47 +11,55 @@ abstract class Destination {
 
     DestinationConfig destinationConfig
 
-    BobbinConfig parentBobbinConfig
-
     BobbinScriptEngine bobbinScriptEngine
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
-    Destination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
+    Destination(DestinationConfig destinationConfig) {
         this.destinationConfig = destinationConfig
-        this.parentBobbinConfig = parentBobbinConfig
-        this.bobbinScriptEngine = new BobbinScriptEngineFactory().getDestinationBobbinScriptEngine(destinationConfig)
     }
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
-    @Override
-    String toString() {
-        return super.toString()
-    }
-
-    void log(Event event) {
-        if (!needsLogging(event.getLevel(), event.getClassName())) {
-            return
+    void log(Level level, String className, String msg) {
+        if (needsLogging(level, className)) {
+            String date = bobbinScriptEngine.getDate()
+            store(bobbinScriptEngine.formatLine(level.value(), className, date, msg), level, className, date)
         }
-        formatMessage(event)
-        store(event)
     }
 
-    abstract protected void store(Event event)
+    void log(Level level, String className, String format, Object arg) {
+        if (needsLogging(level, className)) {
+            String date = bobbinScriptEngine.getDate()
+            store(bobbinScriptEngine.formatLine(level.value(), className, date, format, arg), level, className, date)
+        }
+    }
+
+    void logWithArray(Level level, String className, String format, Object... arguments) {
+        if (needsLogging(level, className)) {
+            String date = bobbinScriptEngine.getDate()
+            store(bobbinScriptEngine.formatLineWithArray(level.value(), className, date, format, arguments), level, className, date)
+        }
+    }
+
+    void log(Level level, String className, String format, Object arg1, Object arg2) {
+        if (needsLogging(level, className)) {
+            String date = bobbinScriptEngine.getDate()
+            store(bobbinScriptEngine.formatLine(level.value(), className, date, format, arg1, arg2), level, className, date)
+        }
+    }
+
+    void log(Level level, String className, String msg, Throwable t) {
+        if (needsLogging(level, className)) {
+            String date = bobbinScriptEngine.getDate()
+            store(bobbinScriptEngine.formatLine(level.value(), className, date, msg, t), level, className, date)
+        }
+    }
+
+    abstract protected void store(String finalOutputMessageText, Level level, String className, String date)
 
     @Memoized(maxCacheSize = 128)
     Boolean needsLogging(Level level, String className) {
         return (bobbinScriptEngine.isClassEnabled(className)
                 && bobbinScriptEngine.isLevelEnabled(level.value()))
-    }
-
-    Event formatMessage(Event event) {
-        /*if (event.throwable != null) {
-            event.setError(scriptEngine.eval(destinationConfig.errorFormat ?: parentBobbinConfig.errorFormat) as String)
-        } else {
-            event.setError("")
-        }*/
-        event.setFormattedMessage(bobbinScriptEngine.formatMessage(event) as String)
-        return event
     }
 
 }

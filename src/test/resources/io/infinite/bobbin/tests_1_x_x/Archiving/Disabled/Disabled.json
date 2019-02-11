@@ -10,7 +10,7 @@
         "zipFileName": "\"./LOGS/Archiving/Disabled/${className}.log.zip\"",
         "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
       },
-      "format": "\"${level}|${threadName}|${className}|${event.message}\\n\""
+      "format": "\"${level}|${threadName}|${className}|${message}\\n\""
     }
   ]
 }

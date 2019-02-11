@@ -1,6 +1,6 @@
 package io.infinite.bobbin.tests_1_x_x.Archiving.Disabled
 
-import io.infinite.bobbin.BobbinFactory
+
 import io.infinite.bobbin.tests_2_x_x.BobbinTest
 import org.junit.Test
 import org.slf4j.Logger

@@ -4,29 +4,33 @@ import groovy.text.SimpleTemplateEngine
 import groovy.text.Template
 import groovy.transform.CompileStatic
 import groovy.transform.Memoized
+import io.infinite.bobbin.BobbinFactory
+import io.infinite.bobbin.BobbinScriptEngine
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
 import io.infinite.supplies.ast.cache.Cache
 import io.infinite.supplies.conf.ResourceLookup
 
 @CompileStatic
-class BobbinScriptEngineFactory {
+class TestBobbinScriptEngineFactory {
 
-    @Cache
+    TestBobbinScriptEngineFactory(BobbinConfig bobbinConfig) {
+        this.bobbinConfig = bobbinConfig
+    }
     SimpleTemplateEngine simpleTemplateEngine = new SimpleTemplateEngine(getClass().getClassLoader())
 
-    @Cache
+    
     String combinedTemplateFileString = new ResourceLookup("BobbinScriptEngine", combinedTemplateFileName).getResourceAsString()
 
-    @Cache
+    
     Template combinedTemplate = simpleTemplateEngine.createTemplate(combinedTemplateFileString)
 
-    @Cache
+    
     GroovyClassLoader groovyClassLoader = new GroovyClassLoader(getClass().getClassLoader())
 
-    BobbinConfig bobbinConfig = new BobbinFactory().bobbinConfig
+    BobbinConfig bobbinConfig
 
-    @Cache
+    
     String bobbinScriptEngineImplCode = combinedTemplate.make([
             "levelScript"  : bobbinConfig.levels,
             "classesScript": bobbinConfig.classes,
@@ -40,10 +44,10 @@ class BobbinScriptEngineFactory {
             "fileNameScript" : "\"\""
     ])
 
-    @Cache
+    
     Class bobbinScriptEngineImplClass = groovyClassLoader.parseClass(bobbinScriptEngineImplCode)
 
-    @Cache
+    
     BobbinScriptEngine bobbinScriptEngine = bobbinScriptEngineImplClass.newInstance(bobbinScriptEngineImplCode) as BobbinScriptEngine
 
     String getCombinedTemplateFileName() {

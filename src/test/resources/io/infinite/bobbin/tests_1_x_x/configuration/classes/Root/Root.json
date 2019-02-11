@@ -9,7 +9,7 @@
         "zipFileName": "\"./LOGS/configuration/classes/Root/Root.log.zip\"",
         "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
       },
-      "format": "\"${level}|${threadName}|${className}|${event.message}\\n\""
+      "format": "\"${level}|${threadName}|${className}|${message}\\n\""
     }
   ]
 }

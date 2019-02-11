@@ -2,8 +2,10 @@ package io.infinite.bobbin.tests_2_x_x
 
 import groovy.text.SimpleTemplateEngine
 import groovy.text.Template
-import io.infinite.bobbin.BobbinAdapter
+import io.infinite.bobbin.Bobbin
 import io.infinite.bobbin.BobbinFactory
+import io.infinite.bobbin.BobbinScriptEngineFactory
+import io.infinite.bobbin.TestBobbinFactory
 import org.slf4j.helpers.Util
 
 abstract class BobbinTest {
@@ -13,8 +15,8 @@ abstract class BobbinTest {
     String dynamicValue = System.currentTimeMillis().toString()
     String className = this.getClass().getSimpleName()
     String canonicalName = this.getClass().getCanonicalName()
-    BobbinAdapter bobbinNameAdapter
-    BobbinFactory bobbinFactory = new BobbinFactory()
+    Bobbin bobbinNameAdapter
+    BobbinFactory bobbinFactory = new TestBobbinFactory()
 
 
     String stdout
@@ -54,7 +56,8 @@ abstract class BobbinTest {
         bobbinFactory.setConfName(getConfName())
         bobbinFactory.setBobbinConfig(bobbinFactory.initBobbinConfig())
         Thread.currentThread().setName(this.getClass().getSimpleName())
-        bobbinNameAdapter = bobbinFactory.getLogger(canonicalName) as BobbinAdapter
+        bobbinNameAdapter = bobbinFactory.getLogger(canonicalName) as Bobbin
+        bobbinNameAdapter.setBobbinScriptEngine(new BobbinScriptEngineFactory().bobbinScriptEngine)
         byteArrayOutputStream = new ByteArrayOutputStream()
         PrintStream printStream = new PrintStream(byteArrayOutputStream)
         initialPrintStream = System.out

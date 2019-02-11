@@ -10,6 +10,9 @@ abstract class AbstractConfig {
     String dateFormat
     String dateTimeFormat
     String format
-    String errorFormat
+    String formatThrowable
+    String formatArg
+    String formatArgs
+    String formatArg1Arg2
 
 }

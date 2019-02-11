@@ -10,11 +10,11 @@
         "zipFileName": "\"./LOGS/${threadName}/${level}/ARCHIVE/${threadName}_${level}_${date}.zip\"",
         "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
       },
-      "format": "\"${dateTime}|${level}|${threadName}|${className}|${event.message}\\n\""
+      "format": "\"${dateTime}|${level}|${threadName}|${className}|${message}\\n\""
     },
     {
       "name": "io.infinite.bobbin.destinations.ConsoleDestination",
-      "format": "\"${dateTime}|${level}|${threadName}|${className}|${event.message}\\n\""
+      "format": "\"${dateTime}|${level}|${threadName}|${className}|${message}\\n\""
     }
   ]
 }
