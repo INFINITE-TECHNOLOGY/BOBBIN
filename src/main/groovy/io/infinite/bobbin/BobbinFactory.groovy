@@ -44,7 +44,12 @@ class BobbinFactory implements ILoggerFactory {
             Destination destination = Class.forName(it.name).newInstance(
                     it
             ) as Destination
-            destination.bobbinScriptEngine = new BobbinScriptEngineFactory().getDestinationBobbinScriptEngine(it)
+            if (it.bobbinScriptEngine != null) {
+                destination.bobbinScriptEngine = it.bobbinScriptEngine
+            } else {
+                it.bobbinScriptEngine = new BobbinScriptEngineFactory().getDestinationBobbinScriptEngine(it)
+                destination.bobbinScriptEngine = it.bobbinScriptEngine
+            }
             bobbin.destinations.add(destination)
         }
         bobbin.bobbinScriptEngine = new BobbinScriptEngineFactory().bobbinScriptEngine

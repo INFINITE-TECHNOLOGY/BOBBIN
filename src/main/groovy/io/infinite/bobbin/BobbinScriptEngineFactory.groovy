@@ -3,11 +3,9 @@ package io.infinite.bobbin
 import groovy.text.SimpleTemplateEngine
 import groovy.text.Template
 import groovy.transform.CompileStatic
-import groovy.transform.Memoized
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
 import io.infinite.supplies.ast.cache.Cache
-import io.infinite.supplies.conf.ResourceLookup
 
 @CompileStatic
 class BobbinScriptEngineFactory {
@@ -46,11 +44,6 @@ class BobbinScriptEngineFactory {
     @Cache
     BobbinScriptEngine bobbinScriptEngine = bobbinScriptEngineImplClass.newInstance(bobbinScriptEngineImplCode) as BobbinScriptEngine
 
-    String getCombinedTemplateFileName() {
-        return "BobbinScriptEngineImpl.groovy"
-    }
-
-    @Memoized
     BobbinScriptEngine getDestinationBobbinScriptEngine(DestinationConfig destinationConfig) {
         return groovyClassLoader.parseClass(combinedTemplate.make([
                 "levelScript"  : destinationConfig.levels ?: bobbinConfig.levels,

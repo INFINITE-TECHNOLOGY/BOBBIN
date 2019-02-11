@@ -1,7 +1,6 @@
 package io.infinite.bobbin.destinations
 
 import groovy.transform.CompileStatic
-import groovy.transform.Memoized
 import io.infinite.bobbin.BobbinScriptEngine
 import io.infinite.bobbin.Level
 import io.infinite.bobbin.config.DestinationConfig
@@ -56,7 +55,6 @@ abstract class Destination {
 
     abstract protected void store(String finalOutputMessageText, Level level, String className, String date)
 
-    @Memoized(maxCacheSize = 128)
     Boolean needsLogging(Level level, String className) {
         return (bobbinScriptEngine.isClassEnabled(className)
                 && bobbinScriptEngine.isLevelEnabled(level.value()))
