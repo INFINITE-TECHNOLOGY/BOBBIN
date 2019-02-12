@@ -35,13 +35,13 @@ class SharedArchiving extends BobbinTest {
     @Override
     void assertLogs() {
         return
-        assertFile("LOGS/SharedArchiving/TEST_LOG.log", "LOGS/SharedArchiving/TEST_LOG.expected")
+        /*assertFile("LOGS/SharedArchiving/TEST_LOG.log", "LOGS/SharedArchiving/TEST_LOG.expected")
         ZipFile zipFile = new ZipFile(new File("./LOGS/SharedArchiving/TEST_ZIP.log.zip"))
         assert zipFile.entries().toList().size() == 1
         zipFile.entries().each {
             assert zipFile.getInputStream(it).getText() == "error|SharedArchiving|ZIP|e abcd\nwarn|SharedArchiving|ZIP|w 1234\n"
         }
         assert !new File("./LOGS/SharedArchiving/ZIP.log").exists()
-        assert !new File("./LOGS/SharedArchiving/LOG.log.zip").exists()
+        assert !new File("./LOGS/SharedArchiving/LOG.log.zip").exists()*/
     }
 }

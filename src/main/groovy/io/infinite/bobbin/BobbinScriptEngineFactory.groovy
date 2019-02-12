@@ -11,7 +11,7 @@ import io.infinite.supplies.ast.cache.Cache
 class BobbinScriptEngineFactory {
 
     @Cache
-    SimpleTemplateEngine simpleTemplateEngine = new SimpleTemplateEngine(getClass().getClassLoader())
+    SimpleTemplateEngine simpleTemplateEngine = new SimpleTemplateEngine()
 
     @Cache
     String combinedTemplateFileString = getTemplateText()
@@ -87,19 +87,19 @@ class BobbinScriptEngineImpl extends BobbinScriptEngine {
         \$formatScript
     }
 
-    String formatLine(String level, String className, String date, String message, Object arg) {
+    String formatLineArg(String level, String className, String date, String message, Object arg) {
         \$argFormatScript
     }
 
-    String formatLineWithArray(String level, String className, String date, String message, Object... args) {
+    String formatLineArgs(String level, String className, String date, String message, Object... args) {
         \$argsFormatScript
     }
 
-    String formatLine(String level, String className, String date, String message, Object arg1, Object arg2) {
+    String formatLineArg1Arg2(String level, String className, String date, String message, Object arg1, Object arg2) {
         \$arg1arg2FormatScript
     }
 
-    String formatLine(String level, String className, String date, String message, Throwable throwable) {
+    String formatLineThrowable(String level, String className, String date, String message, Throwable throwable) {
         \$throwableFormatScript
     }
 

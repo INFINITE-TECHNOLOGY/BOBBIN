@@ -51,13 +51,13 @@ abstract class BobbinScriptEngine {
 
     abstract String formatLine(String level, String className, String date, String msg)
 
-    abstract String formatLine(String level, String className, String date, String format, Object arg)
+    abstract String formatLineArg(String level, String className, String date, String format, Object arg)
 
-    abstract String formatLineWithArray(String level, String className, String date, String format, Object... arguments)
+    abstract String formatLineArgs(String level, String className, String date, String format, Object... arguments)
 
-    abstract String formatLine(String level, String className, String date, String format, Object arg1, Object arg2)
+    abstract String formatLineArg1Arg2(String level, String className, String date, String format, Object arg1, Object arg2)
 
-    abstract String formatLine(String level, String className, String date, String msg, Throwable t)
+    abstract String formatLineThrowable(String level, String className, String date, String msg, Throwable t)
 
     abstract String getDateFormat()
 

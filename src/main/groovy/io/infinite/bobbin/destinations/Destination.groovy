@@ -25,31 +25,31 @@ abstract class Destination {
         }
     }
 
-    void log(Level level, String className, String format, Object arg) {
+    void logArg(Level level, String className, String format, Object arg) {
         if (needsLogging(level, className)) {
             String date = bobbinScriptEngine.getDate()
-            store(bobbinScriptEngine.formatLine(level.value(), className, date, format, arg), level, className, date)
+            store(bobbinScriptEngine.formatLineArg(level.value(), className, date, format, arg), level, className, date)
         }
     }
 
-    void logWithArray(Level level, String className, String format, Object... arguments) {
+    void logArgs(Level level, String className, String format, Object... arguments) {
         if (needsLogging(level, className)) {
             String date = bobbinScriptEngine.getDate()
-            store(bobbinScriptEngine.formatLineWithArray(level.value(), className, date, format, arguments), level, className, date)
+            store(bobbinScriptEngine.formatLineArgs(level.value(), className, date, format, arguments), level, className, date)
         }
     }
 
-    void log(Level level, String className, String format, Object arg1, Object arg2) {
+    void logArg1Arg2(Level level, String className, String format, Object arg1, Object arg2) {
         if (needsLogging(level, className)) {
             String date = bobbinScriptEngine.getDate()
-            store(bobbinScriptEngine.formatLine(level.value(), className, date, format, arg1, arg2), level, className, date)
+            store(bobbinScriptEngine.formatLineArg1Arg2(level.value(), className, date, format, arg1, arg2), level, className, date)
         }
     }
 
-    void log(Level level, String className, String msg, Throwable t) {
+    void logThrowable(Level level, String className, String msg, Throwable t) {
         if (needsLogging(level, className)) {
             String date = bobbinScriptEngine.getDate()
-            store(bobbinScriptEngine.formatLine(level.value(), className, date, msg, t), level, className, date)
+            store(bobbinScriptEngine.formatLineThrowable(level.value(), className, date, msg, t), level, className, date)
         }
     }
 

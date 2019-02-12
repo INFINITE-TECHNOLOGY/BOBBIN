@@ -40,34 +40,34 @@ class Bobbin extends MarkerIgnoringBase {
         }
     }
 
-    void log(Level level, String className, String format, Object arg) {
+    void logArg(Level level, String className, String format, Object arg) {
         if (needsLogging(level, className)) {
             destinations.each {
-                it.log(level, className, format, arg)
+                it.logArg(level, className, format, arg)
             }
         }
     }
 
-    void logWithArray(Level level, String className, String format, Object... arguments) {
+    void logArgs(Level level, String className, String format, Object... arguments) {
         if (needsLogging(level, className)) {
             destinations.each {
-                it.logWithArray(level, className, format, arguments)
+                it.logArgs(level, className, format, arguments)
             }
         }
     }
 
-    void log(Level level, String className, String format, Object arg1, Object arg2) {
+    void logArg1Arg2(Level level, String className, String format, Object arg1, Object arg2) {
         if (needsLogging(level, className)) {
             destinations.each {
-                it.log(level, className, format, arg1, arg2)
+                it.logArg1Arg2(level, className, format, arg1, arg2)
             }
         }
     }
 
-    void log(Level level, String className, String msg, Throwable t) {
+    void logThrowable(Level level, String className, String msg, Throwable t) {
         if (needsLogging(level, className)) {
             destinations.each {
-                it.log(level, className, msg, t)
+                it.logThrowable(level, className, msg, t)
             }
         }
     }
@@ -84,22 +84,22 @@ class Bobbin extends MarkerIgnoringBase {
 
     @Override
     void trace(String format, Object arg) {
-        log(Level.TRACE, className, format, arg)
+        logArg(Level.TRACE, className, format, arg)
     }
 
     @Override
     void trace(String format, Object arg1, Object arg2) {
-        log(Level.TRACE, className, format, arg1, arg2)
+        logArg1Arg2(Level.TRACE, className, format, arg1, arg2)
     }
 
     @Override
     void trace(String format, Object... arguments) {
-        logWithArray(Level.TRACE, className, format, arguments)
+        logArgs(Level.TRACE, className, format, arguments)
     }
 
     @Override
     void trace(String msg, Throwable t) {
-        log(Level.TRACE, className, msg, t)
+        logThrowable(Level.TRACE, className, msg, t)
     }
 
     @Override
@@ -114,22 +114,22 @@ class Bobbin extends MarkerIgnoringBase {
 
     @Override
     void debug(String format, Object arg) {
-        log(Level.DEBUG, className, format, arg)
+        logArg(Level.DEBUG, className, format, arg)
     }
 
     @Override
     void debug(String format, Object arg1, Object arg2) {
-        log(Level.DEBUG, className, format, arg1, arg2)
+        logArg1Arg2(Level.DEBUG, className, format, arg1, arg2)
     }
 
     @Override
     void debug(String format, Object... arguments) {
-        logWithArray(Level.DEBUG, className, format, arguments)
+        logArgs(Level.DEBUG, className, format, arguments)
     }
 
     @Override
     void debug(String msg, Throwable t) {
-        log(Level.DEBUG, className, msg, t)
+        logThrowable(Level.DEBUG, className, msg, t)
     }
 
     @Override
@@ -144,22 +144,22 @@ class Bobbin extends MarkerIgnoringBase {
 
     @Override
     void info(String format, Object arg) {
-        log(Level.INFO, className, format, arg)
+        logArg(Level.INFO, className, format, arg)
     }
 
     @Override
     void info(String format, Object arg1, Object arg2) {
-        log(Level.INFO, className, format, arg1, arg2)
+        logArg1Arg2(Level.INFO, className, format, arg1, arg2)
     }
 
     @Override
     void info(String format, Object... arguments) {
-        logWithArray(Level.INFO, className, format, arguments)
+        logArgs(Level.INFO, className, format, arguments)
     }
 
     @Override
     void info(String msg, Throwable t) {
-        log(Level.INFO, className, msg, t)
+        logThrowable(Level.INFO, className, msg, t)
     }
 
     @Override
@@ -174,22 +174,22 @@ class Bobbin extends MarkerIgnoringBase {
 
     @Override
     void warn(String format, Object arg) {
-        log(Level.WARN, className, format, arg)
+        logArg(Level.WARN, className, format, arg)
     }
 
     @Override
     void warn(String format, Object... arguments) {
-        logWithArray(Level.WARN, className, format, arguments)
+        logArgs(Level.WARN, className, format, arguments)
     }
 
     @Override
     void warn(String format, Object arg1, Object arg2) {
-        log(Level.WARN, className, format, arg1, arg2)
+        logArg1Arg2(Level.WARN, className, format, arg1, arg2)
     }
 
     @Override
     void warn(String msg, Throwable t) {
-        log(Level.WARN, className, msg, t)
+        logThrowable(Level.WARN, className, msg, t)
     }
 
     @Override
@@ -204,22 +204,22 @@ class Bobbin extends MarkerIgnoringBase {
 
     @Override
     void error(String format, Object arg) {
-        log(Level.ERROR, className, format, arg)
+        logArg(Level.ERROR, className, format, arg)
     }
 
     @Override
     void error(String format, Object arg1, Object arg2) {
-        log(Level.ERROR, className, format, arg1, arg2)
+        logArg1Arg2(Level.ERROR, className, format, arg1, arg2)
     }
 
     @Override
     void error(String format, Object... arguments) {
-        logWithArray(Level.ERROR, className, format, arguments)
+        logArgs(Level.ERROR, className, format, arguments)
     }
 
     @Override
     void error(String msg, Throwable t) {
-        log(Level.ERROR, className, msg, t)
+        logThrowable(Level.ERROR, className, msg, t)
     }
 
 }

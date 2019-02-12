@@ -14,7 +14,7 @@ class TestBobbinScriptEngineFactory {
     TestBobbinScriptEngineFactory(BobbinConfig bobbinConfig) {
         this.bobbinConfig = bobbinConfig
     }
-    SimpleTemplateEngine simpleTemplateEngine = new SimpleTemplateEngine(getClass().getClassLoader())
+    SimpleTemplateEngine simpleTemplateEngine = new SimpleTemplateEngine()
 
 
     String combinedTemplateFileString = new BobbinScriptEngineFactory().getTemplateText()
@@ -41,15 +41,9 @@ class TestBobbinScriptEngineFactory {
             "fileNameScript"       : "\"\""
     ])
 
-
     Class bobbinScriptEngineImplClass = groovyClassLoader.parseClass(bobbinScriptEngineImplCode)
 
-
     BobbinScriptEngine bobbinScriptEngine = bobbinScriptEngineImplClass.newInstance(bobbinScriptEngineImplCode) as BobbinScriptEngine
-
-    String getCombinedTemplateFileName() {
-        return "BobbinScriptEngineImpl.groovy"
-    }
 
     @Memoized
     BobbinScriptEngine getDestinationBobbinScriptEngine(DestinationConfig destinationConfig) {

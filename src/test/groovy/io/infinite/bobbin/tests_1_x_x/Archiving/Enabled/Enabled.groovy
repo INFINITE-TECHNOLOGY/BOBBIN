@@ -29,14 +29,14 @@ class Enabled extends BobbinTest {
     @Override
     void assertLogs() {
         return
-        assertFile("LOGS/Archiving/Enabled/LOG.log", "LOGS/Archiving/Enabled/LOG.expected")
+        /*assertFile("LOGS/Archiving/Enabled/LOG.log", "LOGS/Archiving/Enabled/LOG.expected")
         ZipFile zipFile = new ZipFile(new File("./LOGS/Archiving/Enabled/ZIP.log.zip"))
         assert zipFile.entries().toList().size() == 1
         zipFile.entries().each {
             assert zipFile.getInputStream(it).getText() == "error|Enabled|ZIP|error abcd\nwarn|Enabled|ZIP|warn 1234\n"
         }
         assert !new File("./LOGS/Archiving/Enabled/ZIP.log").exists()
-        assert !new File("./LOGS/Archiving/Enabled/LOG.log.zip").exists()
+        assert !new File("./LOGS/Archiving/Enabled/LOG.log.zip").exists()*/
     }
 
 }
