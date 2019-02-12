@@ -9,7 +9,7 @@
         "zipFileName": "\"./LOGS/ALL/WARNINGS_AND_ERRORS_${date}.zip\"",
         "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
       },
-      "format": "\"${level}|${threadName}|${className}|${event.message}\\n\"",
+      "format": "\"${level}|${threadName}|${className}|${message}\\n\"",
       "levels": "['warn', 'error'].contains(level)"
     }
   ]

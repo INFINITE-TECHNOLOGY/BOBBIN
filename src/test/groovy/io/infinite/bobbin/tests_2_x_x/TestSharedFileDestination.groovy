@@ -1,18 +1,15 @@
 package io.infinite.bobbin.tests_2_x_x
 
-import io.infinite.bobbin.config.BobbinConfig
-import io.infinite.bobbin.config.DestinationConfig
-import io.infinite.bobbin.destinations.Destination
-import io.infinite.bobbin.destinations.EventQueueRunnable
-import io.infinite.bobbin.destinations.SharedDestination
-import io.infinite.bobbin.destinations.SharedFileDestination
 
-class TestSharedFileDestination extends SharedFileDestination {
+import io.infinite.bobbin.config.DestinationConfig
+import io.infinite.bobbin.destinations.FileDestination
+
+class TestSharedFileDestination extends FileDestination {
 
     static TestSharedFileDestination instance
 
-    TestSharedFileDestination(DestinationConfig destinationConfig, BobbinConfig parentBobbinConfig) {
-        super(destinationConfig, parentBobbinConfig)
+    TestSharedFileDestination(DestinationConfig destinationConfig) {
+        super(destinationConfig)
         instance = this
     }
 

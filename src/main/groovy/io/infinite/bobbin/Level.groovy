@@ -1,5 +1,8 @@
 package io.infinite.bobbin
 
+import groovy.transform.CompileStatic
+
+@CompileStatic
 enum Level {
     TRACE("trace"),
     DEBUG("debug"),

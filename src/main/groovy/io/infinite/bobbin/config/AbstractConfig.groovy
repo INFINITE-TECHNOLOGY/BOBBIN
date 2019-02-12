@@ -1,5 +1,8 @@
 package io.infinite.bobbin.config
 
+import groovy.transform.CompileStatic
+
+@CompileStatic
 abstract class AbstractConfig {
 
     String levels
@@ -7,6 +10,9 @@ abstract class AbstractConfig {
     String dateFormat
     String dateTimeFormat
     String format
-    String errorFormat
+    String formatThrowable
+    String formatArg
+    String formatArgs
+    String formatArg1Arg2
 
 }

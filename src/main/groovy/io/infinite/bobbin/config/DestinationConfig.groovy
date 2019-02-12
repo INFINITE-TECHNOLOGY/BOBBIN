@@ -1,10 +1,15 @@
 package io.infinite.bobbin.config
 
+import groovy.transform.CompileStatic
+import io.infinite.bobbin.BobbinScriptEngine
+
+@CompileStatic
 class DestinationConfig extends AbstractConfig {
 
     String name = "io.infinite.bobbin.destinations.ConsoleDestination"
     BobbinConfig bobbinConfig
     Map<String, String> properties = [:]
+    BobbinScriptEngine bobbinScriptEngine
 
     @Override
     String getLevels() {
@@ -32,8 +37,23 @@ class DestinationConfig extends AbstractConfig {
     }
 
     @Override
-    String getErrorFormat() {
-        return super.@errorFormat ?: bobbinConfig.getErrorFormat()
+    String getFormatThrowable() {
+        return super.@formatThrowable ?: bobbinConfig.getFormatThrowable()
+    }
+
+    @Override
+    String getFormatArg() {
+        return super.@formatArg ?: bobbinConfig.getFormatArg()
+    }
+
+    @Override
+    String getFormatArgs() {
+        return super.@formatArgs ?: bobbinConfig.getFormatArgs()
+    }
+
+    @Override
+    String getFormatArg1Arg2() {
+        return super.@formatArg1Arg2 ?: bobbinConfig.getFormatArg1Arg2()
     }
 
 }

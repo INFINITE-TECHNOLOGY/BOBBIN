@@ -1,256 +1,225 @@
 package io.infinite.bobbin
 
-import groovy.transform.Memoized
+import groovy.transform.CompileStatic
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.destinations.Destination
-import org.slf4j.spi.MDCAdapter
+import org.slf4j.helpers.MarkerIgnoringBase
 
-import javax.script.ScriptEngine
-import javax.script.ScriptEngineManager
+@CompileStatic
+class Bobbin extends MarkerIgnoringBase {
 
-class Bobbin implements MDCAdapter {
-
-    ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("groovy")
-
-    BobbinConfig bobbinConfig
-
-    Map<String, String> contextMap = [:]
-
-    String get(String key) {
-        return contextMap.get(key)
-    }
-
-    void put(String key, String value) {
-        contextMap.put(key, value)
-    }
-
-    @Override
-    void remove(String key) {
-        contextMap.remove(key)
-    }
-
-    @Override
-    void clear() {
-        contextMap.clear()
-    }
-
-    @Override
-    Map<String, String> getCopyOfContextMap() {
-        return contextMap.clone() as Map<String, String>
-    }
-
-    @Override
-    void setContextMap(Map<String, String> contextMap) {
-        this.contextMap = contextMap
-    }
-
-    @Memoized
-    Boolean isLevelEnabled(Level level) {
-        scriptEngine.put("level", level.value())
-        return scriptEngine.eval(bobbinConfig.levels)
-    }
-
-    @Memoized(maxCacheSize = 128)
-    final Boolean isClassEnabled(String className) {
-        scriptEngine.put("className", className)
-        return scriptEngine.eval(bobbinConfig.classes)
-    }
-
-    @Memoized(maxCacheSize = 128)
-    final Boolean isLevelAndClassEnabled(Level level, String className) {
-        return isLevelEnabled(level) && isClassEnabled(className)
-    }
-
-    Bobbin(BobbinConfig bobbinConfig) {
-        scriptEngine.put("all", true)
-        scriptEngine.put("none", false)
-        scriptEngine.put("threadName", Thread.currentThread().getName())
-        scriptEngine.put("threadGroupName", Thread.currentThread().getThreadGroup().getName())
-        scriptEngine.put("bobbin", this)
-        this.bobbinConfig = bobbinConfig
-        bobbinConfig.destinations.each {
-            Destination destination = Class.forName(it.name).newInstance(
-                    it,
-                    bobbinConfig
-            ) as Destination
-            destinations.add(destination)
-        }
-    }
+    String className
 
     List<Destination> destinations = new ArrayList<>()
 
-    void log(Event event) {
-        destinations.each { it.log(event) }
+    BobbinScriptEngine bobbinScriptEngine
+    
+    ///////////////////CONSTRUCTOR \/\/\/\/\/\/
+    Bobbin(String className) {
+        this.className = className
+    }
+    ///////////////////CONSTRUCTOR /\/\/\/\/\/\
+
+    Boolean isLevelEnabled(Level level) {
+        return bobbinScriptEngine.isLevelEnabled(level.value())
     }
 
-    boolean isTraceEnabled(String className) {
-        return isLevelAndClassEnabled(Level.TRACE, className)
+    Boolean isClassEnabled(String className) {
+        return bobbinScriptEngine.isClassEnabled(className)
     }
 
-    void trace(String className, String msg) {
-        if (isTraceEnabled(className)) {
-            log(new Event(className: className, level: Level.TRACE, message: msg))
+    Boolean needsLogging(Level level, String className) {
+        return isLevelEnabled(level) && isClassEnabled(className)
+    }
+
+    void log(Level level, String className, String msg) {
+        if (needsLogging(level, className)) {
+            destinations.each {
+                it.log(level, className, msg)
+            }
         }
     }
 
-    void trace(String className, String format, Object arg) {
-        if (isTraceEnabled(className)) {
-            log(new Event(className: className, level: Level.TRACE, message: format, arguments: [arg]))
+    void logArg(Level level, String className, String format, Object arg) {
+        if (needsLogging(level, className)) {
+            destinations.each {
+                it.logArg(level, className, format, arg)
+            }
         }
     }
 
-    void trace(String className, String format, Object arg1, Object arg2) {
-        if (isTraceEnabled(className)) {
-            log(new Event(className: className, level: Level.TRACE, message: format, arguments: [arg1, arg2]))
+    void logArgs(Level level, String className, String format, Object... arguments) {
+        if (needsLogging(level, className)) {
+            destinations.each {
+                it.logArgs(level, className, format, arguments)
+            }
         }
     }
 
-    void trace(String className, String format, Object... arguments) {
-        if (isTraceEnabled(className)) {
-            log(new Event(className: className, level: Level.TRACE, message: format, arguments: arguments))
+    void logArg1Arg2(Level level, String className, String format, Object arg1, Object arg2) {
+        if (needsLogging(level, className)) {
+            destinations.each {
+                it.logArg1Arg2(level, className, format, arg1, arg2)
+            }
         }
     }
 
-    void trace(String className, String msg, Throwable t) {
-        if (isTraceEnabled(className)) {
-            log(new Event(className: className, level: Level.TRACE, message: msg, throwable: t))
+    void logThrowable(Level level, String className, String msg, Throwable t) {
+        if (needsLogging(level, className)) {
+            destinations.each {
+                it.logThrowable(level, className, msg, t)
+            }
         }
     }
 
-    boolean isDebugEnabled(String className) {
-        return isLevelAndClassEnabled(Level.DEBUG, className)
+    @Override
+    boolean isTraceEnabled() {
+        return needsLogging(Level.TRACE, className)
     }
 
-    void debug(String className, String msg) {
-        if (isDebugEnabled(className)) {
-            log(new Event(className: className, level: Level.DEBUG, message: msg))
-        }
+    @Override
+    void trace(String msg) {
+        log(Level.TRACE, className, msg)
     }
 
-    void debug(String className, String format, Object arg) {
-        if (isDebugEnabled(className)) {
-            log(new Event(className: className, level: Level.DEBUG, message: format, arguments: [arg]))
-        }
+    @Override
+    void trace(String format, Object arg) {
+        logArg(Level.TRACE, className, format, arg)
     }
 
-    void debug(String className, String format, Object arg1, Object arg2) {
-        if (isDebugEnabled(className)) {
-            log(new Event(className: className, level: Level.DEBUG, message: format, arguments: [arg1, arg2]))
-        }
+    @Override
+    void trace(String format, Object arg1, Object arg2) {
+        logArg1Arg2(Level.TRACE, className, format, arg1, arg2)
     }
 
-    void debug(String className, String format, Object... arguments) {
-        if (isDebugEnabled(className)) {
-            log(new Event(className: className, level: Level.DEBUG, message: format, arguments: arguments))
-        }
+    @Override
+    void trace(String format, Object... arguments) {
+        logArgs(Level.TRACE, className, format, arguments)
     }
 
-    void debug(String className, String msg, Throwable t) {
-        if (isDebugEnabled(className)) {
-            log(new Event(className: className, level: Level.DEBUG, message: msg, throwable: t))
-        }
+    @Override
+    void trace(String msg, Throwable t) {
+        logThrowable(Level.TRACE, className, msg, t)
     }
 
-    boolean isInfoEnabled(String className) {
-        return isLevelAndClassEnabled(Level.INFO, className)
+    @Override
+    boolean isDebugEnabled() {
+        needsLogging(Level.DEBUG, className)
     }
 
-    void info(String className, String msg) {
-        if (isInfoEnabled(className)) {
-            log(new Event(className: className, level: Level.INFO, message: msg))
-        }
+    @Override
+    void debug(String msg) {
+        log(Level.DEBUG, className, msg)
     }
 
-    void info(String className, String format, Object arg) {
-        if (isInfoEnabled(className)) {
-            log(new Event(className: className, level: Level.INFO, message: format, arguments: [arg]))
-        }
+    @Override
+    void debug(String format, Object arg) {
+        logArg(Level.DEBUG, className, format, arg)
     }
 
-    void info(String className, String format, Object arg1, Object arg2) {
-        if (isInfoEnabled(className)) {
-            log(new Event(className: className, level: Level.INFO, message: format, arguments: [arg1, arg2]))
-        }
+    @Override
+    void debug(String format, Object arg1, Object arg2) {
+        logArg1Arg2(Level.DEBUG, className, format, arg1, arg2)
     }
 
-    void info(String className, String format, Object... arguments) {
-        if (isInfoEnabled(className)) {
-            log(new Event(className: className, level: Level.INFO, message: format, arguments: arguments))
-        }
+    @Override
+    void debug(String format, Object... arguments) {
+        logArgs(Level.DEBUG, className, format, arguments)
     }
 
-    void info(String className, String msg, Throwable t) {
-        if (isInfoEnabled(className)) {
-            log(new Event(className: className, level: Level.INFO, message: msg, throwable: t))
-        }
+    @Override
+    void debug(String msg, Throwable t) {
+        logThrowable(Level.DEBUG, className, msg, t)
     }
 
-    boolean isWarnEnabled(String className) {
-        return isLevelAndClassEnabled(Level.WARN, className)
+    @Override
+    boolean isInfoEnabled() {
+        needsLogging(Level.INFO, className)
     }
 
-    void warn(String className, String msg) {
-        if (isWarnEnabled(className)) {
-            log(new Event(className: className, level: Level.WARN, message: msg))
-        }
+    @Override
+    void info(String msg) {
+        log(Level.INFO, className, msg)
     }
 
-    void warn(String className, String format, Object arg) {
-        if (isWarnEnabled(className)) {
-            log(new Event(className: className, level: Level.WARN, message: format, arguments: [arg]))
-        }
+    @Override
+    void info(String format, Object arg) {
+        logArg(Level.INFO, className, format, arg)
     }
 
-    void warn(String className, String format, Object... arguments) {
-        if (isWarnEnabled(className)) {
-            log(new Event(className: className, level: Level.WARN, message: format, arguments: arguments))
-        }
+    @Override
+    void info(String format, Object arg1, Object arg2) {
+        logArg1Arg2(Level.INFO, className, format, arg1, arg2)
     }
 
-    void warn(String className, String format, Object arg1, Object arg2) {
-        if (isWarnEnabled(className)) {
-            log(new Event(className: className, level: Level.WARN, message: format, arguments: [arg1, arg2]))
-        }
+    @Override
+    void info(String format, Object... arguments) {
+        logArgs(Level.INFO, className, format, arguments)
     }
 
-    void warn(String className, String msg, Throwable t) {
-        if (isWarnEnabled(className)) {
-            log(new Event(className: className, level: Level.WARN, message: msg, throwable: t))
-        }
+    @Override
+    void info(String msg, Throwable t) {
+        logThrowable(Level.INFO, className, msg, t)
     }
 
-    boolean isErrorEnabled(String className) {
-        return isLevelAndClassEnabled(Level.ERROR, className)
+    @Override
+    boolean isWarnEnabled() {
+        needsLogging(Level.WARN, className)
     }
 
-    void error(String className, String msg) {
-        if (isErrorEnabled(className)) {
-            log(new Event(className: className, level: Level.ERROR, message: msg))
-        }
+    @Override
+    void warn(String msg) {
+        log(Level.WARN, className, msg)
     }
 
-    void error(String className, String format, Object arg) {
-        if (isErrorEnabled(className)) {
-            log(new Event(className: className, level: Level.ERROR, message: format, arguments: [arg]))
-        }
+    @Override
+    void warn(String format, Object arg) {
+        logArg(Level.WARN, className, format, arg)
     }
 
-    void error(String className, String format, Object arg1, Object arg2) {
-        if (isErrorEnabled(className)) {
-            log(new Event(className: className, level: Level.ERROR, message: format, arguments: [arg1, arg2]))
-        }
+    @Override
+    void warn(String format, Object... arguments) {
+        logArgs(Level.WARN, className, format, arguments)
     }
 
-    void error(String className, String format, Object... arguments) {
-        if (isErrorEnabled(className)) {
-            log(new Event(className: className, level: Level.ERROR, message: format, arguments: arguments))
-        }
+    @Override
+    void warn(String format, Object arg1, Object arg2) {
+        logArg1Arg2(Level.WARN, className, format, arg1, arg2)
     }
 
-    void error(String className, String msg, Throwable t) {
-        if (isErrorEnabled(className)) {
-            log(new Event(className: className, level: Level.ERROR, message: msg, throwable: t))
-        }
+    @Override
+    void warn(String msg, Throwable t) {
+        logThrowable(Level.WARN, className, msg, t)
+    }
+
+    @Override
+    boolean isErrorEnabled() {
+        needsLogging(Level.ERROR, className)
+    }
+
+    @Override
+    void error(String msg) {
+        log(Level.ERROR, className, msg)
+    }
+
+    @Override
+    void error(String format, Object arg) {
+        logArg(Level.ERROR, className, format, arg)
+    }
+
+    @Override
+    void error(String format, Object arg1, Object arg2) {
+        logArg1Arg2(Level.ERROR, className, format, arg1, arg2)
+    }
+
+    @Override
+    void error(String format, Object... arguments) {
+        logArgs(Level.ERROR, className, format, arguments)
+    }
+
+    @Override
+    void error(String msg, Throwable t) {
+        logThrowable(Level.ERROR, className, msg, t)
     }
 
 }

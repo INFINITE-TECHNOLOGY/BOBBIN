@@ -3,13 +3,13 @@
   "classes": "all",
   "destinations": [
     {
-      "name": "io.infinite.bobbin.tests_2_x_x.TestSharedFileDestination",
+      "name": "io.infinite.bobbin.destinations.FileDestination",
       "properties": {
         "fileName": "\"./LOGS/SharedArchiving/TEST_${className}.log\"",
         "zipFileName": "\"${origFileName}.zip\"",
         "cleanupZipFileName": "\"${origFileName}_${System.currentTimeMillis().toString()}.zip\""
       },
-      "format": "\"${level}|${threadName}|${className}|${event.message}\\n\"",
+      "format": "\"${level}|${threadName}|${className}|${message}\\n\"",
       "levels": "all"
     }
   ]
