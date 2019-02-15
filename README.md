@@ -1,7 +1,7 @@
 # Infinite Technology ∞ Bobbin 📼
 
-The Bobbin revolves infinitely.\
-A revolution in Java logging.
+> ***...The Bobbin revolves infinitely...*** \
+***...A revolution in Java logging...***
 
 |Attribute\Release type|Latest|Stable|
 |----------------------|------|------|
