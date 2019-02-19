@@ -11,6 +11,7 @@ plugins {
     id "com.jfrog.artifactory" version "4.8.1"
     id "idea"
     id "jacoco"
+    id "enterprise.groovy.plugin" version "1.0.RC4"
 }
 
 sourceCompatibility = 1.8
@@ -24,9 +25,6 @@ wrapper {
 
 repositories {
     jcenter()
-    maven {
-        url "https://oss.jfrog.org/artifactory/oss-snapshot-local"
-    }
 }
 
 sourceSets {
@@ -38,7 +36,7 @@ dependencies {
     compile "org.codehaus.groovy:groovy-all:2.5.4"
     compile "org.slf4j:slf4j-api:1.7.25"
     compile "com.fasterxml.jackson.core:jackson-databind:2.9.7"
-    compile "io.infinite:supplies:1.0.1-20190212.113001-33"
+    compile "io.infinite:supplies:1.0.1"
     testCompile "junit:junit:4.12"
 }
 

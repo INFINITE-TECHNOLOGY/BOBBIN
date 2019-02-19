@@ -1,21 +1,19 @@
 package io.infinite.bobbin
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import groovy.transform.CompileStatic
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.destinations.Destination
-import io.infinite.supplies.ast.cache.Cache
+import io.infinite.supplies.ast.cache.CacheFieldInit
 import io.infinite.supplies.conf.ResourceLookup
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 import org.slf4j.helpers.Util
 
-@CompileStatic
 class BobbinFactory implements ILoggerFactory {
 
     String confName = "Bobbin.json"
 
-    @Cache
+    @CacheFieldInit
     BobbinConfig bobbinConfig = initBobbinConfig()
 
     synchronized BobbinConfig initBobbinConfig() {

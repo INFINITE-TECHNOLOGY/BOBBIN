@@ -1,9 +1,7 @@
 package io.infinite.bobbin.config
 
-import groovy.transform.CompileStatic
 import io.infinite.bobbin.BobbinScriptEngine
 
-@CompileStatic
 class DestinationConfig extends AbstractConfig {
 
     String name = "io.infinite.bobbin.destinations.ConsoleDestination"

@@ -1,11 +1,9 @@
 package io.infinite.bobbin.destinations
 
-import groovy.transform.CompileStatic
 import io.infinite.bobbin.BobbinScriptEngine
 import io.infinite.bobbin.Level
 import io.infinite.bobbin.config.DestinationConfig
 
-@CompileStatic
 abstract class Destination {
 
     DestinationConfig destinationConfig

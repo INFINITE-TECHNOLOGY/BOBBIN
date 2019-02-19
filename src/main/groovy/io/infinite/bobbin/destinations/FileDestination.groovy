@@ -1,12 +1,10 @@
 package io.infinite.bobbin.destinations
 
-import groovy.transform.CompileStatic
 import io.infinite.bobbin.BobbinFile
 import io.infinite.bobbin.Level
 import io.infinite.bobbin.config.DestinationConfig
 import org.slf4j.helpers.Util
 
-@CompileStatic
 class FileDestination extends Destination {
 
     BobbinFile currentBobbinFile

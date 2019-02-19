@@ -1,10 +1,7 @@
 package io.infinite.bobbin
 
-import groovy.transform.CompileStatic
-
 import java.text.SimpleDateFormat
 
-@CompileStatic
 abstract class BobbinScriptEngine {
 
     final Boolean all = true

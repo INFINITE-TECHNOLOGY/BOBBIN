@@ -1,16 +1,14 @@
 package org.slf4j.impl
 
-import groovy.transform.CompileStatic
 import io.infinite.bobbin.BobbinFactory
 import org.slf4j.ILoggerFactory
 import org.slf4j.spi.LoggerFactoryBinder
 
-@CompileStatic
-public class StaticLoggerBinder implements LoggerFactoryBinder {
+class StaticLoggerBinder implements LoggerFactoryBinder {
 
     private static final StaticLoggerBinder SINGLETON = new StaticLoggerBinder()
 
-    public static final StaticLoggerBinder getSingleton() {
+    static final StaticLoggerBinder getSingleton() {
         return SINGLETON
     }
 
@@ -24,11 +22,11 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
         loggerFactory = new BobbinFactory()
     }
 
-    public ILoggerFactory getLoggerFactory() {
+    ILoggerFactory getLoggerFactory() {
         return loggerFactory
     }
 
-    public String getLoggerFactoryClassStr() {
+    String getLoggerFactoryClassStr() {
         return loggerFactoryClassStr
     }
 }

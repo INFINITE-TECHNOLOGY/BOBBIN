@@ -1,11 +1,8 @@
 package io.infinite.bobbin
 
-import groovy.transform.CompileStatic
-import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.destinations.Destination
 import org.slf4j.helpers.MarkerIgnoringBase
 
-@CompileStatic
 class Bobbin extends MarkerIgnoringBase {
 
     String className

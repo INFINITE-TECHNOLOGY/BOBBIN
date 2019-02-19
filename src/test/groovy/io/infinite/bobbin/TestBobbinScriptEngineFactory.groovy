@@ -2,13 +2,10 @@ package io.infinite.bobbin
 
 import groovy.text.SimpleTemplateEngine
 import groovy.text.Template
-import groovy.transform.CompileStatic
 import groovy.transform.Memoized
-import io.infinite.bobbin.BobbinScriptEngine
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.DestinationConfig
 
-@CompileStatic
 class TestBobbinScriptEngineFactory {
 
     TestBobbinScriptEngineFactory(BobbinConfig bobbinConfig) {

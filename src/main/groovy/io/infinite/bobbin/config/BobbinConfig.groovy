@@ -1,9 +1,5 @@
 package io.infinite.bobbin.config
 
-import groovy.transform.CompileStatic
-import io.infinite.bobbin.BobbinScriptEngineFactory
-
-@CompileStatic
 class BobbinConfig extends AbstractConfig {
 
     String levels = "true"

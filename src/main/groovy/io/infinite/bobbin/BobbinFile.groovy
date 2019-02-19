@@ -1,8 +1,5 @@
 package io.infinite.bobbin
 
-import groovy.transform.CompileStatic
-
-@CompileStatic
 class BobbinFile extends File{
 
     FileWriter writer
