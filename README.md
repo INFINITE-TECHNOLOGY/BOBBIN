@@ -1,7 +1,7 @@
 # Infinite Technology ∞ Bobbin 📼
 
-The Bobbin revolves infinitely.\
-A revolution in Java logging.
+> ***...The Bobbin revolves infinitely...*** \
+***...A revolution in Java logging...***
 
 |Attribute\Release type|Latest|Stable|
 |----------------------|------|------|
@@ -14,6 +14,9 @@ A revolution in Java logging.
 Bobbin is a high-performance Groovy Slf4j-compatible logger designed for multi-threaded applications (especially those with persistent threads like batch and messaging applications).
 
 Bobbin leverages the concept of Logback/Log4j2 sifting appenders while providing much more easier configuration using native Groovy/Java scripting expressions.
+
+**Gradle:**
+`compile "io.infinite:bobbin:2.0.0-RC1"`
 
 References:
 * [Bobbin Documentation](https://github.com/INFINITE-TECHNOLOGY/BOBBIN/wiki)
