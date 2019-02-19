@@ -16,7 +16,7 @@ plugins {
 
 sourceCompatibility = 1.8
 group = "io.infinite"
-version = "2.0.0-SNAPSHOT"
+version = "2.0.1-SNAPSHOT"
 description = "Groovy Slf4j logger"
 
 wrapper {
