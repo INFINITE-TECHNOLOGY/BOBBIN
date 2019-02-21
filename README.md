@@ -33,28 +33,28 @@ Bobbin.json
     {
       "name": "io.infinite.bobbin.destinations.FileDestination",
       "properties": {
-        "fileName": "'./LOGS/PLUGINS/INPUT/${className}/${level}/${className}_${level}.log'"
+        "fileName": "\"./LOGS/PLUGINS/INPUT/${className}/${level}/${className}_${level}.log\""
       },
       "classes": "className.contains('conf.plugins.input')"
     },
     {
       "name": "io.infinite.bobbin.destinations.FileDestination",
       "properties": {
-        "fileName": "'./LOGS/PLUGINS/OUTPUT/${className}/${level}/${threadName}_${level}_${date}.log'"
+        "fileName": "\"./LOGS/PLUGINS/OUTPUT/${className}/${level}/${threadName}_${level}_${date}.log\""
       },
       "classes": "className.contains('conf.plugins.output')"
     },
     {
       "name": "io.infinite.bobbin.destinations.FileDestination",
       "properties": {
-        "fileName": "'./LOGS/THREADS/${threadGroupName}/${threadName}/${level}/${threadName}_${level}_${date}.log'"
+        "fileName": "\"./LOGS/THREADS/${threadGroupName}/${threadName}/${level}/${threadName}_${level}_${date}.log\""
       },
       "classes": "className.contains('io.infinite.')"
     },
     {
       "name": "io.infinite.bobbin.destinations.FileDestination",
       "properties": {
-        "fileName": "'./LOGS/ALL/WARNINGS_AND_ERRORS_${date}.log'"
+        "fileName": "\"./LOGS/ALL/WARNINGS_AND_ERRORS_${date}.log\""
       },
       "levels": "['warn', 'error'].contains(level)"
     },
