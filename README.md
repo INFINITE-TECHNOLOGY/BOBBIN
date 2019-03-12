@@ -5,7 +5,7 @@
 
 |Attribute\Release type|Latest|Stable|
 |----------------------|------|------|
-|Version|3.0.0-SNAPSHOT|2.0.0|
+|Version|3.0.0-SNAPSHOT|2.0.1|
 |Branch|[master](https://github.com/INFINITE-TECHNOLOGY/BOBBIN)|[BOBBIN_2_0_X](https://github.com/INFINITE-TECHNOLOGY/BOBBIN/tree/BOBBIN_2_0_X)|
 |CI Build status|[![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=master)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)|[![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=BOBBIN_2_0_X)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)|
 |Test coverage|[![codecov](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/master/graphs/badge.svg)](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/master/graphs)|[![codecov](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/BOBBIN_2_0_X/graphs/badge.svg)](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/BOBBIN_2_0_X/graphs)|
