@@ -16,7 +16,7 @@ plugins {
 
 sourceCompatibility = 1.8
 group = "io.infinite"
-version = "2.0.1-SNAPSHOT"
+version = "2.0.2-SNAPSHOT"
 description = "Groovy Slf4j logger"
 
 wrapper {
@@ -36,8 +36,8 @@ dependencies {
     compile "org.codehaus.groovy:groovy-all:2.5.4"
     compile "org.slf4j:slf4j-api:1.7.25"
     compile "com.fasterxml.jackson.core:jackson-databind:2.9.7"
-    compile "io.infinite:supplies:1.0.1"
-    testCompile "junit:junit:4.12"
+    compile "io.infinite:supplies:1.1.0"
+    testCompile "org.junit.jupiter:junit-jupiter-api:5.4.0"
 }
 
 task sourceJar(type: Jar) {
