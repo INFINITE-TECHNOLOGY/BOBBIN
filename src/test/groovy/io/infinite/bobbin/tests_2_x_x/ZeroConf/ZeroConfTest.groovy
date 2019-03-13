@@ -3,7 +3,7 @@ package io.infinite.bobbin.tests_2_x_x.ZeroConf
 import io.infinite.bobbin.Bobbin
 import io.infinite.bobbin.BobbinFactory
 import io.infinite.bobbin.tests_2_x_x.BobbinTest
-import org.junit.Test
+import org.testng.annotations.Test
 
 class ZeroConfTest extends BobbinTest {
 

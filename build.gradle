@@ -11,7 +11,7 @@ plugins {
     id "com.jfrog.artifactory" version "4.8.1"
     id "idea"
     id "jacoco"
-    id "enterprise.groovy.plugin" version "1.0.RC4"
+    id "enterprise.groovy.plugin" version "1.0.1"
 }
 
 sourceCompatibility = 1.8
@@ -36,8 +36,8 @@ dependencies {
     compile "org.codehaus.groovy:groovy-all:2.5.4"
     compile "org.slf4j:slf4j-api:1.7.25"
     compile "com.fasterxml.jackson.core:jackson-databind:2.9.7"
-    compile "io.infinite:supplies:1.1.0"
-    testCompile "org.junit.jupiter:junit-jupiter-api:5.4.0"
+    compile "io.infinite:supplies:1.1.2"
+    testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
 }
 
 task sourceJar(type: Jar) {
@@ -111,6 +111,7 @@ artifactory {
 }
 
 test {
+    useTestNG()
     testLogging {
         events "passed", "skipped", "failed"
         exceptionFormat "full"
@@ -125,3 +126,8 @@ jacocoTestReport {
 }
 
 check.dependsOn jacocoTestReport
+configurations {
+    providedRuntime
+    compile.exclude(group: 'junit')
+    compile.exclude(group: 'org.junit.platform')
+}
