@@ -2,7 +2,7 @@ package io.infinite.bobbin.tests_1_x_x.BasicTest
 
 
 import io.infinite.bobbin.tests_2_x_x.BobbinTest
-import org.junit.Test
+import org.testng.annotations.Test
 
 class BasicTest extends BobbinTest {
 

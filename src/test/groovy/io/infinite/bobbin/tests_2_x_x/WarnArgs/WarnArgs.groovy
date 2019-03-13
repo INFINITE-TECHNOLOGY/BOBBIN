@@ -1,7 +1,7 @@
 package io.infinite.bobbin.tests_2_x_x.WarnArgs
 
 import io.infinite.bobbin.tests_2_x_x.BobbinTest
-import org.junit.Test
+import org.testng.annotations.Test
 
 class WarnArgs extends BobbinTest {
 

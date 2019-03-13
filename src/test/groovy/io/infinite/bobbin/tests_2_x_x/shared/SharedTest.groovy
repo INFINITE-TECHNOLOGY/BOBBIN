@@ -5,7 +5,7 @@ import io.infinite.bobbin.BobbinFactory
 import io.infinite.bobbin.destinations.FileDestination
 import io.infinite.bobbin.tests_2_x_x.BobbinTest
 import io.infinite.bobbin.tests_2_x_x.TestSharedFileDestination
-import org.junit.Test
+import org.testng.annotations.Test
 
 import java.text.SimpleDateFormat
 

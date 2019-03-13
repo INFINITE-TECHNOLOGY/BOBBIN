@@ -1,7 +1,7 @@
 package io.infinite.bobbin.tests_2_x_x.MDC
 
 import io.infinite.bobbin.tests_2_x_x.BobbinTest
-import org.junit.Test
+import org.testng.annotations.Test
 import org.slf4j.MDC
 
 class MDCTest extends BobbinTest {

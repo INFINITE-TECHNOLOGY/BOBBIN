@@ -1,7 +1,7 @@
 package io.infinite.bobbin.tests_sanity
 
 import groovy.util.logging.Slf4j
-import org.junit.Test
+import org.testng.annotations.Test
 
 @Slf4j
 class SingleTest {
