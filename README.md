@@ -30,7 +30,7 @@ compile "io.infinite:bobbin:2.0.2"
 Just simply run the below code in Groovy console:
 
 ```groovy
-@Grab('io.infinite:bobbin:2.0.2')
+@Grab('io.infinite:bobbin:2.0.3')
 @Grab('org.slf4j:slf4j-api:1.7.25')
 import groovy.util.logging.Slf4j
 
@@ -44,6 +44,12 @@ class TryMe {
 }
 
 new TryMe().tryMe()
+```
+
+Output:
+
+```
+2019-03-15 15:19:14:337|info|Thread-3|TryMe|Welcome to the revolution in Java Logging.
 ```
 
 ## Documentation
