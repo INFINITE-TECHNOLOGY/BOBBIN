@@ -20,7 +20,7 @@ Bobbin leverages the concept of Logback/Log4j2 sifting appenders while providing
 > ❗ Via **JCenter** repository
 
 ```groovy
-compile "io.infinite:bobbin:2.0.2"
+compile "io.infinite:bobbin:2.0.3"
 ```
 
 ## Try it now!
