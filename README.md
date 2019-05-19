@@ -17,20 +17,22 @@ Bobbin leverages the concept of Logback/Log4j2 sifting appenders while providing
 
 ## Gradle
 
-> ❗ Via **JCenter** repository
-
 ```groovy
-compile "io.infinite:bobbin:2.0.3"
+repositories {
+    jcenter()
+}
+dependencies {
+    compile "org.codehaus.groovy:groovy-all:2.5.4"
+    compile "io.infinite:bobbin:2.0.4"
+}
 ```
 
 ## Try it now!
 
-> ❗ Requires Groovy 2.5.4
-
-Just simply run the below code in Groovy console:
+Just simply run the below code in Groovy (2.5.4+) console:
 
 ```groovy
-@Grab('io.infinite:bobbin:2.0.3')
+@Grab('io.infinite:bobbin:2.0.4')
 @Grab('org.slf4j:slf4j-api:1.7.25')
 import groovy.util.logging.Slf4j
 
