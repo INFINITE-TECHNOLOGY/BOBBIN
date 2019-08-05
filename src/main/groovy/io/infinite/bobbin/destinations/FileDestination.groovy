@@ -7,7 +7,7 @@ import org.slf4j.helpers.Util
 
 class FileDestination extends Destination {
 
-    BobbinFile currentBobbinFile
+    ThreadLocal<BobbinFile> bobbinFileMap = new ThreadLocal<BobbinFile>()
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     FileDestination(DestinationConfig destinationConfig) {
@@ -19,16 +19,16 @@ class FileDestination extends Destination {
     protected void store(String finalOutputMessageText, Level level, String className, String date) {
         String newFileName = bobbinScriptEngine.evalFileName(level.value(), className, date)
         refreshCurrentFile(newFileName)
-        currentBobbinFile.writer.write(finalOutputMessageText)
-        currentBobbinFile.writer.flush()
+        bobbinFileMap.get().writer.write(finalOutputMessageText)
+        bobbinFileMap.get().writer.flush()
     }
 
     void refreshCurrentFile(String newFileName) {
-        if (currentBobbinFile == null) {
-            currentBobbinFile = initFile(newFileName)
+        if (bobbinFileMap.get() == null) {
+            bobbinFileMap.set(initFile(newFileName))
         } else {
-            if (currentBobbinFile.fileName != newFileName) {
-                currentBobbinFile = initFile(newFileName)
+            if (bobbinFileMap.get().fileName != newFileName) {
+                bobbinFileMap.set(initFile(newFileName))
             }
         }
     }

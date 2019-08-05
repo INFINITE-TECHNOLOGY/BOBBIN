@@ -1,6 +1,6 @@
 package io.infinite.bobbin
 
-import java.text.SimpleDateFormat
+import org.apache.commons.lang3.time.FastDateFormat
 
 abstract class BobbinScriptEngine {
 
@@ -10,9 +10,9 @@ abstract class BobbinScriptEngine {
 
     String code
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat(getDateFormat())
+    FastDateFormat dateFormat = FastDateFormat.getInstance(getDateFormat())
 
-    SimpleDateFormat dateTimeFormat = new SimpleDateFormat(getDateTimeFormat())
+    FastDateFormat dateTimeFormat = FastDateFormat.getInstance(getDateTimeFormat())
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     BobbinScriptEngine(String code) {
