@@ -18,15 +18,16 @@ class PerformanceTest_2_0_5  extends BobbinTest {
         log.info("Started")
         Thread t1 = Thread.start {
             Thread.currentThread().setName("THREAD 1")
-            for (i in 1..1000000) {
+            for (i in 1..100000) {
                 log.debug("ZZZ")
             }
         }
         Thread t2 = Thread.start {
             Thread.currentThread().setName("THREAD 2")
-            for (i in 1..1000000) {
+            for (i in 1..100000) {
                 log.debug("ZZZ")
             }
+            log.info("Thread 2 finished")
         }
         Thread.sleep(5000)
         t1.join()
