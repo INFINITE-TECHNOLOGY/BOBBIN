@@ -7,7 +7,7 @@ import org.slf4j.helpers.Util
 
 class FileDestination extends Destination {
 
-    ThreadLocal<BobbinFile> bobbinFileMap = new ThreadLocal<BobbinFile>()
+    ThreadLocal<Map<Level, BobbinFile>> bobbinFileThreadLocalMap = new ThreadLocal<Map<Level, BobbinFile>>()
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     FileDestination(DestinationConfig destinationConfig) {
@@ -18,17 +18,20 @@ class FileDestination extends Destination {
     @Override
     protected void store(String finalOutputMessageText, Level level, String className, String date) {
         String newFileName = bobbinScriptEngine.evalFileName(level.value(), className, date)
-        refreshCurrentFile(newFileName)
-        bobbinFileMap.get().writer.write(finalOutputMessageText)
-        bobbinFileMap.get().writer.flush()
+        refreshCurrentFile(level, newFileName)
+        bobbinFileThreadLocalMap.get().get(level).writer.write(finalOutputMessageText)
+        bobbinFileThreadLocalMap.get().get(level).writer.flush()
     }
 
-    void refreshCurrentFile(String newFileName) {
-        if (bobbinFileMap.get() == null) {
-            bobbinFileMap.set(initFile(newFileName))
+    void refreshCurrentFile(Level level, String newFileName) {
+        if (bobbinFileThreadLocalMap.get() == null) {
+            Map<Level, BobbinFile> bobbinFileMap = new HashMap<Level, BobbinFile>()
+            bobbinFileMap.put(level, initFile(newFileName))
+            bobbinFileThreadLocalMap.set(bobbinFileMap)
         } else {
-            if (bobbinFileMap.get().fileName != newFileName) {
-                bobbinFileMap.set(initFile(newFileName))
+            if (bobbinFileThreadLocalMap.get().get(level).fileName != newFileName) {
+                bobbinFileThreadLocalMap.get().get(level).writer.close()
+                bobbinFileThreadLocalMap.get().put(level, initFile(newFileName))
             }
         }
     }
