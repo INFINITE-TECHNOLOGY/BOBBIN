@@ -29,9 +29,13 @@ class FileDestination extends Destination {
             bobbinFileMap.put(level, initFile(newFileName))
             bobbinFileThreadLocalMap.set(bobbinFileMap)
         } else {
-            if (bobbinFileThreadLocalMap.get().get(level).fileName != newFileName) {
-                bobbinFileThreadLocalMap.get().get(level).writer.close()
+            if (!bobbinFileThreadLocalMap.get().containsKey(level)) {
                 bobbinFileThreadLocalMap.get().put(level, initFile(newFileName))
+            } else {
+                if (bobbinFileThreadLocalMap.get().get(level).fileName != newFileName) {
+                    bobbinFileThreadLocalMap.get().get(level).writer.close()
+                    bobbinFileThreadLocalMap.get().put(level, initFile(newFileName))
+                }
             }
         }
     }
