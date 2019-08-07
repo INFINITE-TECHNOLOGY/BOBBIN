@@ -12,7 +12,7 @@ class FileDestination extends Destination {
 
     ThreadLocal<Map<Level, BobbinFile>> bobbinFileThreadLocalMap = new ThreadLocal<Map<Level, BobbinFile>>()
 
-    ConcurrentHashMap<String, ReentrantLock> lockMap = new ConcurrentHashMap<String, ReentrantLock>(8, 0.9f, 1)
+    static ConcurrentHashMap<String, ReentrantLock> lockMap = new ConcurrentHashMap<String, ReentrantLock>(8, 0.9f, 1)
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     FileDestination(DestinationConfig destinationConfig) {
