@@ -5,9 +5,14 @@ import io.infinite.bobbin.Level
 import io.infinite.bobbin.config.DestinationConfig
 import org.slf4j.helpers.Util
 
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.locks.ReentrantLock
+
 class FileDestination extends Destination {
 
     ThreadLocal<Map<Level, BobbinFile>> bobbinFileThreadLocalMap = new ThreadLocal<Map<Level, BobbinFile>>()
+
+    ConcurrentHashMap<String, ReentrantLock> lockMap = new ConcurrentHashMap<String, ReentrantLock>(8, 0.9f, 1)
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     FileDestination(DestinationConfig destinationConfig) {
@@ -19,9 +24,14 @@ class FileDestination extends Destination {
     protected void store(String finalOutputMessageText, Level level, String className, String date) {
         String newFileName = bobbinScriptEngine.evalFileName(level.value(), className, date)
         BobbinFile bobbinFile = refreshCurrentFile(level, newFileName)
-        synchronized (bobbinFile.getCanonicalPath().intern()) {
+        ReentrantLock newLock = new ReentrantLock()
+        ReentrantLock lock = lockMap.putIfAbsent(bobbinFile.getCanonicalPath(), newLock) ?: newLock
+        try {
+            lock.lock()
             bobbinFile.writer.write(finalOutputMessageText)
             bobbinFile.writer.flush()
+        } finally {
+            lock.unlock()
         }
     }
 
