@@ -18,24 +18,34 @@ class FileDestination extends Destination {
     @Override
     protected void store(String finalOutputMessageText, Level level, String className, String date) {
         String newFileName = bobbinScriptEngine.evalFileName(level.value(), className, date)
-        refreshCurrentFile(level, newFileName)
-        bobbinFileThreadLocalMap.get().get(level).writer.write(finalOutputMessageText)
-        bobbinFileThreadLocalMap.get().get(level).writer.flush()
+        BobbinFile bobbinFile = refreshCurrentFile(level, newFileName)
+        synchronized (newFileName) {
+            bobbinFile.writer.write(finalOutputMessageText)
+            bobbinFile.writer.flush()
+        }
     }
 
-    void refreshCurrentFile(Level level, String newFileName) {
-        if (bobbinFileThreadLocalMap.get() == null) {
-            Map<Level, BobbinFile> bobbinFileMap = new HashMap<Level, BobbinFile>()
-            bobbinFileMap.put(level, initFile(newFileName))
+    BobbinFile refreshCurrentFile(Level level, String newFileName) {
+        Map<Level, BobbinFile> bobbinFileMap = bobbinFileThreadLocalMap.get()
+        if (bobbinFileMap == null) {
+            bobbinFileMap = new HashMap<Level, BobbinFile>()
+            BobbinFile bobbinFile = initFile(newFileName)
+            bobbinFileMap.put(level, bobbinFile)
             bobbinFileThreadLocalMap.set(bobbinFileMap)
+            return bobbinFile
         } else {
-            if (!bobbinFileThreadLocalMap.get().containsKey(level)) {
-                bobbinFileThreadLocalMap.get().put(level, initFile(newFileName))
+            if (!bobbinFileMap.containsKey(level)) {
+                BobbinFile bobbinFile = initFile(newFileName)
+                bobbinFileMap.put(level, bobbinFile)
+                return bobbinFile
             } else {
-                if (bobbinFileThreadLocalMap.get().get(level).fileName != newFileName) {
-                    bobbinFileThreadLocalMap.get().get(level).writer.close()
-                    bobbinFileThreadLocalMap.get().put(level, initFile(newFileName))
+                BobbinFile bobbinFile = bobbinFileMap.get(level)
+                if (bobbinFile.fileName != newFileName) {
+                    bobbinFile.writer.close()
+                    bobbinFile = initFile(newFileName)
+                    bobbinFileMap.put(level, bobbinFile)
                 }
+                return bobbinFile
             }
         }
     }
