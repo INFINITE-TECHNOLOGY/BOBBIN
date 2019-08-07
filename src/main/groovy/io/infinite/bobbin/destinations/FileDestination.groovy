@@ -19,7 +19,7 @@ class FileDestination extends Destination {
     protected void store(String finalOutputMessageText, Level level, String className, String date) {
         String newFileName = bobbinScriptEngine.evalFileName(level.value(), className, date)
         BobbinFile bobbinFile = refreshCurrentFile(level, newFileName)
-        synchronized (newFileName) {
+        synchronized (bobbinFile.getCanonicalPath().intern()) {
             bobbinFile.writer.write(finalOutputMessageText)
             bobbinFile.writer.flush()
         }
