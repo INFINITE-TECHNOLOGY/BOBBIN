@@ -15,12 +15,12 @@ plugins {
 }
 
 sourceCompatibility = 1.8
-group = "io.infinite"
+group = "io.i-t"
 version = "2.0.9-SNAPSHOT"
 description = "Groovy Slf4j logger"
 
 wrapper {
-    gradleVersion = "5.2.1"
+    gradleVersion = "5.5.1"
 }
 
 repositories {
@@ -36,7 +36,7 @@ dependencies {
     compileOnly "org.codehaus.groovy:groovy-all:2.5.4"
     compile "org.slf4j:slf4j-api:1.7.25"
     compile "com.fasterxml.jackson.core:jackson-databind:2.9.7"
-    compile "io.infinite:supplies:1.1.4"
+    compile "io.i-t:supplies:1.1.8"
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
     testCompile "org.codehaus.groovy:groovy-all:2.5.4"
     testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
@@ -113,10 +113,11 @@ artifactory {
 }
 
 test {
-    useTestNG()
-    testLogging {
-        events "passed", "skipped", "failed"
-        exceptionFormat "full"
+    useTestNG {
+        testLogging {
+            events "passed", "skipped", "failed"
+            exceptionFormat "full"
+        }
     }
 }
 
