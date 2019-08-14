@@ -37,7 +37,7 @@ Bobbin leverages the concept of Logback/Log4j2 sifting appenders while providing
 ```groovy
 dependencies {
     compile "org.codehaus.groovy:groovy-all:2.5.4"
-    compile "io.infinite:bobbin:2.0.10"
+    compile "io.i-t:bobbin:2.0.10"
 }
 ```
 
@@ -46,7 +46,7 @@ dependencies {
 Just simply run the below code in Groovy (2.5.4+) console:
 
 ```groovy
-@Grab('io.infinite:bobbin:2.0.10')
+@Grab('io.i-t:bobbin:2.0.10')
 @Grab('org.slf4j:slf4j-api:1.7.25')
 import groovy.util.logging.Slf4j
 
