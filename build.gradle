@@ -15,12 +15,12 @@ plugins {
 }
 
 sourceCompatibility = 1.8
-group = "io.infinite"
-version = "3.0.0-SNAPSHOT"
+group = "io.i-t"
+version = "2.0.10"
 description = "Groovy Slf4j logger"
 
 wrapper {
-    gradleVersion = "5.2.1"
+    gradleVersion = "5.5.1"
 }
 
 repositories {
@@ -29,6 +29,7 @@ repositories {
 
 sourceSets {
     main.groovy.srcDirs = ["src/main/groovy"]
+    main.java.srcDirs = ["src/main/java"]
     test.groovy.srcDirs = ["src/test/groovy"]
 }
 
@@ -36,7 +37,7 @@ dependencies {
     compileOnly "org.codehaus.groovy:groovy-all:2.5.4"
     compile "org.slf4j:slf4j-api:1.7.25"
     compile "com.fasterxml.jackson.core:jackson-databind:2.9.7"
-    compile "io.infinite:supplies:1.1.4"
+    compile "io.i-t:supplies:1.1.8"
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
     testCompile "org.codehaus.groovy:groovy-all:2.5.4"
     testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
@@ -45,6 +46,11 @@ dependencies {
 task sourceJar(type: Jar) {
     from sourceSets.main.allSource
     classifier "sources"
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
 }
 
 ext {
@@ -58,20 +64,47 @@ publishing {
     publications {
         groovyMaven(MavenPublication) {
             from components.java
+            //https://github.com/webjars/webjars-locator-weblogic/blob/master/build.gradle
+            pom.withXml {
+                asNode().children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+                    name bintray.pkg.name
+                    description bintray.pkg.desc
+                    url bintray.pkg.websiteUrl
+                    scm {
+                        url bintray.pkg.vcsUrl
+                        connection bintray.pkg.vcsUrl
+                        developerConnection bintray.pkg.vcsUrl
+                    }
+                    licenses {
+                        license {
+                            name "Apache-2.0"
+                            url "http://www.apache.org/licenses/"
+                            distribution 'repo'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'apryamostanov'
+                            name 'Anton Pryamostanov'
+                            email 'anton.pryamostanov@gmail.com'
+                        }
+                    }
+                }
+            }
             artifact(sourceJar) {
                 classifier "sources"
+            }
+            artifact(javadocJar) {
+                classifier "javadoc"
             }
         }
     }
 }
 
-task jarSrc(type: Jar, dependsOn: classes) {
-    classifier = "sources"
-    from sourceSets.main.allSource
-}
 
 artifacts {
-    archives(jarSrc)
+    archives(sourceJar)
 }
 
 bintray {
@@ -113,10 +146,11 @@ artifactory {
 }
 
 test {
-    useTestNG()
-    testLogging {
-        events "passed", "skipped", "failed"
-        exceptionFormat "full"
+    useTestNG {
+        testLogging {
+            events "passed", "skipped", "failed"
+            exceptionFormat "full"
+        }
     }
 }
 
@@ -128,6 +162,8 @@ jacocoTestReport {
 }
 
 check.dependsOn jacocoTestReport
+
+bintrayUpload.dependsOn javadocJar
 configurations {
     providedRuntime
     compile.exclude(group: 'junit')

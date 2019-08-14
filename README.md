@@ -15,15 +15,29 @@ Bobbin is a high-performance Groovy Slf4j-compatible logger designed for multi-t
 
 Bobbin leverages the concept of Logback/Log4j2 sifting appenders while providing much more easier configuration using native Groovy/Java scripting expressions.
 
+
+> ❇ Bobbin is available both in `JCenter` and `Maven Central` repositories.
+
+## Maven
+
+> ❗ Note that there is no `<type>pom</type>`
+
+> ❇ [Example Maven project with Bobbin](https://github.com/INFINITE-TECHNOLOGY/BOBBIN_MAVEN_EXAMPLE)
+
+```xml
+        <dependency>
+            <groupId>io.i-t</groupId>
+            <artifactId>bobbin</artifactId>
+            <version>2.0.10</version>
+        </dependency>
+```
+
 ## Gradle
 
 ```groovy
-repositories {
-    jcenter()
-}
 dependencies {
     compile "org.codehaus.groovy:groovy-all:2.5.4"
-    compile "io.infinite:bobbin:2.0.4"
+    compile "io.infinite:bobbin:2.0.10"
 }
 ```
 
@@ -32,7 +46,7 @@ dependencies {
 Just simply run the below code in Groovy (2.5.4+) console:
 
 ```groovy
-@Grab('io.infinite:bobbin:2.0.4')
+@Grab('io.infinite:bobbin:2.0.10')
 @Grab('org.slf4j:slf4j-api:1.7.25')
 import groovy.util.logging.Slf4j
 

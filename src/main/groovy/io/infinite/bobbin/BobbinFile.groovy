@@ -1,9 +1,10 @@
 package io.infinite.bobbin
 
-class BobbinFile extends File{
+class BobbinFile extends File {
 
     FileWriter writer
     String fileName
+    Date createDate = new Date()
 
     BobbinFile(String pathname) {
         super(pathname)
@@ -20,4 +21,5 @@ class BobbinFile extends File{
     BobbinFile(URI uri) {
         super(uri)
     }
+
 }
