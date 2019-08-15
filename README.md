@@ -15,7 +15,6 @@ Bobbin is a high-performance Groovy Slf4j-compatible logger designed for multi-t
 
 Bobbin leverages the concept of Logback/Log4j2 sifting appenders while providing much more easier configuration using native Groovy/Java scripting expressions.
 
-
 > ❇ Bobbin is available both in `JCenter` and `Maven Central` repositories.
 
 ## Maven
