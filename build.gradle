@@ -16,7 +16,7 @@ plugins {
 
 sourceCompatibility = 1.8
 group = "io.i-t"
-version = "2.0.11-SNAPSHOT"
+version = "2.0.12-SNAPSHOT"
 description = "Groovy Slf4j logger"
 
 wrapper {
@@ -115,7 +115,7 @@ bintray {
     def projectDescription = project.description
     pkg {
         userOrg = "infinite-technology"
-        repo = "m2"
+        repo = "io.i-t"
         name = "bobbin"
         desc = "Groovy Slf4j Logger"
         issueTrackerUrl = "https://github.com/INFINITE-TECHNOLOGY/BOBBIN/issues"
