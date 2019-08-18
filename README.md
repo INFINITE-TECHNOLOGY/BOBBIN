@@ -9,12 +9,11 @@
 |Branch|[master](https://github.com/INFINITE-TECHNOLOGY/BOBBIN)|[BOBBIN_2_0_X](https://github.com/INFINITE-TECHNOLOGY/BOBBIN/tree/BOBBIN_2_0_X)|
 |CI Build status|[![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=master)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)|[![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=BOBBIN_2_0_X)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)|
 |Test coverage|[![codecov](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/master/graphs/badge.svg)](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/master/graphs)|[![codecov](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/BOBBIN_2_0_X/graphs/badge.svg)](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/BOBBIN_2_0_X/graphs)|
-|Library (Maven)|[oss.jfrog.org snapshot](https://oss.jfrog.org/artifactory/webapp/#/artifacts/browse/tree/General/oss-snapshot-local/io/infinite/bobbin/3.0.0-SNAPSHOT)|[ ![Download](https://api.bintray.com/packages/infinite-technology/m2/bobbin/images/download.svg) ](https://bintray.com/infinite-technology/m2/bobbin/_latestVersion)|
+|Library (Maven)|[oss.jfrog.org snapshot](https://oss.jfrog.org/artifactory/webapp/#/artifacts/browse/tree/General/oss-snapshot-local/io/infinite/bobbin/3.0.0-SNAPSHOT)|[ ![Download](https://api.bintray.com/packages/infinite-technology/io.i-t/bobbin/images/download.svg) ](https://bintray.com/infinite-technology/io.i-t/bobbin/_latestVersion)|
 
 Bobbin is a high-performance Groovy Slf4j-compatible logger designed for multi-threaded applications (especially those with persistent threads like batch and messaging applications).
 
 Bobbin leverages the concept of Logback/Log4j2 sifting appenders while providing much more easier configuration using native Groovy/Java scripting expressions.
-
 
 > ❇ Bobbin is available both in `JCenter` and `Maven Central` repositories.
 
