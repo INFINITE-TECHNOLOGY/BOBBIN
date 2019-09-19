@@ -27,7 +27,7 @@ Bobbin leverages the concept of Logback/Log4j2 sifting appenders while providing
         <dependency>
             <groupId>io.i-t</groupId>
             <artifactId>bobbin</artifactId>
-            <version>2.0.11</version>
+            <version>2.0.12</version>
         </dependency>
 ```
 
@@ -36,7 +36,7 @@ Bobbin leverages the concept of Logback/Log4j2 sifting appenders while providing
 ```groovy
 dependencies {
     compile "org.codehaus.groovy:groovy-all:2.5.4"
-    compile "io.i-t:bobbin:2.0.11"
+    compile "io.i-t:bobbin:2.0.12"
 }
 ```
 
@@ -45,7 +45,7 @@ dependencies {
 Just simply run the below code in Groovy (2.5.4+) console:
 
 ```groovy
-@Grab('io.i-t:bobbin:2.0.11')
+@Grab('io.i-t:bobbin:2.0.12')
 @Grab('org.slf4j:slf4j-api:1.7.25')
 import groovy.util.logging.Slf4j
 
