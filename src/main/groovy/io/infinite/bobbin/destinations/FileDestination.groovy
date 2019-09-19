@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantLock
 
 class FileDestination extends Destination {
 
-    ThreadLocal<Map<String, BobbinFile>> bobbinFileThreadLocalCache = new ThreadLocal<Map<String, BobbinFile>>()
+    static ThreadLocal<Map<String, BobbinFile>> bobbinFileThreadLocalCache = new ThreadLocal<Map<String, BobbinFile>>()
 
     static ConcurrentHashMap<String, ReentrantLock> lockMap = new ConcurrentHashMap<String, ReentrantLock>(8, 0.9f, 1)
 
