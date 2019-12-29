@@ -2,8 +2,9 @@ package io.infinite.bobbin.config
 
 abstract class AbstractConfig {
 
-    String levels
-    String classes
+    List<String> levels
+    List<String> classes
+    String filter
     String dateFormat
     String dateTimeFormat
     String format

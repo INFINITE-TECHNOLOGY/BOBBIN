@@ -1,5 +1,0 @@
-error|ZeroConfTest|io.infinite.bobbin.tests_2_x_x.ZeroConf.ZeroConfTest|error abcd
-warn|ZeroConfTest|io.infinite.bobbin.tests_2_x_x.ZeroConf.ZeroConfTest|warn 1234
-info|ZeroConfTest|io.infinite.bobbin.tests_2_x_x.ZeroConf.ZeroConfTest|info abcd1234
-debug|ZeroConfTest|io.infinite.bobbin.tests_2_x_x.ZeroConf.ZeroConfTest|debug $uuid
-trace|ZeroConfTest|io.infinite.bobbin.tests_2_x_x.ZeroConf.ZeroConfTest|trace $uuid

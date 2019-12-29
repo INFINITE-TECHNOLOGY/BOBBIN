@@ -1,3 +1,0 @@
-info|Enabled|LOG|info abcd1234
-debug|Enabled|LOG|debug $uuid
-trace|Enabled|LOG|trace $uuid

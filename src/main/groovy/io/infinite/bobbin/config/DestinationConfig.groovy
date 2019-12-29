@@ -10,12 +10,12 @@ class DestinationConfig extends AbstractConfig {
     BobbinScriptEngine bobbinScriptEngine
 
     @Override
-    String getLevels() {
+    List<String> getLevels() {
         return super.@levels ?: bobbinConfig.getLevels()
     }
 
     @Override
-    String getClasses() {
+    List<String> getClasses() {
         return super.@classes ?: bobbinConfig.getClasses()
     }
 

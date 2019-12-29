@@ -1,6 +1,7 @@
 package io.infinite.bobbin
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.destinations.Destination
 import io.infinite.supplies.ast.cache.CacheFieldInit
@@ -11,7 +12,7 @@ import org.slf4j.helpers.Util
 
 class BobbinFactory implements ILoggerFactory {
 
-    String confName = "Bobbin.json"
+    String confName = "Bobbin.yml"
 
     @CacheFieldInit
     BobbinConfig bobbinConfig = initBobbinConfig()
@@ -20,7 +21,7 @@ class BobbinFactory implements ILoggerFactory {
         BobbinConfig bobbinConfig
         String configResourceString = new ResourceLookup("Bobbin", confName, true).getResourceAsString()
         if (configResourceString != null) {
-            bobbinConfig = new ObjectMapper().readValue(
+            bobbinConfig = new ObjectMapper(new YAMLFactory()).readValue(
                     configResourceString
                     , BobbinConfig.class
             )

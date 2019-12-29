@@ -11,7 +11,7 @@ plugins {
     id "com.jfrog.artifactory" version "4.8.1"
     id "idea"
     id "jacoco"
-    id "enterprise.groovy.plugin" version "1.0.1"
+    id "enterprise.groovy.plugin" version "1.0.4"
 }
 
 sourceCompatibility = 1.8
@@ -36,8 +36,9 @@ sourceSets {
 dependencies {
     compileOnly "org.codehaus.groovy:groovy-all:2.5.4"
     compile "org.slf4j:slf4j-api:1.7.25"
-    compile "com.fasterxml.jackson.core:jackson-databind:2.9.7"
-    compile "io.i-t:supplies:1.1.9"
+    compile "com.fasterxml.jackson.core:jackson-databind:2.9.8"
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.8'
+    compile "io.i-t:supplies:1.1.11"
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
     testCompile "org.codehaus.groovy:groovy-all:2.5.4"
     testCompile group: 'org.testng', name: 'testng', version: '6.14.3'

@@ -10,7 +10,7 @@ class Bobbin extends MarkerIgnoringBase {
     List<Destination> destinations = new ArrayList<>()
 
     BobbinScriptEngine bobbinScriptEngine
-    
+
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     Bobbin(String className) {
         this.className = className
@@ -21,12 +21,20 @@ class Bobbin extends MarkerIgnoringBase {
         return bobbinScriptEngine.isLevelEnabled(level.value())
     }
 
+    Boolean isPackageEnabled(String className) {
+        return bobbinScriptEngine.isPackageEnabled(className)
+    }
+
     Boolean isClassEnabled(String className) {
         return bobbinScriptEngine.isClassEnabled(className)
     }
 
+    Boolean isFiltered(Level level, String className) {
+        return bobbinScriptEngine.isFiltered(level.value(), className)
+    }
+
     Boolean needsLogging(Level level, String className) {
-        return isLevelEnabled(level) && isClassEnabled(className)
+        return isLevelEnabled(level) && isPackageEnabled(className) && isClassEnabled(className) && (!isFiltered(level, className))
     }
 
     void log(Level level, String className, String msg) {

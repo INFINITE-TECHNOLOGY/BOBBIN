@@ -24,8 +24,7 @@ class BobbinScriptEngineFactory {
 
     @CacheFieldInit
     String bobbinScriptEngineImplCode = combinedTemplate.make([
-            "levelScript"  : bobbinConfig.levels,
-            "classesScript": bobbinConfig.classes,
+            "filterScript"  : bobbinConfig.filter,
             "formatScript" : bobbinConfig.format,
             "argFormatScript" : bobbinConfig.formatArg,
             "argsFormatScript" : bobbinConfig.formatArgs,
@@ -44,8 +43,7 @@ class BobbinScriptEngineFactory {
 
     BobbinScriptEngine getDestinationBobbinScriptEngine(DestinationConfig destinationConfig) {
         return groovyClassLoader.parseClass(combinedTemplate.make([
-                "levelScript"  : destinationConfig.levels ?: bobbinConfig.levels,
-                "classesScript": destinationConfig.classes ?: bobbinConfig.classes,
+                "filterScript": destinationConfig.filter ?: bobbinConfig.filter,
                 "formatScript" : destinationConfig.format ?: bobbinConfig.format,
                 "argFormatScript" : destinationConfig.formatArg ?: bobbinConfig.formatArg,
                 "argsFormatScript" : destinationConfig.formatArgs ?: bobbinConfig.formatArgs,
@@ -68,13 +66,9 @@ class BobbinScriptEngineImpl extends BobbinScriptEngine {
     BobbinScriptEngineImpl(String code) {
         super(code)
     }
-
-    Boolean isLevelEnabled(String level) {
-        \$levelScript
-    }
-
-    Boolean isClassEnabled(String className) {
-        \$classesScript
+    
+    Boolean isFiltered(String level, String className) {
+        \$filterScript
     }
 
     String evalFileName(String level, String className, String date) {

@@ -1,5 +1,6 @@
 package io.infinite.bobbin
 
+import io.infinite.supplies.ast.exceptions.ExceptionUtils
 import org.apache.commons.lang3.time.FastDateFormat
 
 abstract class BobbinScriptEngine {
@@ -13,6 +14,14 @@ abstract class BobbinScriptEngine {
     FastDateFormat dateFormat = FastDateFormat.getInstance(getDateFormat())
 
     FastDateFormat dateTimeFormat = FastDateFormat.getInstance(getDateTimeFormat())
+
+    ExceptionUtils exceptionUtils = new ExceptionUtils()
+
+    List<String> levels = new ArrayList<>()
+
+    List<String> packageNames = new ArrayList<>()
+
+    List<String> classNames = new ArrayList<>()
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     BobbinScriptEngine(String code) {
@@ -40,9 +49,27 @@ abstract class BobbinScriptEngine {
         return dateTimeFormat.format(new Date())
     }
 
-    abstract Boolean isLevelEnabled(String level)
+    Boolean isLevelEnabled(String level) {
+        return levels.isEmpty() || levels.contains(level)
+    }
 
-    abstract Boolean isClassEnabled(String className)
+    Boolean isPackageEnabled(String className) {
+        if (packageNames.isEmpty()) {
+            return true
+        }
+        for (packageName in packageNames) {
+            if (className.startsWith(packageName)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    Boolean isClassEnabled(String className) {
+        return classNames.isEmpty() || classNames.contains(className)
+    }
+
+    abstract Boolean isFiltered(String level, String className)
 
     abstract String evalFileName(String level, String className, String date)
 
