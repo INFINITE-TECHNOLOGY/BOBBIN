@@ -1,63 +1,63 @@
 package io.infinite.bobbin.destinations
 
-import io.infinite.bobbin.BobbinScriptEngine
+import io.infinite.bobbin.BobbinEngine
 import io.infinite.bobbin.Level
-import io.infinite.bobbin.config.DestinationConfig
+import io.infinite.bobbin.config.AbstractDestinationConfig
 
 abstract class Destination {
 
-    DestinationConfig destinationConfig
+    AbstractDestinationConfig destinationConfig
 
-    BobbinScriptEngine bobbinScriptEngine
+    BobbinEngine bobbinEngine
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
-    Destination(DestinationConfig destinationConfig) {
+    Destination(AbstractDestinationConfig destinationConfig) {
         this.destinationConfig = destinationConfig
     }
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
-    void log(Level level, String className, String msg) {
-        if (needsLogging(level, className)) {
-            String date = bobbinScriptEngine.getDate()
-            store(bobbinScriptEngine.formatLine(level.value(), className, date, msg), level, className, date)
+    void log(String loggerName, Level level, String msg) {
+        if (needsLogging(loggerName, level)) {
+            String date = bobbinEngine.getDate()
+            store(bobbinEngine.formatLine(level.value(), loggerName, date, msg), loggerName, level, date)
         }
     }
 
-    void logArg(Level level, String className, String format, Object arg) {
-        if (needsLogging(level, className)) {
-            String date = bobbinScriptEngine.getDate()
-            store(bobbinScriptEngine.formatLineArg(level.value(), className, date, format, arg), level, className, date)
+    void logArg(String loggerName, Level level, String format, Object arg) {
+        if (needsLogging(loggerName, level)) {
+            String date = bobbinEngine.getDate()
+            store(bobbinEngine.formatLineArg(level.value(), loggerName, date, format, arg), loggerName, level, date)
         }
     }
 
-    void logArgs(Level level, String className, String format, Object... arguments) {
-        if (needsLogging(level, className)) {
-            String date = bobbinScriptEngine.getDate()
-            store(bobbinScriptEngine.formatLineArgs(level.value(), className, date, format, arguments), level, className, date)
+    void logArgs(String loggerName, Level level, String format, Object... arguments) {
+        if (needsLogging(loggerName, level)) {
+            String date = bobbinEngine.getDate()
+            store(bobbinEngine.formatLineArgs(level.value(), loggerName, date, format, arguments), loggerName, level, date)
         }
     }
 
-    void logArg1Arg2(Level level, String className, String format, Object arg1, Object arg2) {
-        if (needsLogging(level, className)) {
-            String date = bobbinScriptEngine.getDate()
-            store(bobbinScriptEngine.formatLineArg1Arg2(level.value(), className, date, format, arg1, arg2), level, className, date)
+    void logArg1Arg2(String loggerName, Level level, String format, Object arg1, Object arg2) {
+        if (needsLogging(loggerName, level)) {
+            String date = bobbinEngine.getDate()
+            store(bobbinEngine.formatLineArg1Arg2(level.value(), loggerName, date, format, arg1, arg2), loggerName, level, date)
         }
     }
 
-    void logThrowable(Level level, String className, String msg, Throwable t) {
-        if (needsLogging(level, className)) {
-            String date = bobbinScriptEngine.getDate()
-            store(bobbinScriptEngine.formatLineThrowable(level.value(), className, date, msg, t), level, className, date)
+    void logThrowable(String loggerName, Level level, String msg, Throwable t) {
+        if (needsLogging(loggerName, level)) {
+            String date = bobbinEngine.getDate()
+            store(bobbinEngine.formatLineThrowable(level.value(), loggerName, date, msg, t), loggerName, level, date)
         }
     }
 
-    abstract protected void store(String finalOutputMessageText, Level level, String className, String date)
+    abstract protected void store(String finalOutputMessageText, String loggerName, Level level, String date)
 
-    Boolean needsLogging(Level level, String className) {
+    Boolean needsLogging(String loggerName, Level level) {
         return (destinationConfig.isLevelEnabled(level.value())
-                && destinationConfig.isPackageEnabled(className)
-                && destinationConfig.isClassEnabled(className)
-                && (!bobbinScriptEngine.isFiltered(level.value(), className)))
+                && destinationConfig.isPackageEnabled(loggerName)
+                && destinationConfig.isClassEnabled(loggerName)
+                && (!bobbinEngine.isFiltered(level.value(), loggerName)))
     }
 
 }

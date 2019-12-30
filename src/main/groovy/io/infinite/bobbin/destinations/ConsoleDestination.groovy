@@ -1,16 +1,16 @@
 package io.infinite.bobbin.destinations
 
 import io.infinite.bobbin.Level
-import io.infinite.bobbin.config.DestinationConfig
+import io.infinite.bobbin.config.ConsoleDestinationConfig
 
 class ConsoleDestination extends Destination {
 
-    ConsoleDestination(DestinationConfig destinationConfig) {
+    ConsoleDestination(ConsoleDestinationConfig destinationConfig) {
         super(destinationConfig)
     }
 
     @Override
-    protected void store(String finalOutputMessageText, Level level, String className, String date) {
+    protected void store(String finalOutputMessageText, String className, Level level, String date) {
         System.out.print(finalOutputMessageText)
     }
 }

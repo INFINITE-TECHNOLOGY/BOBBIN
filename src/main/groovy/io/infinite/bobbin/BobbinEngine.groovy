@@ -1,27 +1,20 @@
 package io.infinite.bobbin
 
+import io.infinite.bobbin.destinations.Destination
 import io.infinite.supplies.ast.exceptions.ExceptionUtils
 import org.apache.commons.lang3.time.FastDateFormat
 
-abstract class BobbinScriptEngine {
+abstract class BobbinEngine {
 
     final Boolean all = true
 
     final Boolean none = false
-
-    String code
 
     FastDateFormat dateFormat = FastDateFormat.getInstance(getDateFormat())
 
     FastDateFormat dateTimeFormat = FastDateFormat.getInstance(getDateTimeFormat())
 
     ExceptionUtils exceptionUtils = new ExceptionUtils()
-
-    ///////////////////CONSTRUCTOR \/\/\/\/\/\/
-    BobbinScriptEngine(String code) {
-        this.code = code
-    }
-    ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
     String getThreadName() {
         return Thread.currentThread().getName()

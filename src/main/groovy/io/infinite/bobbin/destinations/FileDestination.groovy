@@ -4,7 +4,7 @@ import groovy.time.TimeCategory
 import groovy.transform.CompileDynamic
 import io.infinite.bobbin.BobbinFile
 import io.infinite.bobbin.Level
-import io.infinite.bobbin.config.DestinationConfig
+import io.infinite.bobbin.config.FileDestinationConfig
 import org.slf4j.helpers.Util
 
 import java.util.concurrent.ConcurrentHashMap
@@ -17,14 +17,14 @@ class FileDestination extends Destination {
     static ConcurrentHashMap<String, ReentrantLock> lockMap = new ConcurrentHashMap<String, ReentrantLock>(8, 0.9f, 1)
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
-    FileDestination(DestinationConfig destinationConfig) {
+    FileDestination(FileDestinationConfig destinationConfig) {
         super(destinationConfig)
     }
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
     @Override
-    protected void store(String finalOutputMessageText, Level level, String className, String date) {
-        String newFileName = bobbinScriptEngine.evalFileName(level.value(), className, date)
+    protected void store(String finalOutputMessageText, String loggerName, Level level, String date) {
+        String newFileName = bobbinEngine.evalFileName(level.value(), loggerName, date)
         BobbinFile bobbinFile = refreshCurrentFile(newFileName)
         ReentrantLock newLock = new ReentrantLock()
         ReentrantLock lock = lockMap.putIfAbsent(bobbinFile.getCanonicalPath(), newLock) ?: newLock
