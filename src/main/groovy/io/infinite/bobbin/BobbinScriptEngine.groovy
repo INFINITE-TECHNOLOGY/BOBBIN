@@ -17,12 +17,6 @@ abstract class BobbinScriptEngine {
 
     ExceptionUtils exceptionUtils = new ExceptionUtils()
 
-    List<String> levels = new ArrayList<>()
-
-    List<String> packageNames = new ArrayList<>()
-
-    List<String> classNames = new ArrayList<>()
-
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     BobbinScriptEngine(String code) {
         this.code = code
@@ -47,26 +41,6 @@ abstract class BobbinScriptEngine {
 
     String getDateTime() {
         return dateTimeFormat.format(new Date())
-    }
-
-    Boolean isLevelEnabled(String level) {
-        return levels.isEmpty() || levels.contains(level)
-    }
-
-    Boolean isPackageEnabled(String className) {
-        if (packageNames.isEmpty()) {
-            return true
-        }
-        for (packageName in packageNames) {
-            if (className.startsWith(packageName)) {
-                return true
-            }
-        }
-        return false
-    }
-
-    Boolean isClassEnabled(String className) {
-        return classNames.isEmpty() || classNames.contains(className)
     }
 
     abstract Boolean isFiltered(String level, String className)

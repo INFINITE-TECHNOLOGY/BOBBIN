@@ -1,5 +1,6 @@
 package io.infinite.bobbin
 
+import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.destinations.Destination
 import org.slf4j.helpers.MarkerIgnoringBase
 
@@ -11,6 +12,8 @@ class Bobbin extends MarkerIgnoringBase {
 
     BobbinScriptEngine bobbinScriptEngine
 
+    BobbinConfig bobbinConfig
+
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     Bobbin(String className) {
         this.className = className
@@ -18,15 +21,15 @@ class Bobbin extends MarkerIgnoringBase {
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
     Boolean isLevelEnabled(Level level) {
-        return bobbinScriptEngine.isLevelEnabled(level.value())
+        return bobbinConfig.isLevelEnabled(level.value())
     }
 
     Boolean isPackageEnabled(String className) {
-        return bobbinScriptEngine.isPackageEnabled(className)
+        return bobbinConfig.isPackageEnabled(className)
     }
 
     Boolean isClassEnabled(String className) {
-        return bobbinScriptEngine.isClassEnabled(className)
+        return bobbinConfig.isClassEnabled(className)
     }
 
     Boolean isFiltered(Level level, String className) {

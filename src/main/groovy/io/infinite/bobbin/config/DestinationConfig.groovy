@@ -15,6 +15,11 @@ class DestinationConfig extends AbstractConfig {
     }
 
     @Override
+    List<String> getPackages() {
+        return super.@packages ?: bobbinConfig.getPackages()
+    }
+
+    @Override
     List<String> getClasses() {
         return super.@classes ?: bobbinConfig.getClasses()
     }

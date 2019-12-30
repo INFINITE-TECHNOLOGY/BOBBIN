@@ -52,6 +52,7 @@ class BobbinFactory implements ILoggerFactory {
             bobbin.destinations.add(destination)
         }
         bobbin.bobbinScriptEngine = new BobbinScriptEngineFactory().bobbinScriptEngine
+        bobbin.bobbinConfig = bobbinConfig
         return bobbin
     }
 
