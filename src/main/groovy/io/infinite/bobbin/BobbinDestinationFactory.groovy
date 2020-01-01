@@ -9,9 +9,9 @@ import io.infinite.bobbin.destinations.Destination
 import io.infinite.supplies.conf.ResourceLookup
 import org.slf4j.helpers.Util
 
-class BobbinEngineFactory {
+class BobbinDestinationFactory {
 
-    static List<Destination> destinationsCache = initDestinations()
+    static List<Destination> destinations = initDestinations()
 
     static BobbinEngine createBobbinEngine(AbstractDestinationConfig destinationConfig) {
         return new GroovyClassLoader(destinationConfig.getClass().getClassLoader()).parseClass(getBobbinEngineImplCode(
