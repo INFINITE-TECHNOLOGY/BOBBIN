@@ -1,13 +1,11 @@
 package io.infinite.bobbin
 
 import groovy.util.logging.Slf4j
-import org.testng.annotations.Test
 
 @Slf4j
 class Test01 {
 
-    @Test
-    void runTest() {
+    static void main(String[] args) {
         log.debug("The Bobbin revolves infinitely.")
         log.debug("Welcome to the revolution in Java logging.")
         log.debug("Zero configuration output:")

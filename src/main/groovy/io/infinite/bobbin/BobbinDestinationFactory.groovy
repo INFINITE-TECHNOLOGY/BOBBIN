@@ -54,39 +54,39 @@ import io.infinite.bobbin.BobbinEngine
 class BobbinEngineImpl extends BobbinEngine {
     
     Boolean isFiltered(String level, String className) {
-        $destinationConfig.filter
+        return $destinationConfig.filter
     }
 
     String evalFileName(String level, String className, String date) {
-        ${destinationConfig instanceof FileDestinationConfig ? destinationConfig.fileName : "return ''"}
+        return ${destinationConfig instanceof FileDestinationConfig ? destinationConfig.fileName : "''"}
     }
 
     String formatLine(String level, String className, String date, String message) {
-        $destinationConfig.format
+        return $destinationConfig.format
     }
 
     String formatLineArg(String level, String className, String date, String message, Object arg) {
-        $destinationConfig.formatArg
+        return $destinationConfig.formatArg
     }
 
     String formatLineArgs(String level, String className, String date, String message, Object... args) {
-        $destinationConfig.formatArgs
+        return $destinationConfig.formatArgs
     }
 
     String formatLineArg1Arg2(String level, String className, String date, String message, Object arg1, Object arg2) {
-        $destinationConfig.formatArg1Arg2
+        return $destinationConfig.formatArg1Arg2
     }
 
     String formatLineThrowable(String level, String className, String date, String message, Throwable throwable) {
-        $destinationConfig.formatThrowable
+        return $destinationConfig.formatThrowable
     }
 
     String getDateFormat() {
-        "$destinationConfig.dateFormat"
+        return "$destinationConfig.dateFormat"
     }
 
     String getDateTimeFormat() {
-        "$destinationConfig.dateTimeFormat"
+        return "$destinationConfig.dateTimeFormat"
     }
 
 }"""
