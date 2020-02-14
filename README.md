@@ -3,13 +3,19 @@
 > ***...The Bobbin revolves infinitely...*** \
 ***...A revolution in Java logging...***
 
+If you haven't been using `Bobbin`, you have not been using any logger at all.
+
+`Bobbin` opens a whole new dimension of insight into the depths of software runtime.
+
+`Bobbin` is the ultimate, definitive and absolute logging solution. Yet the most compact and simple.
+
 |Attribute\Release type|Latest|Stable|
 |----------------------|------|------|
-|Version|3.0.0-SNAPSHOT|2.0.x|
-|Branch|[master](https://github.com/INFINITE-TECHNOLOGY/BOBBIN)|[BOBBIN_2_0_X](https://github.com/INFINITE-TECHNOLOGY/BOBBIN/tree/BOBBIN_2_0_X)|
-|CI Build status|[![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=master)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)|[![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=BOBBIN_2_0_X)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)|
-|Test coverage|[![codecov](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/master/graphs/badge.svg)](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/master/graphs)|[![codecov](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/BOBBIN_2_0_X/graphs/badge.svg)](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/BOBBIN_2_0_X/graphs)|
-|Library (Maven)|[oss.jfrog.org snapshot](https://oss.jfrog.org/artifactory/webapp/#/artifacts/browse/tree/General/oss-snapshot-local/io/infinite/bobbin/3.0.0-SNAPSHOT)|[ ![Download](https://api.bintray.com/packages/infinite-technology/io.i-t/bobbin/images/download.svg) ](https://bintray.com/infinite-technology/io.i-t/bobbin/_latestVersion)|
+|Version|4.0.0-SNAPSHOT|3.0.x|
+|Branch|[master](https://github.com/INFINITE-TECHNOLOGY/BOBBIN)|[BOBBIN_3_0_X](https://github.com/INFINITE-TECHNOLOGY/BOBBIN/tree/BOBBIN_3_0_X)|
+|CI Build status|[![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=master)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)|[![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=BOBBIN_3_0_X)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)|
+|Test coverage|[![codecov](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/master/graphs/badge.svg)](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/master/graphs)|[![codecov](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/BOBBIN_3_0_X/graphs/badge.svg)](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/BOBBIN_3_0_X/graphs)|
+|Library (Maven)|[oss.jfrog.org snapshot](https://oss.jfrog.org/artifactory/webapp/#/artifacts/browse/tree/General/oss-snapshot-local/io/infinite/bobbin/4.0.0-SNAPSHOT)|[ ![Download](https://api.bintray.com/packages/infinite-technology/io.i-t/bobbin/images/download.svg) ](https://bintray.com/infinite-technology/io.i-t/bobbin/_latestVersion)|
 
 Bobbin is a high-performance Groovy Slf4j-compatible logger designed for multi-threaded applications (especially those with persistent threads like batch and messaging applications).
 
@@ -27,7 +33,7 @@ Bobbin leverages the concept of Logback/Log4j2 sifting appenders while providing
         <dependency>
             <groupId>io.i-t</groupId>
             <artifactId>bobbin</artifactId>
-            <version>2.0.13</version>
+            <version>3.0.0</version>
         </dependency>
 ```
 
@@ -36,7 +42,7 @@ Bobbin leverages the concept of Logback/Log4j2 sifting appenders while providing
 ```groovy
 dependencies {
     compile "org.codehaus.groovy:groovy-all:2.5.4"
-    compile "io.i-t:bobbin:2.0.13"
+    compile "io.i-t:bobbin:3.0.0"
 }
 ```
 
@@ -45,7 +51,7 @@ dependencies {
 Just simply run the below code in Groovy (2.5.4+) console:
 
 ```groovy
-@Grab('io.i-t:bobbin:2.0.13')
+@Grab('io.i-t:bobbin:3.0.0')
 @Grab('org.slf4j:slf4j-api:1.7.25')
 import groovy.util.logging.Slf4j
 
@@ -73,44 +79,16 @@ Output:
 
 ## Sample configuration
 
-Bobbin.json
+Bobbin.yml
 
-```json
-{
-  "levels": "['debug', 'info', 'warn', 'error'].contains(level)",
-  "destinations": [
-    {
-      "name": "io.infinite.bobbin.destinations.FileDestination",
-      "properties": {
-        "fileName": "\"./LOGS/PLUGINS/INPUT/${className}/${level}/${className}_${level}.log\""
-      },
-      "classes": "className.contains('conf.plugins.input')"
-    },
-    {
-      "name": "io.infinite.bobbin.destinations.FileDestination",
-      "properties": {
-        "fileName": "\"./LOGS/PLUGINS/OUTPUT/${className}/${level}/${threadName}_${level}_${date}.log\""
-      },
-      "classes": "className.contains('conf.plugins.output')"
-    },
-    {
-      "name": "io.infinite.bobbin.destinations.FileDestination",
-      "properties": {
-        "fileName": "\"./LOGS/THREADS/${threadGroupName}/${threadName}/${level}/${threadName}_${level}_${date}.log\""
-      },
-      "classes": "className.contains('io.infinite.')"
-    },
-    {
-      "name": "io.infinite.bobbin.destinations.FileDestination",
-      "properties": {
-        "fileName": "\"./LOGS/ALL/WARNINGS_AND_ERRORS_${date}.log\""
-      },
-      "levels": "['warn', 'error'].contains(level)"
-    },
-    {
-      "name": "io.infinite.bobbin.destinations.ConsoleDestination",
-      "levels": "['warn', 'error'].contains(level)"
-    }
-  ]
-}
+```yaml
+destinations:
+  - name: io.infinite.bobbin.config.ConsoleDestinationConfig
+    levels: [warn, error, info]
+  - name: io.infinite.bobbin.config.FileDestinationConfig
+    packages: [io.infinite]
+    fileName: ("./LOGS/INFINITE/${className}/${level}/${className}_${level}_${date}.log")
+  - name: io.infinite.bobbin.config.FileDestinationConfig
+    fileName: ("./LOGS/PACKAGES/${className}/${level}/${className}_${level}_${date}.log")
+    format: dateTime + '|' + level + '|' + threadName + '|' + className + '|' + message + '\n'
 ```

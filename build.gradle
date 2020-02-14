@@ -16,7 +16,7 @@ plugins {
 
 sourceCompatibility = 1.8
 group = "io.i-t"
-version = "3.0.0"
+version = "3.0.1-SNAPSHOT"
 description = "Groovy Slf4j logger"
 
 wrapper {
@@ -109,8 +109,8 @@ artifacts {
 }
 
 bintray {
-    user = System.getProperty("bintrayuser")
-    key = System.getProperty("bintraypassword")
+    user = System.getenv("bintrayuser")
+    key = System.getenv("bintraypassword")
     publications = ["groovyMaven"]
     def projectName = project.name
     def projectDescription = project.description
@@ -131,8 +131,8 @@ artifactory {
     publish {
         repository {
             repoKey = 'oss-snapshot-local'
-            username = System.getProperty('bintray.user')
-            password = System.getProperty('bintray.key')
+            username = System.getenv("bintrayuser")
+            password = System.getenv("bintraypassword")
         }
         defaults {
             publications('groovyMaven')
