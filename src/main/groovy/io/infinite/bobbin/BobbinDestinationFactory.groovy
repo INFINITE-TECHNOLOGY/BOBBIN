@@ -22,7 +22,7 @@ class BobbinDestinationFactory {
     static synchronized List<Destination> initDestinations() {
         List<Destination> destinations = new ArrayList<>()
         BobbinConfig bobbinConfig
-        String configResourceString = new ResourceLookup("Bobbin", "Bobbin.yml", true).getResourceAsString()
+        String configResourceString = new ResourceLookup("Bobbin", "Bobbin.yml", false).getResourceAsString()
         if (configResourceString != null) {
             bobbinConfig = new ObjectMapper(new YAMLFactory()).readValue(
                     configResourceString
