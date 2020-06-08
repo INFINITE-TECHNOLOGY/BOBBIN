@@ -2,7 +2,7 @@ package io.infinite.bobbin.config
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 
-@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="name")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "name")
 abstract class AbstractDestinationConfig {
 
     List<String> levels = new ArrayList<>()
@@ -11,11 +11,14 @@ abstract class AbstractDestinationConfig {
     String filter = "none"
     String dateFormat = "yyyy-MM-dd"
     String dateTimeFormat = "yyyy-MM-dd HH:mm:ss:SSS"
-    String format = "dateTime + '|' + level + '|' + threadName + '|' + className + '|' + message + '\\n'"
-    String formatThrowable = "dateTime + '|' + level + '|' + threadName + '|' + className + '|' + message + '|' + exceptionUtils.stacktrace(throwable) + '\\n'"
-    String formatArg = "dateTime + '|' + level + '|' + threadName + '|' + className + '|' + message + '|' + arg.toString() + '\\n'"
-    String formatArgs = "dateTime + '|' + level + '|' + threadName + '|' + className + '|' + message + '|' + args.toString() + '\\n'"
-    String formatArg1Arg2 = "dateTime + '|' + level + '|' + threadName + '|' + className + '|' + message + '|' + arg1.toString() + ';' + arg2.toString() + '\\n'"
+    String delimiter = "|"
+    String lineBreak = "\\n"
+    String format = "dateTime + delimiter + level + delimiter + threadName + delimiter + className + delimiter + message"
+    String formatMessage = "$format + lineBreak"
+    String formatThrowable = "$format + delimiter + exceptionUtils.stacktrace(throwable) + lineBreak"
+    String formatArg = "$format + delimiter + arg.toString() + lineBreak"
+    String formatArgs = "$format + delimiter + args.toString() + lineBreak"
+    String formatArg1Arg2 = "$format + delimiter + arg1.toString() + delimiter + arg2.toString() + lineBreak"
 
     Boolean isLevelEnabled(String level) {
         return levels.isEmpty() || levels.contains(level)

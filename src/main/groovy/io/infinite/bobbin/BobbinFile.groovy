@@ -1,10 +1,12 @@
 package io.infinite.bobbin
 
+import java.time.Instant
+
 class BobbinFile extends File {
 
     FileWriter writer
     String fileName
-    Date createDate = new Date()
+    Instant createDate = Instant.now()
 
     BobbinFile(String pathname) {
         super(pathname)

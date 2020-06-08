@@ -16,38 +16,38 @@ abstract class Destination {
     }
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
-    void log(String loggerName, Level level, String msg) {
+    void logMessage(String loggerName, Level level, String msg) {
         if (needsLogging(loggerName, level)) {
             String date = bobbinEngine.getDate()
-            store(bobbinEngine.formatLine(level.value(), loggerName, date, msg), loggerName, level, date)
+            store(bobbinEngine.formatMessage(level.value(), loggerName, date, msg), loggerName, level, date)
         }
     }
 
     void logArg(String loggerName, Level level, String format, Object arg) {
         if (needsLogging(loggerName, level)) {
             String date = bobbinEngine.getDate()
-            store(bobbinEngine.formatLineArg(level.value(), loggerName, date, format, arg), loggerName, level, date)
+            store(bobbinEngine.formatArg(level.value(), loggerName, date, format, arg), loggerName, level, date)
         }
     }
 
     void logArgs(String loggerName, Level level, String format, Object... arguments) {
         if (needsLogging(loggerName, level)) {
             String date = bobbinEngine.getDate()
-            store(bobbinEngine.formatLineArgs(level.value(), loggerName, date, format, arguments), loggerName, level, date)
+            store(bobbinEngine.formatArgs(level.value(), loggerName, date, format, arguments), loggerName, level, date)
         }
     }
 
     void logArg1Arg2(String loggerName, Level level, String format, Object arg1, Object arg2) {
         if (needsLogging(loggerName, level)) {
             String date = bobbinEngine.getDate()
-            store(bobbinEngine.formatLineArg1Arg2(level.value(), loggerName, date, format, arg1, arg2), loggerName, level, date)
+            store(bobbinEngine.formatArg1Arg2(level.value(), loggerName, date, format, arg1, arg2), loggerName, level, date)
         }
     }
 
     void logThrowable(String loggerName, Level level, String msg, Throwable t) {
         if (needsLogging(loggerName, level)) {
             String date = bobbinEngine.getDate()
-            store(bobbinEngine.formatLineThrowable(level.value(), loggerName, date, msg, t), loggerName, level, date)
+            store(bobbinEngine.formatThrowable(level.value(), loggerName, date, msg, t), loggerName, level, date)
         }
     }
 

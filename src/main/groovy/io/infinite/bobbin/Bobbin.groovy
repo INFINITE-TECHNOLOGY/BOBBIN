@@ -6,19 +6,19 @@ import org.slf4j.helpers.MarkerIgnoringBase
 class Bobbin extends MarkerIgnoringBase {
 
     List<Destination> destinations
-    
+
     String loggerName
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
     Bobbin(String loggerName, List<Destination> destinations) {
-        this.loggerName= loggerName
+        this.loggerName = loggerName
         this.destinations = destinations
     }
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
-    void log(Level level, String msg) {
+    void logMessage(Level level, String msg) {
         destinations.each {
-            it.log(loggerName, level, msg)
+            it.logMessage(loggerName, level, msg)
         }
     }
 
@@ -53,7 +53,7 @@ class Bobbin extends MarkerIgnoringBase {
 
     @Override
     void trace(String msg) {
-        log(Level.TRACE, msg)
+        logMessage(Level.TRACE, msg)
     }
 
     @Override
@@ -83,7 +83,7 @@ class Bobbin extends MarkerIgnoringBase {
 
     @Override
     void debug(String msg) {
-        log(Level.DEBUG, msg)
+        logMessage(Level.DEBUG, msg)
     }
 
     @Override
@@ -113,7 +113,7 @@ class Bobbin extends MarkerIgnoringBase {
 
     @Override
     void info(String msg) {
-        log(Level.INFO, msg)
+        logMessage(Level.INFO, msg)
     }
 
     @Override
@@ -143,7 +143,7 @@ class Bobbin extends MarkerIgnoringBase {
 
     @Override
     void warn(String msg) {
-        log(Level.WARN, msg)
+        logMessage(Level.WARN, msg)
     }
 
     @Override
@@ -173,7 +173,7 @@ class Bobbin extends MarkerIgnoringBase {
 
     @Override
     void error(String msg) {
-        log(Level.ERROR, msg)
+        logMessage(Level.ERROR, msg)
     }
 
     @Override

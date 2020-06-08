@@ -61,23 +61,23 @@ class BobbinEngineImpl extends BobbinEngine {
         return ${destinationConfig instanceof FileDestinationConfig ? destinationConfig.fileName : "''"}
     }
 
-    String formatLine(String level, String className, String date, String message) {
-        return $destinationConfig.format
+    String formatMessage(String level, String className, String date, String message) {
+        return $destinationConfig.formatMessage
     }
 
-    String formatLineArg(String level, String className, String date, String message, Object arg) {
+    String formatArg(String level, String className, String date, String message, Object arg) {
         return $destinationConfig.formatArg
     }
 
-    String formatLineArgs(String level, String className, String date, String message, Object... args) {
+    String formatArgs(String level, String className, String date, String message, Object... args) {
         return $destinationConfig.formatArgs
     }
 
-    String formatLineArg1Arg2(String level, String className, String date, String message, Object arg1, Object arg2) {
+    String formatArg1Arg2(String level, String className, String date, String message, Object arg1, Object arg2) {
         return $destinationConfig.formatArg1Arg2
     }
 
-    String formatLineThrowable(String level, String className, String date, String message, Throwable throwable) {
+    String formatThrowable(String level, String className, String date, String message, Throwable throwable) {
         return $destinationConfig.formatThrowable
     }
 
@@ -87,6 +87,14 @@ class BobbinEngineImpl extends BobbinEngine {
 
     String getDateTimeFormat() {
         return "$destinationConfig.dateTimeFormat"
+    }
+    
+    String getDelimiter() {
+        return "$destinationConfig.delimiter"
+    }
+    
+    String getLineBreak() {
+        return "$destinationConfig.lineBreak"
     }
 
 }"""

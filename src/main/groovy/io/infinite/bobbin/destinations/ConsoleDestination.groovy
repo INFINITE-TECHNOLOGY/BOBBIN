@@ -11,6 +11,10 @@ class ConsoleDestination extends Destination {
 
     @Override
     protected void store(String finalOutputMessageText, String className, Level level, String date) {
-        System.out.print(finalOutputMessageText)
+        if (level != Level.ERROR) {
+            System.out.print(finalOutputMessageText)
+        } else {
+            System.err.print(finalOutputMessageText)
+        }
     }
 }

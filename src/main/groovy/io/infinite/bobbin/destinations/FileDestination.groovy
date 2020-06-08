@@ -1,12 +1,13 @@
 package io.infinite.bobbin.destinations
 
-import groovy.time.TimeCategory
-import groovy.transform.CompileDynamic
+
 import io.infinite.bobbin.BobbinFile
 import io.infinite.bobbin.Level
 import io.infinite.bobbin.config.FileDestinationConfig
 import org.slf4j.helpers.Util
 
+import java.time.Duration
+import java.time.Instant
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.locks.ReentrantLock
 
@@ -37,19 +38,15 @@ class FileDestination extends Destination {
         }
     }
 
-    @CompileDynamic
     void cleanupCache(Map<String, BobbinFile> bobbinFileMap) {
-        Date checkDate
-        use (TimeCategory) {
-            checkDate = new Date() - 24.hours
-        }
+        Instant checkDate = Instant.now() - Duration.ofHours(24)
         bobbinFileMap.each {
-            if (it.value.createDate.before(checkDate)) {
+            if (it.value.createDate.isBefore(checkDate)) {
                 it.value.writer.close()
             }
         }
         bobbinFileMap.removeAll {
-            it.value.createDate.before(checkDate)
+            it.value.createDate.isBefore(checkDate)
         }
     }
 

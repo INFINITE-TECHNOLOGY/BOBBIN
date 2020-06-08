@@ -1,6 +1,6 @@
 package io.infinite.bobbin
 
-import io.infinite.bobbin.destinations.Destination
+
 import io.infinite.supplies.ast.exceptions.ExceptionUtils
 import org.apache.commons.lang3.time.FastDateFormat
 
@@ -40,15 +40,15 @@ abstract class BobbinEngine {
 
     abstract String evalFileName(String level, String className, String date)
 
-    abstract String formatLine(String level, String className, String date, String msg)
+    abstract String formatMessage(String level, String className, String date, String msg)
 
-    abstract String formatLineArg(String level, String className, String date, String format, Object arg)
+    abstract String formatArg(String level, String className, String date, String format, Object arg)
 
-    abstract String formatLineArgs(String level, String className, String date, String format, Object... arguments)
+    abstract String formatArgs(String level, String className, String date, String format, Object... arguments)
 
-    abstract String formatLineArg1Arg2(String level, String className, String date, String format, Object arg1, Object arg2)
+    abstract String formatArg1Arg2(String level, String className, String date, String format, Object arg1, Object arg2)
 
-    abstract String formatLineThrowable(String level, String className, String date, String msg, Throwable t)
+    abstract String formatThrowable(String level, String className, String date, String msg, Throwable t)
 
     abstract String getDateFormat()
 
