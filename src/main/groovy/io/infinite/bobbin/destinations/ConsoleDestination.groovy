@@ -12,9 +12,9 @@ class ConsoleDestination extends Destination {
     @Override
     protected void store(String finalOutputMessageText, String className, Level level, String date) {
         if (level != Level.ERROR) {
-            System.out.print(finalOutputMessageText)
+            System.out.print(finalOutputMessageText + destinationConfig.lineBreak)
         } else {
-            System.err.print(finalOutputMessageText)
+            System.err.print(finalOutputMessageText + destinationConfig.lineBreak)
         }
     }
 }

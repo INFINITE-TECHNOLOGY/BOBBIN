@@ -44,9 +44,6 @@ class BobbinDestinationFactory {
     static BobbinConfig zeroConf() {
         Util.report("Bobbin: using zero configuration")
         BobbinConfig zeroConf = new BobbinConfig()
-        zeroConf.destinations.each { destination ->
-            destination.parentConfig = zeroConf
-        }
         return zeroConf
     }
 
@@ -95,10 +92,6 @@ class BobbinEngineImpl extends BobbinEngine {
     
     String getDelimiter() {
         return "$destinationConfig.delimiter"
-    }
-    
-    String getLineBreak() {
-        return "$destinationConfig.lineBreak"
     }
 
 }"""

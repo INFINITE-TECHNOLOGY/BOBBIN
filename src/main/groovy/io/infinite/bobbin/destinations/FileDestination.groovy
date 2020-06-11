@@ -31,7 +31,7 @@ class FileDestination extends Destination {
         ReentrantLock lock = lockMap.putIfAbsent(bobbinFile.getCanonicalPath(), newLock) ?: newLock
         try {
             lock.lock()
-            bobbinFile.writer.write(finalOutputMessageText)
+            bobbinFile.writer.write(finalOutputMessageText + destinationConfig.lineBreak)
             bobbinFile.writer.flush()
         } finally {
             lock.unlock()

@@ -9,78 +9,76 @@ abstract class AbstractDestinationConfig extends AbstractBobbinConfig {
     @JsonBackReference
     BobbinConfig parentConfig
 
-    List<String> levels
-    List<String> packages
-    List<String> classes
-    String filter
-    String dateFormat
-    String dateTimeFormat
-    String delimiter
-    String lineBreak
-    String format
-    String formatMessage
-    String formatThrowable
-    String formatArg
-    String formatArgs
-    String formatArg1Arg2
-
     abstract Class getDestinationClass()
 
     @Override
     List<String> getLevels() {
-        return levels ?: parentConfig.levels
+        return super.levels ?: parentConfig.getLevels()
     }
 
-    List<String> getPackages() {
-        return packages ?: parentConfig.packages
-    }
-
+    @Override
     List<String> getClasses() {
-        return classes ?: parentConfig.classes
+        return super.classes ?: parentConfig.getClasses()
     }
 
-    String getFilter() {
-        return filter ?: parentConfig.filter
+    @Override
+    List<String> getPackages() {
+        return super.packages ?: parentConfig.getClasses()
     }
 
+    @Override
     String getDateFormat() {
-        return dateFormat ?: parentConfig.dateFormat
+        return super.dateFormat ?: parentConfig.getDateFormat()
     }
 
+    @Override
     String getDateTimeFormat() {
-        return dateTimeFormat ?: parentConfig.dateTimeFormat
+        return super.dateTimeFormat ?: parentConfig.getDateTimeFormat()
     }
 
-    String getDelimiter() {
-        return delimiter ?: parentConfig.delimiter
-    }
-
-    String getLineBreak() {
-        return lineBreak ?: parentConfig.lineBreak
-    }
-
+    @Override
     String getFormat() {
-        return format ?: parentConfig.format
+        return super.format ?: parentConfig.getFormat()
     }
 
-    String getFormatMessage() {
-        return formatMessage ?: parentConfig.formatMessage
-    }
-
+    @Override
     String getFormatThrowable() {
-        return formatThrowable ?: parentConfig.formatThrowable
+        return super.formatThrowable ?: parentConfig.getFormatThrowable()
     }
 
+    @Override
     String getFormatArg() {
-        return formatArg ?: parentConfig.formatArg
+        return super.formatArg ?: parentConfig.getFormatArg()
     }
 
+    @Override
     String getFormatArgs() {
-        return formatArgs ?: parentConfig.formatArgs
+        return super.formatArgs ?: parentConfig.getFormatArgs()
     }
 
+    @Override
     String getFormatArg1Arg2() {
-        return formatArg1Arg2 ?: parentConfig.formatArg1Arg2
+        return super.formatArg1Arg2 ?: parentConfig.getFormatArg1Arg2()
+    }
+
+    @Override
+    String getFilter() {
+        return super.filter ?: parentConfig.getFilter()
+    }
+
+    @Override
+    String getDelimiter() {
+        return super.delimiter ?: parentConfig.getDelimiter()
+    }
+
+    @Override
+    String getLineBreak() {
+        return super.lineBreak ?: parentConfig.getLineBreak()
+    }
+
+    @Override
+    String getFormatMessage() {
+        return super.formatMessage ?: parentConfig.getFormatMessage()
     }
 
 }
