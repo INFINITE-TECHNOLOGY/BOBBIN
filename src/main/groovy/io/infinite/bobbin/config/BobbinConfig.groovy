@@ -1,7 +1,10 @@
 package io.infinite.bobbin.config
 
-class BobbinConfig {
+import com.fasterxml.jackson.annotation.JsonManagedReference
 
+class BobbinConfig extends AbstractBobbinConfig {
+
+    @JsonManagedReference
     List<AbstractDestinationConfig> destinations = [
             new ConsoleDestinationConfig(
                     levels: ["info", "warn", "error"],

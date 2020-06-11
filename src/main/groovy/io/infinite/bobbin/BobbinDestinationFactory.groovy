@@ -43,7 +43,11 @@ class BobbinDestinationFactory {
 
     static BobbinConfig zeroConf() {
         Util.report("Bobbin: using zero configuration")
-        return new BobbinConfig()
+        BobbinConfig zeroConf = new BobbinConfig()
+        zeroConf.destinations.each { destination ->
+            destination.parentConfig = zeroConf
+        }
+        return zeroConf
     }
 
     static String getBobbinEngineImplCode(AbstractDestinationConfig destinationConfig) {
