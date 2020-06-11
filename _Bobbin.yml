@@ -1,0 +1,4 @@
+format: message
+destinations:
+  - name: io.infinite.bobbin.config.ConsoleDestinationConfig
+    format: MDC.get("Infinite") + message

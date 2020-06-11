@@ -63,23 +63,23 @@ class BobbinEngineImpl extends BobbinEngine {
     }
 
     String formatMessage(String level, String className, String date, String message) {
-        return $destinationConfig.formatMessage
+        return ${destinationConfig.formatMessage.replace("%format%", destinationConfig.format)}
     }
 
     String formatArg(String level, String className, String date, String message, Object arg) {
-        return $destinationConfig.formatArg
+        return ${destinationConfig.formatArg.replace("%format%", destinationConfig.format)}
     }
 
     String formatArgs(String level, String className, String date, String message, Object... args) {
-        return $destinationConfig.formatArgs
+        return ${destinationConfig.formatArgs.replace("%format%", destinationConfig.format)}
     }
 
     String formatArg1Arg2(String level, String className, String date, String message, Object arg1, Object arg2) {
-        return $destinationConfig.formatArg1Arg2
+        return ${destinationConfig.formatArg1Arg2.replace("%format%", destinationConfig.format)}
     }
 
     String formatThrowable(String level, String className, String date, String message, Throwable throwable) {
-        return $destinationConfig.formatThrowable
+        return ${destinationConfig.formatThrowable.replace("%format%", destinationConfig.format)}
     }
 
     String getDateFormat() {

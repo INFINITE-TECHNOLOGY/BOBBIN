@@ -42,6 +42,12 @@ abstract class AbstractDestinationConfig extends AbstractBobbinConfig {
     }
 
     @Override
+    String getFormatMessage() {
+        return super.formatMessage ?: parentConfig.getFormatMessage()
+    }
+
+
+    @Override
     String getFormatThrowable() {
         return super.formatThrowable ?: parentConfig.getFormatThrowable()
     }
@@ -74,11 +80,6 @@ abstract class AbstractDestinationConfig extends AbstractBobbinConfig {
     @Override
     String getLineBreak() {
         return super.lineBreak ?: parentConfig.getLineBreak()
-    }
-
-    @Override
-    String getFormatMessage() {
-        return super.formatMessage ?: parentConfig.getFormatMessage()
     }
 
 }

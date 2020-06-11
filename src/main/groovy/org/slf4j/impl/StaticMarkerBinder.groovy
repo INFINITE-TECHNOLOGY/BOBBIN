@@ -19,7 +19,7 @@ class StaticMarkerBinder implements MarkerFactoryBinder {
     }
 
     String getMarkerFactoryClassStr() {
-        return BasicMarkerFactory.class.getName()
+        return BasicMarkerFactory.name
     }
 
 }

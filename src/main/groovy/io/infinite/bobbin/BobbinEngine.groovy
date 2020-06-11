@@ -17,11 +17,11 @@ abstract class BobbinEngine {
     ExceptionUtils exceptionUtils = new ExceptionUtils()
 
     String getThreadName() {
-        return Thread.currentThread().getName()
+        return Thread.currentThread().name
     }
 
     String getThreadGroupName() {
-        return Thread.currentThread().getThreadGroup().getName()
+        return Thread.currentThread().getThreadGroup().name
     }
 
     Class<org.slf4j.MDC> getMDC() {//keep full qualified reference for MDC getter shortcut

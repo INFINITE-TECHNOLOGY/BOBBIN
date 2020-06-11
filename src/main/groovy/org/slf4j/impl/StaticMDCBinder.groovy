@@ -1,5 +1,6 @@
 package org.slf4j.impl
 
+import groovy.transform.CompileDynamic
 import org.slf4j.helpers.BasicMDCAdapter
 import org.slf4j.spi.MDCAdapter
 

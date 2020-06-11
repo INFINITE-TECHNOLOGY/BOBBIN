@@ -14,7 +14,7 @@ class StaticLoggerBinder implements LoggerFactoryBinder {
 
     public static String REQUESTED_API_VERSION = "1.6.99" // !final
 
-    private static final String loggerFactoryClassStr = BobbinFactory.class.getName()
+    private static final String loggerFactoryClassStr = BobbinFactory.name
 
     private final ILoggerFactory loggerFactory
 
