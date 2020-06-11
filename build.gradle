@@ -16,7 +16,7 @@ plugins {
 
 sourceCompatibility = 1.8
 group = "io.i-t"
-version = "4.0.3"
+version = "4.0.4"
 description = "Groovy Slf4j logger"
 
 wrapper {
