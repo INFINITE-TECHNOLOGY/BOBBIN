@@ -1,49 +1,68 @@
 package io.infinite.bobbin
 
+import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.destinations.Destination
 import org.slf4j.helpers.MarkerIgnoringBase
 
 class Bobbin extends MarkerIgnoringBase {
 
-    List<Destination> destinations
+    static BobbinConfig bobbinConfig = BobbinDestinationFactory.initBobbinConfig()
+
+    static List<Destination> destinations = BobbinDestinationFactory.initDestinations(bobbinConfig)
+
+    static BobbinEngine bobbinEngine = BobbinDestinationFactory.createBobbinEngine(bobbinConfig)
 
     String loggerName
 
     ///////////////////CONSTRUCTOR \/\/\/\/\/\/
-    Bobbin(String loggerName, List<Destination> destinations) {
+    Bobbin(String loggerName) {
         this.loggerName = loggerName
-        this.destinations = destinations
     }
     ///////////////////CONSTRUCTOR /\/\/\/\/\/\
 
     void logMessage(Level level, String msg) {
-        destinations.each {
-            it.logMessage(loggerName, level, msg)
+        if (needsLogging(loggerName, level)) {
+            destinations.each {
+                it.logMessage(loggerName, level, msg)
+            }
         }
     }
 
     void logArg(Level level, String format, Object arg) {
-        destinations.each {
-            it.logArg(loggerName, level, format, arg)
+        if (needsLogging(loggerName, level)) {
+            destinations.each {
+                it.logArg(loggerName, level, format, arg)
+            }
         }
     }
 
     void logArgs(Level level, String format, Object... arguments) {
-        destinations.each {
-            it.logArgs(loggerName, level, format, arguments)
+        if (needsLogging(loggerName, level)) {
+            destinations.each {
+                it.logArgs(loggerName, level, format, arguments)
+            }
         }
     }
 
     void logArg1Arg2(Level level, String format, Object arg1, Object arg2) {
-        destinations.each {
-            it.logArg1Arg2(loggerName, level, format, arg1, arg2)
+        if (needsLogging(loggerName, level)) {
+            destinations.each {
+                it.logArg1Arg2(loggerName, level, format, arg1, arg2)
+            }
         }
     }
 
     void logThrowable(Level level, String msg, Throwable t) {
-        destinations.each {
-            it.logThrowable(loggerName, level, msg, t)
+        if (needsLogging(loggerName, level)) {
+            destinations.each {
+                it.logThrowable(loggerName, level, msg, t)
+            }
         }
+    }
+
+    Boolean needsLogging(String loggerName, Level level) {
+        return bobbinConfig.needsLogging(loggerName, level) &&
+                (!bobbinEngine.isFiltered(level.value(), loggerName))
     }
 
     @Override

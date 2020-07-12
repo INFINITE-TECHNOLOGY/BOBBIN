@@ -12,21 +12,6 @@ abstract class AbstractDestinationConfig extends AbstractBobbinConfig {
     abstract Class getDestinationClass()
 
     @Override
-    List<String> getLevels() {
-        return super.levels ?: parentConfig.getLevels()
-    }
-
-    @Override
-    List<String> getClasses() {
-        return super.classes ?: parentConfig.getClasses()
-    }
-
-    @Override
-    List<String> getPackages() {
-        return super.packages ?: parentConfig.getClasses()
-    }
-
-    @Override
     String getDateFormat() {
         return super.dateFormat ?: parentConfig.getDateFormat()
     }

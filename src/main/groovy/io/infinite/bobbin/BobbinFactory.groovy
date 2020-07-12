@@ -8,7 +8,7 @@ class BobbinFactory implements ILoggerFactory {
 
     @Override
     Logger getLogger(String name) {
-        return new Bobbin(name, BobbinDestinationFactory.destinations)
+        return new Bobbin(name)
     }
 
 }

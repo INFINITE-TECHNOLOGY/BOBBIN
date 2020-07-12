@@ -54,10 +54,8 @@ abstract class Destination {
     abstract protected void store(String finalOutputMessageText, String loggerName, Level level, String date)
 
     Boolean needsLogging(String loggerName, Level level) {
-        return (destinationConfig.isLevelEnabled(level.value())
-                && destinationConfig.isPackageEnabled(loggerName)
-                && destinationConfig.isClassEnabled(loggerName)
-                && (!bobbinEngine.isFiltered(level.value(), loggerName)))
+        return destinationConfig.needsLogging(loggerName, level) &&
+                (!bobbinEngine.isFiltered(level.value(), loggerName))
     }
 
 }

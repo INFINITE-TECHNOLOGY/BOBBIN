@@ -2,7 +2,7 @@ package io.infinite.bobbin
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import io.infinite.bobbin.config.AbstractDestinationConfig
+import io.infinite.bobbin.config.AbstractBobbinConfig
 import io.infinite.bobbin.config.BobbinConfig
 import io.infinite.bobbin.config.FileDestinationConfig
 import io.infinite.bobbin.destinations.Destination
@@ -11,16 +11,13 @@ import org.slf4j.helpers.Util
 
 class BobbinDestinationFactory {
 
-    static List<Destination> destinations = initDestinations()
-
-    static BobbinEngine createBobbinEngine(AbstractDestinationConfig destinationConfig) {
+    static BobbinEngine createBobbinEngine(AbstractBobbinConfig destinationConfig) {
         return new GroovyClassLoader(destinationConfig.getClass().getClassLoader()).parseClass(getBobbinEngineImplCode(
                 destinationConfig
         )).newInstance() as BobbinEngine
     }
 
-    static synchronized List<Destination> initDestinations() {
-        List<Destination> destinations = new ArrayList<>()
+    static BobbinConfig initBobbinConfig() {
         BobbinConfig bobbinConfig
         String configResourceString = new ResourceLookup("Bobbin", "Bobbin.yml", false).getResourceAsString()
         if (configResourceString != null) {
@@ -31,6 +28,11 @@ class BobbinDestinationFactory {
         } else {
             bobbinConfig = zeroConf()
         }
+        return bobbinConfig
+    }
+
+    static List<Destination> initDestinations(BobbinConfig bobbinConfig) {
+        List<Destination> destinations = new ArrayList<>()
         bobbinConfig.destinations.each { destinationConfig ->
             Destination destination = destinationConfig.getDestinationClass().newInstance(
                     destinationConfig
@@ -47,7 +49,7 @@ class BobbinDestinationFactory {
         return zeroConf
     }
 
-    static String getBobbinEngineImplCode(AbstractDestinationConfig destinationConfig) {
+    static String getBobbinEngineImplCode(AbstractBobbinConfig destinationConfig) {
         return """import groovy.transform.CompileStatic
 import io.infinite.bobbin.BobbinEngine
 

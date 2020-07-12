@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference
 
 class BobbinConfig extends AbstractBobbinConfig {
 
-    List<String> levels = []
-    List<String> packages = []
-    List<String> classes = []
     String filter = "none"
     String dateFormat = "yyyy-MM-dd"
     String dateTimeFormat = "yyyy-MM-dd HH:mm:ss:SSS"

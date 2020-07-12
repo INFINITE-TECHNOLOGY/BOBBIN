@@ -1,5 +1,7 @@
 package io.infinite.bobbin.config
 
+import io.infinite.bobbin.Level
+
 abstract class AbstractBobbinConfig {
 
     List<String> levels
@@ -18,11 +20,11 @@ abstract class AbstractBobbinConfig {
     String formatArg1Arg2
 
     Boolean isLevelEnabled(String level) {
-        return getLevels().empty || getLevels().contains(level)
+        return getLevels() == null || getLevels().contains(level)
     }
 
     Boolean isPackageEnabled(String className) {
-        if (getPackages().empty) {
+        if (getPackages() == null) {
             return true
         }
         for (packageName in getPackages()) {
@@ -34,7 +36,13 @@ abstract class AbstractBobbinConfig {
     }
 
     Boolean isClassEnabled(String className) {
-        return getClasses().isEmpty() || getClasses().contains(className)
+        return getClasses() == null || getClasses().contains(className)
+    }
+
+    Boolean needsLogging(String loggerName, Level level) {
+        return (isLevelEnabled(level.value())
+                && isPackageEnabled(loggerName)
+                && isClassEnabled(loggerName))
     }
 
 }
