@@ -1,0 +1,24 @@
+levels: [info, warn, error]
+destinations:
+  - name: io.infinite.bobbin.config.FileDestinationConfig
+    fileName: ("${System.getProperty('user.home')}/logs/module/All.log")
+  - name: io.infinite.bobbin.config.FileDestinationConfig
+    fileName: ("${System.getProperty('user.home')}/logs/module/Test02.log")
+    classes: [io.infinite.bobbin.Test02]
+    dateTimeFormat: "yyyy-MM-dd'T'HH:mm:ss:SSSZ"
+    lineBreak: ",\r\n"
+    formatArgs: |-
+      """{
+        "@timestamp": "$dateTime",
+        "@version": "1",
+        "message": "$message",
+        "logger_name": "$className",
+        "thread_name": "$threadName",
+        "level": "$level",
+        "arg0": "${args[0]}",
+        "arg1": "${args[1]}",
+        "arg2": "${args[2]}",
+        "arg3": "${args[3]}",
+        "arg4": "${args[4]}",
+        "arg5": "${args[5]}"
+      }"""
