@@ -1,85 +1,52 @@
-# Infinite Technology ∞ Bobbin 📼
+## Introduction
 
-> ***...The Bobbin revolves infinitely...*** \
-***...A revolution in Java logging...***
+`Bobbin` is a high-performance `Slf4j`-compatible logger designed for multi-threaded applications (especially those with persistent threads like batch, stream and messaging applications).
 
-If you haven't been using `Bobbin`, you have not been using any logger at all.
+`Bobbin` leverages the concept of `Logback`/`Log4j2` sifting appenders while providing much more easier configuration using native `Groovy`/`Java` scripting expressions.
 
-`Bobbin` opens a whole new dimension of insight into the depths of software runtime.
-
-`Bobbin` is the ultimate, definitive and absolute logging solution. Yet the most compact and simple.
-
-|Attribute\Release type|Latest|Stable|
-|----------------------|------|------|
-|Version|4.0.0-SNAPSHOT|3.0.x|
-|Branch|[master](https://github.com/INFINITE-TECHNOLOGY/BOBBIN)|[BOBBIN_3_0_X](https://github.com/INFINITE-TECHNOLOGY/BOBBIN/tree/BOBBIN_3_0_X)|
-|CI Build status|[![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=master)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)|[![Build Status](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN.svg?branch=BOBBIN_3_0_X)](https://travis-ci.com/INFINITE-TECHNOLOGY/BOBBIN)|
-|Test coverage|[![codecov](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/master/graphs/badge.svg)](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/master/graphs)|[![codecov](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/BOBBIN_3_0_X/graphs/badge.svg)](https://codecov.io/gh/INFINITE-TECHNOLOGY/BOBBIN/branch/BOBBIN_3_0_X/graphs)|
-|Library (Maven)|[oss.jfrog.org snapshot](https://oss.jfrog.org/artifactory/webapp/#/artifacts/browse/tree/General/oss-snapshot-local/io/infinite/bobbin/4.0.0-SNAPSHOT)|[ ![Download](https://api.bintray.com/packages/infinite-technology/io.i-t/bobbin/images/download.svg) ](https://bintray.com/infinite-technology/io.i-t/bobbin/_latestVersion)|
-
-Bobbin is a high-performance Groovy Slf4j-compatible logger designed for multi-threaded applications (especially those with persistent threads like batch and messaging applications).
-
-Bobbin leverages the concept of Logback/Log4j2 sifting appenders while providing much more easier configuration using native Groovy/Java scripting expressions.
-
-> ❇ Bobbin is available both in `JCenter` and `Maven Central` repositories.
+> Bobbin is available in `JCenter` repository.
 
 ## Maven
 
 > ❗ Note that there is no `<type>pom</type>`
 
-> ❇ [Example Maven project with Bobbin](https://github.com/INFINITE-TECHNOLOGY/BOBBIN_MAVEN_EXAMPLE)
+> [Example Maven project with Bobbin](https://github.com/INFINITE-TECHNOLOGY/BOBBIN_MAVEN_EXAMPLE)
 
 ```xml
-        <dependency>
-            <groupId>io.i-t</groupId>
-            <artifactId>bobbin</artifactId>
-            <version>3.0.0</version>
-        </dependency>
+...
+<repositories>
+    <repository>
+        <id>jcenter</id>
+        <name>jcenter</name>
+        <url>https://jcenter.bintray.com</url>
+    </repository>
+</repositories>
+...
+<dependency>
+    <groupId>io.i-t</groupId>
+    <artifactId>bobbin</artifactId>
+    <version>4.1.0</version>
+</dependency>
+...
 ```
 
 ## Gradle
 
 ```groovy
+repositories {
+    jcenter()
+}
 dependencies {
     compile "org.codehaus.groovy:groovy-all:2.5.4"
-    compile "io.i-t:bobbin:3.0.0"
+    compile "io.i-t:bobbin:4.1.0"
 }
 ```
 
-## Try it now!
+## Sample configurations
 
-Just simply run the below code in Groovy (2.5.4+) console:
+Examples of `Bobbin.yml` for different use cases.
 
-```groovy
-@Grab('io.i-t:bobbin:3.0.0')
-@Grab('org.slf4j:slf4j-api:1.7.25')
-import groovy.util.logging.Slf4j
-
-@Slf4j
-class TryMe {
-    
-    void tryMe() {
-        log.info("Welcome to the revolution in Java Logging.")
-    }
-
-}
-
-new TryMe().tryMe()
-```
-
-Output:
-
-```
-2019-03-15 15:19:14:337|info|Thread-3|TryMe|Welcome to the revolution in Java Logging.
-```
-
-## Documentation
-* [Bobbin Documentation](https://github.com/INFINITE-TECHNOLOGY/BOBBIN/wiki)
-
-
-## Sample configuration
-
-Bobbin.yml
+#### General usage
 
 ```yaml
 destinations:
@@ -91,4 +58,83 @@ destinations:
   - name: io.infinite.bobbin.config.FileDestinationConfig
     fileName: ("./LOGS/PACKAGES/${className}/${level}/${className}_${level}_${date}.log")
     format: dateTime + '|' + level + '|' + threadName + '|' + className + '|' + message + '\n'
+```
+
+#### Spring Boot
+
+> [Logging Spring Boot HTTP with Bobbin](https://i-t.io/website/#/Blog/LoggingSpringBoot)
+
+```yaml
+destinations:
+  - name: io.infinite.bobbin.config.ConsoleDestinationConfig
+    formatThrowable: "%format% + delimiter + throwable"
+    levels: [warn, error, info]
+  - name: io.infinite.bobbin.config.FileDestinationConfig
+    levels: [warn]
+    fileName: ("./LOGS/WARNINGS_${date}.log")
+  - name: io.infinite.bobbin.config.FileDestinationConfig
+    levels: [error]
+    fileName: ("./LOGS/ERRORS_${date}.log")
+  - name: io.infinite.bobbin.config.FileDestinationConfig
+    packages: [org.springframework.web]
+    fileName: ("./LOGS/SPRING_WEB/SPRING_WEB_${date}.log")
+```
+
+#### Logstash
+
+Pass named parameters to `Logstash` without using `MDC` (using positioned logging arguments indexes instead).
+
+```yaml
+levels: [info, warn, error, debug]
+destinations:
+  - name: io.infinite.bobbin.config.ConsoleDestinationConfig
+    packages: [com.acme.logstash]
+    dateTimeFormat: "yyyy-MM-dd'T'HH:mm:ss:SSSZ"
+    lineBreak: ",\r\n"
+    formatArgs: |-
+      """{
+        "@timestamp": "$dateTime",
+        "@version": "1",
+        "message": "$message",
+        "logger_name": "$className",
+        "thread_name": "$threadName",
+        "level": "$level",
+        "username": "${args[0]}",
+        "URI": "${args[1]}",
+        "sessionId": "${args[2]}",
+        "transactionId": "${args[3]}",
+        "instanceId": "${MDC.get('instanceUUID')}"
+      }"""
+```
+
+#### MDC and log formatting
+
+Use `MDC` and change formatting of individual logging signatures - like `formatThrowable` in this case.
+
+`%format%` placeholder helps to reuse the base formatting (which itself can be also overridden using `format` parameter).
+
+```yaml
+format: dateTime + delimiter + MDC.get("instanceUUID") + delimiter + level + delimiter + threadName + delimiter + className + delimiter + message
+destinations:
+  - name: io.infinite.bobbin.config.ConsoleDestinationConfig
+    formatThrowable: "%format% + delimiter + throwable"
+    levels: [warn, error, info]
+  - name: io.infinite.bobbin.config.FileDestinationConfig
+    levels: [warn]
+    fileName: ("./LOGS/WARNINGS_${date}.log")
+  - name: io.infinite.bobbin.config.FileDestinationConfig
+    levels: [error]
+    fileName: ("./LOGS/ERRORS_${date}.log")
+  - name: io.infinite.bobbin.config.FileDestinationConfig
+    packages: [org.springframework.web]
+    fileName: ("./LOGS/SPRING_WEB/SPRING_WEB_${date}.log")
+  - name: io.infinite.bobbin.config.FileDestinationConfig
+    packages: [io.infinite]
+    fileName: ("./LOGS/THREADS/${threadGroupName}/${threadName}/${threadName}_${date}.log")
+  - name: io.infinite.bobbin.config.FileDestinationConfig
+    packages: [conf.plugins.output]
+    fileName: ("./LOGS/PLUGINS/OUTPUT/${className}/${className}_${date}.log")
+  - name: io.infinite.bobbin.config.FileDestinationConfig
+    packages: [conf.plugins.input]
+    fileName: ("./LOGS/PLUGINS/INPUT/${className}/${className}_${date}.log")
 ```
