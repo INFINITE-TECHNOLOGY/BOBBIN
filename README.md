@@ -111,7 +111,7 @@ destinations:
 
 Use `MDC` and change formatting of individual logging signatures - like `formatThrowable` in this case.
 
-`%format%` placeholder helps to reuse the base formatting (which itself can be also overridden using `format` parameter).
+`%format%` placeholder helps to reuse the base formatting (which itself can be also redefined using `format` parameter).
 
 ```yaml
 format: dateTime + delimiter + MDC.get("instanceUUID") + delimiter + level + delimiter + threadName + delimiter + className + delimiter + message
