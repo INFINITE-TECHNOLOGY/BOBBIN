@@ -57,7 +57,7 @@ destinations:
     fileName: ("./LOGS/INFINITE/${className}/${level}/${className}_${level}_${date}.log")
   - name: io.infinite.bobbin.config.FileDestinationConfig
     fileName: ("./LOGS/PACKAGES/${className}/${level}/${className}_${level}_${date}.log")
-    format: dateTime + '|' + level + '|' + threadName + '|' + className + '|' + message
+    format: dateTime + delimiter + level + delimiter + threadName + delimiter + className + delimiter + message
 ```
 
 #### Spring Boot
