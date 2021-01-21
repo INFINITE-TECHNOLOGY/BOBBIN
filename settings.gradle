@@ -15,4 +15,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'bobbin'
+rootProject.name = 'bobbin-slf4j18'

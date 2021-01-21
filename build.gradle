@@ -35,7 +35,7 @@ sourceSets {
 
 dependencies {
     compileOnly "org.codehaus.groovy:groovy-all:2.5.4"
-    compile "org.slf4j:slf4j-api:1.7.25"
+    compile "org.slf4j:slf4j-api:1.8.0-beta4"
     compile "com.fasterxml.jackson.core:jackson-databind:2.9.8"
     compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.8'
     compile "io.i-t:supplies:2.0.0"
@@ -116,7 +116,7 @@ bintray {
     pkg {
         userOrg = "infinite-technology"
         repo = "io.i-t"
-        name = "bobbin"
+        name = "bobbin-slf4j18"
         desc = "Groovy Slf4j Logger"
         issueTrackerUrl = "https://github.com/INFINITE-TECHNOLOGY/BOBBIN/issues"
         vcsUrl = "https://github.com/INFINITE-TECHNOLOGY/BOBBIN.git"
